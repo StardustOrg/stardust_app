@@ -1,23 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-class Cep {
-  final String cep;
-  final String logradouro;
-  final String complemento;
-  final String bairro;
-  final String localidade;
-  final String uf;
-
-  Cep({
-    required this.cep,
-    required this.logradouro,
-    required this.complemento,
-    required this.bairro,
-    required this.localidade,
-    required this.uf,
-  });
-}
+import 'package:stardust_app_skeleton/models/cep.dart';
 
 class SearchCep {
   static const String _viaCepUrl = 'https://viacep.com.br/ws/';
