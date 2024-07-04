@@ -24,19 +24,34 @@ class PhotocardContainer extends StatelessWidget {
       children: [
         StarPhotocardImage(imageUrl: imageUrl, size: size),
         const SizedBox(height: StarSizes.xs),
-        Text(
-          artistName,
-          style: Theme.of(context).textTheme.bodySmall,
+        SizedBox(
+          width: size,
+          child: Text(
+            artistName,
+            style: Theme.of(context).textTheme.bodySmall,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         const SizedBox(height: StarSizes.xxs),
-        Text(
-          pcName,
-          style: Theme.of(context).textTheme.bodyMedium,
+        SizedBox(
+          width: size,
+          child: Text(
+            pcName,
+            style: Theme.of(context).textTheme.bodyMedium,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         const SizedBox(height: StarSizes.xxs),
-        Text(
-          UtilBrasilFields.obterReal(price),
-          style: Theme.of(context).textTheme.bodyLarge,
+        SizedBox(
+          width: size,
+          child: Text(
+            UtilBrasilFields.obterReal(price),
+            style: Theme.of(context).textTheme.bodyLarge,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );
