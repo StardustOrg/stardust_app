@@ -12,9 +12,17 @@ class StarColors {
   // Gradient Colors
 
   // Text Colors
+  static const Color textPrimary = Color(0xFF272727);
+  static const Color textSecondary = Color(0xFF6C757D);
+  static const Color textWhite = Color(0xFFF4F3F2);
+  static const Color textDarkScondary = Color(0xFFF4F3F2);
+
 
   // Background Colors
   static const Color bgLight = Color(0xFFFDFEF0);
+  static const Color bgDark = Color(0xFF1A1A1A);
+  static const Color placeholder = Color(0xFFD9D9D9);
+  static const Color placeholder2 = Color(0xFFB8B8B8);
 
   // Button Colors
 
