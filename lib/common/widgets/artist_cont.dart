@@ -15,7 +15,7 @@ class ArtistContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ArtistImage(imageUrl: imageUrl),
+        StarArtistImage(imageUrl: imageUrl),
         const SizedBox(height: StarSizes.xs),
         Text(artistName),
       ],

@@ -3,6 +3,7 @@ class StarSizes {
   StarSizes._();
 
   // Paddind and Margin Sizes
+  static const double xxs = 2.0;
   static const double xs = 6.0;
   static const double sm = 8.0;
   static const double md = 16.0;
@@ -14,8 +15,11 @@ class StarSizes {
   static const double iconSm = 16.0;
   static const double iconMd = 24.0;
   static const double iconLg = 32.0;
-  static const double storeSmall = 70.0;
-  static const double storeMedium = 100.0;
+
+  static const double storeSm = 70.0;
+  static const double storeMd = 100.0;
+
+  static const double artistSm = 80.0;
 
   // Font Sizes
   static const double fontSizeSm = 14.0;
@@ -27,10 +31,18 @@ class StarSizes {
   // AppBar Sizes
 
   // Image Sizes
+  static const double photocardSm = 100.0;
+  static const double photocardMd = 120.0;
+  static const double photocardLg = 164.0;
 
   // Default Spacing Between Sections
 
   // Border Radius
+  static const double borderRadiusXs = 4.0;
+  static const double borderRadiusSm = 6.0;
+  static const double borderRadiusMd = 8.0;
+  static const double borderRadiusLg = 10.0;
+  static const double borderRadiusXl = 30.0;
 
   // Divider Height
 

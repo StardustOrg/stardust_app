@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 
-class StarStoreImage extends StatelessWidget {
-  const StarStoreImage({
+class StarPhotocardImage extends StatelessWidget {
+  const StarPhotocardImage({
     super.key,
-    this.size = StarSizes.storeSm,
+    this.size = StarSizes.photocardSm,
     this.imageUrl,
   });
 
@@ -16,9 +16,11 @@ class StarStoreImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size,
-      height: size,
+      height: size * 1.52,
       decoration: const BoxDecoration(
-        shape: BoxShape.circle,
+        borderRadius: BorderRadius.all(
+          Radius.circular(StarSizes.borderRadiusLg),
+        ),
         color: StarColors.placeholder,
       ),
       // TODO: Add image

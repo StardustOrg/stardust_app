@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/artist_cont.dart';
+import 'package:stardust_app_skeleton/common/widgets/photocard_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/store_cont.dart';
+import 'package:stardust_app_skeleton/utils/theme/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,10 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      themeMode: ThemeMode.system,
+      theme: StarTheme.lightTheme,
+      darkTheme: StarTheme.darkTheme,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -48,6 +49,11 @@ class _MyHomePageState extends State<MyHomePage> {
             StoreContainer(
               storeName: 'Lojinha 12',
             ),
+            PhotocardContainer(
+              artistName: "(G)-IDLE",
+              pcName: "OT5 Photocard",
+              price: 6.66,
+            )
           ],
         ),
       ),
