@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 
 class DifferentWaysToLogin extends StatelessWidget {
@@ -15,10 +16,16 @@ class DifferentWaysToLogin extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 0),
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Entrar com o Google"),
+              Image.asset(
+                StarImages.google,
+                width: StarSizes.iconMd,
+                height: StarSizes.iconMd,
+              ),
+              const SizedBox(width: StarSizes.defaultSpace),
+              const Text("Entrar com o Google"),
             ],
           ),
         ),
@@ -28,10 +35,16 @@ class DifferentWaysToLogin extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 0),
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Entrar com o Facebook"),
+              Image.asset(
+                StarImages.facebook,
+                width: StarSizes.iconMd,
+                height: StarSizes.iconMd,
+              ),
+              const SizedBox(width: StarSizes.defaultSpace),
+              const Text("Entrar com o Facebook"),
             ],
           ),
         ),
