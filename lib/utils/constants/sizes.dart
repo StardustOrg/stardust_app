@@ -9,6 +9,7 @@ class StarSizes {
   static const double md = 12.0;
   static const double lg = 24.0;
   static const double xl = 30.0;
+  static const double xxl = 50.0;
 
   // Icon Sizes
   static const double iconXs = 12.0;
@@ -27,6 +28,7 @@ class StarSizes {
   static const double fontSizeLg = 18.0;
 
   // Button Sizes
+  static const double buttonHeight = 16.0;
 
   // AppBar Sizes
 
@@ -35,7 +37,14 @@ class StarSizes {
   static const double photocardMd = 120.0;
   static const double photocardLg = 164.0;
 
+  static const double logoSm = 50.0;
+  static const double logoMd = 100.0;
+  static const double logoLg = 135.0;
+
   // Default Spacing Between Sections
+  static const double defaultSpace = 25.0;
+  static const double spaceBtwItems = 14.0;
+  static const double spaceBtwSections = 30.0;
 
   // Border Radius
   static const double borderRadiusXs = 4.0;
@@ -43,6 +52,7 @@ class StarSizes {
   static const double borderRadiusMd = 8.0;
   static const double borderRadiusLg = 10.0;
   static const double borderRadiusXl = 30.0;
+  static const double buttonRadius = 15.0;
 
   // Divider Height
 
@@ -55,4 +65,6 @@ class StarSizes {
   // Loading Indicator Sizes
 
   // Grid View Spacing
+  static const double gridSpaceSm = 7.0;
+  static const double gridSpaceMd = 16.0;
 }
