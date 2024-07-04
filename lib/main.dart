@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/artist_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/store_cont.dart';
+import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 import 'package:stardust_app_skeleton/utils/theme/theme.dart';
 
 void main() {
@@ -53,7 +54,73 @@ class _MyHomePageState extends State<MyHomePage> {
               artistName: "(G)-IDLE",
               pcName: "OT5 Photocard",
               price: 6.66,
-            )
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: StarSizes.lg,
+                  ),
+                  PhotocardContainer(
+                    artistName: "(G)-IDLE",
+                    pcName: "OT5 Photocard",
+                    price: 6.66,
+                  ),
+                  SizedBox(
+                    width: StarSizes.md,
+                  ),
+                  PhotocardContainer(
+                    artistName: "(G)-IDLE",
+                    pcName: "OT5 Photocard",
+                    price: 6.66,
+                  ),
+                  SizedBox(
+                    width: StarSizes.md,
+                  ),
+                  PhotocardContainer(
+                    artistName: "(G)-IDLE",
+                    pcName: "OT5 Photocard",
+                    price: 6.66,
+                  ),
+                  SizedBox(
+                    width: StarSizes.md,
+                  ),
+                  PhotocardContainer(
+                    artistName: "(G)-IDLE",
+                    pcName: "OT5 Photocard",
+                    price: 6.66,
+                  ),
+                  SizedBox(
+                    width: StarSizes.md,
+                  ),
+                  PhotocardContainer(
+                    artistName: "(G)-IDLE",
+                    pcName: "OT5 Photocard",
+                    price: 6.66,
+                  ),
+                  SizedBox(
+                    width: StarSizes.md,
+                  ),
+                  PhotocardContainer(
+                    artistName: "(G)-IDLE",
+                    pcName: "OT5 Photocard",
+                    price: 6.66,
+                  ),
+                  SizedBox(
+                    width: StarSizes.md,
+                  ),
+                  PhotocardContainer(
+                    artistName: "(G)-IDLE",
+                    pcName: "OT5 Photocard",
+                    price: 6.66,
+                  ),
+                  SizedBox(
+                    width: StarSizes.lg,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
