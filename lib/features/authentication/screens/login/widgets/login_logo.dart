@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
+import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 
 class LoginLogo extends StatelessWidget {
   const LoginLogo({
@@ -21,7 +22,7 @@ class LoginLogo extends StatelessWidget {
           ),
           const SizedBox(height: StarSizes.md),
           Text(
-            'Stardust Cards',
+            StarTexts.appName,
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   fontSize: 22.0,
                 ),

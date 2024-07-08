@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
+import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 
 class DifferentWaysToLogin extends StatelessWidget {
   const DifferentWaysToLogin({
@@ -25,7 +26,7 @@ class DifferentWaysToLogin extends StatelessWidget {
                 height: StarSizes.iconMd,
               ),
               const SizedBox(width: StarSizes.defaultSpace),
-              const Text("Entrar com o Google"),
+              const Text(StarTexts.loginWithGoogle),
             ],
           ),
         ),
@@ -44,7 +45,7 @@ class DifferentWaysToLogin extends StatelessWidget {
                 height: StarSizes.iconMd,
               ),
               const SizedBox(width: StarSizes.defaultSpace),
-              const Text("Entrar com o Facebook"),
+              const Text(StarTexts.loginWithFacebook),
             ],
           ),
         ),

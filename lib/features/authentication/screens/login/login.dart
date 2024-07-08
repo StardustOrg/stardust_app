@@ -10,24 +10,26 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          horizontal: StarSizes.lg,
-          vertical: StarSizes.xxl,
-        ),
-        child: Column(
-          children: [
-            // Logo
-            LoginLogo(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(
+            horizontal: StarSizes.lg,
+            vertical: StarSizes.xxl,
+          ),
+          child: Column(
+            children: [
+              // Logo
+              LoginLogo(),
 
-            // Form Fields
-            SizedBox(height: StarSizes.spaceBtwSections),
-            LoginForm(),
+              // Form Fields
+              SizedBox(height: StarSizes.spaceBtwSections),
+              LoginForm(),
 
-            // Other Ways
-            SizedBox(height: StarSizes.spaceBtwSections),
-            DifferentWaysToLogin()
-          ],
+              // Other Ways
+              SizedBox(height: StarSizes.spaceBtwSections),
+              DifferentWaysToLogin()
+            ],
+          ),
         ),
       ),
     );

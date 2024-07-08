@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
+import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
@@ -13,22 +14,22 @@ class LoginForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Entre com a sua conta",
+            StarTexts.loginTitle,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: StarSizes.spaceBtwItems),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "E-mail",
-              hintText: "Digite o seu e-mail",
+              labelText: StarTexts.email,
+              hintText: StarTexts.emailLabel,
             ),
           ),
           const SizedBox(height: StarSizes.spaceBtwItems),
           TextFormField(
             obscureText: true,
             decoration: const InputDecoration(
-              labelText: "Senha",
-              hintText: "Digite a sua senha",
+              labelText: StarTexts.password,
+              hintText: StarTexts.passwordLabel,
             ),
           ),
           const SizedBox(height: StarSizes.xxs),
@@ -36,7 +37,7 @@ class LoginForm extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: () {},
-              child: const Text("Esqueceu a senha?"),
+              child: const Text(StarTexts.forgotPassword),
             ),
           ),
           const SizedBox(height: StarSizes.spaceBtwSections),
@@ -45,14 +46,14 @@ class LoginForm extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 0),
             ),
-            child: const Text("Entrar com e-mail"),
+            child: const Text(StarTexts.login),
           ),
           const SizedBox(height: StarSizes.xxs),
           Align(
             alignment: Alignment.center,
             child: TextButton(
               onPressed: () {},
-              child: const Text("Não tem uma conta? Cadastre-se!"),
+              child: const Text(StarTexts.signUp),
             ),
           ),
         ],
