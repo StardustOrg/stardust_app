@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 
-class LoginLogo extends StatelessWidget {
-  const LoginLogo({
+class StarLogo extends StatelessWidget {
+  const StarLogo({
     super.key,
   });
 

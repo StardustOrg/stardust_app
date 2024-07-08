@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:stardust_app_skeleton/features/authentication/screens/login/widgets/login_form.dart';
 import 'package:stardust_app_skeleton/common/widgets/app_logo.dart';
-import 'package:stardust_app_skeleton/features/authentication/screens/login/widgets/social_login.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
+    return Scaffold(
+      appBar: AppBar(),
+      body: const SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
             horizontal: StarSizes.lg,
@@ -23,11 +22,7 @@ class LoginScreen extends StatelessWidget {
 
               // Form Fields
               SizedBox(height: StarSizes.spaceBtwSections),
-              LoginForm(),
-
-              // Other Ways
-              SizedBox(height: StarSizes.spaceBtwSections),
-              DifferentWaysToLogin()
+              // SignUpForm(),
             ],
           ),
         ),
