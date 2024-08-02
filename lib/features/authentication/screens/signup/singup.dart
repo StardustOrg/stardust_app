@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/app_logo.dart';
+import 'package:stardust_app_skeleton/features/authentication/screens/signup/widgets/signup_form.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -22,11 +23,29 @@ class SignUpScreen extends StatelessWidget {
 
               // Form Fields
               SizedBox(height: StarSizes.spaceBtwSections),
-              // SignUpForm(),
+              SignUpForm(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
+
+  @override
+  State<SignUpForm> createState() => _SignUpFormState();
+}
+
+class _SignUpFormState extends State<SignUpForm> {
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        SignupForm(),
+      ],
     );
   }
 }
