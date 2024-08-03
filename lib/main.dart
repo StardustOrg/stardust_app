@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stardust_app_skeleton/features/Search/search.dart';
 import 'package:stardust_app_skeleton/features/authentication/screens/login/login.dart';
 import 'package:stardust_app_skeleton/features/home/home.dart';
 import 'package:stardust_app_skeleton/utils/theme/theme.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: StarTheme.lightTheme,
       darkTheme: StarTheme.darkTheme,
-      home: Home(),
+      home: Search(),
     );
   }
 }

@@ -25,4 +25,6 @@ class StarTexts {
   static const String searchLabel = "Pesquisar";
   static const String newProducts = "NOVOS PRODUTOS";
   static const String lastUnities = "ÚLTIMAS UNIDADES";
+  static const String filterLabel = "Filtros";
+  static const String photocard = "PHOTOCARD";
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard_cont.dart';
-import 'package:stardust_app_skeleton/features/home/widgets/header.dart';
-import 'package:stardust_app_skeleton/features/home/widgets/photocards_row_list.dart';
+import 'package:stardust_app_skeleton/common/widgets/header.dart';
+import 'package:stardust_app_skeleton/common/widgets/photocards_row_list.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
 
@@ -27,6 +27,7 @@ class Home extends StatelessWidget {
             children: [
               // Header
               const Header(),
+              const SizedBox(height: 28),
               Container(
                 height: 200,
                 width: double.infinity,

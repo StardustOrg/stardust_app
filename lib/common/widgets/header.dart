@@ -7,7 +7,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 30, 25, 28),
+      padding: const EdgeInsets.fromLTRB(25, 30, 25, 0),
       child: Row(
         children: [
           Expanded(
