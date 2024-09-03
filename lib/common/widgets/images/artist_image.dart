@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 
-class ArtistImage extends StatelessWidget {
-  const ArtistImage({
+class StarArtistImage extends StatelessWidget {
+  const StarArtistImage({
     super.key,
-    this.size = StarSizes.storeSmall,
+    this.size = StarSizes.artistSm,
     this.imageUrl,
   });
 
-  final double? size;
+  final double size;
   final String? imageUrl;
 
   @override
@@ -18,9 +18,12 @@ class ArtistImage extends StatelessWidget {
       width: size,
       height: size,
       decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(StarSizes.xl)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(StarSizes.borderRadiusXl),
+        ),
         color: StarColors.placeholder2,
       ),
+      // TODO: Add image
     );
   }
 }

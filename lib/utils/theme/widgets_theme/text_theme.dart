@@ -20,6 +20,21 @@ class StarTextTheme {
       fontWeight: FontWeight.w500,
       color: StarColors.textPrimary,
     ),
+    bodySmall: const TextStyle().copyWith(
+      fontSize: 14.0,
+      fontWeight: FontWeight.w300,
+      color: StarColors.textPrimary,
+    ),
+    bodyMedium: const TextStyle().copyWith(
+      fontSize: 14.0,
+      fontWeight: FontWeight.w400,
+      color: StarColors.textPrimary,
+    ),
+    bodyLarge: const TextStyle().copyWith(
+      fontSize: 14.0,
+      fontWeight: FontWeight.w600,
+      color: StarColors.textPrimary,
+    ),
   );
 
   static TextTheme darkTextTheme = TextTheme(
