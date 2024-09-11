@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/artist_wrap_list.dart';
+import 'package:stardust_app_skeleton/common/widgets/artists_row_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocards_row_list.dart';
 import 'package:stardust_app_skeleton/features/home/widgets/slides_home.dart';
@@ -49,13 +50,16 @@ class Home extends StatelessWidget {
                 detailColor: StarColors.starBlue,
               ),
               const SizedBox(height: 25),
+              ArtistsRowList(
+                title: "SEUS ARTISTAS FAVORITOS",
+                artists: artists,
+              ),
+              const SizedBox(height: 25),
               PhotocardsRowList(
                 title: StarTexts.lastUnities,
                 photocards: photocards,
               ),
               const SizedBox(height: 25),
-
-              ArtistWrapList(title: "ARTISTAS RECOMENDADAS", artists: artists),
             ],
           ),
         ),
