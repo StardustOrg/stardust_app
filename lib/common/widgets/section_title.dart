@@ -21,7 +21,7 @@ class SectionTitle extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            title,
+            title.toUpperCase(),
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -32,7 +32,7 @@ class SectionTitle extends StatelessWidget {
           ),
           SvgPicture.asset(
             StarImages.sparkles,
-            semanticsLabel: 'brand logo',
+            semanticsLabel: 'sparkles',
             width: 16,
             color: color,
           ),

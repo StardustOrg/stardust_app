@@ -23,8 +23,11 @@ class StarTexts {
   static const String confirmPasswordLabel = "Digite a sua senha novamente";
   static const String haveAccount = "Já tem uma conta? Faça login!";
   static const String searchLabel = "Pesquisar";
-  static const String newProducts = "NOVOS PRODUTOS";
-  static const String lastUnities = "ÚLTIMAS UNIDADES";
   static const String filterLabel = "Filtros";
+
+  // Sections
+  static const String newProducts = "NOVOS PRODUTOS";
+  static const String recommendations = "DO SEU BIAS";
+  static const String lastUnities = "ÚLTIMAS UNIDADES";
   static const String photocard = "PHOTOCARD";
 }

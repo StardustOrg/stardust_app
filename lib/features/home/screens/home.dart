@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
               const SlidesHome(),
               const SizedBox(height: 27),
               PhotocardsRowList(
-                title: StarTexts.newProducts,
+                title: StarTexts.recommendations,
                 photocards: photocards,
                 detailColor: StarColors.starBlue,
               ),
@@ -56,8 +56,17 @@ class Home extends StatelessWidget {
               ),
               const SizedBox(height: 25),
               PhotocardsRowList(
+                title: StarTexts.newProducts,
+                photocards: photocards,
+                detailColor: StarColors.starBlue,
+              ),
+              const SizedBox(height: 25),
+
+              const SizedBox(height: 25),
+              PhotocardsRowList(
                 title: StarTexts.lastUnities,
                 photocards: photocards,
+                detailColor: StarColors.starBlue,
               ),
               const SizedBox(height: 25),
             ],
