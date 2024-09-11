@@ -39,7 +39,14 @@ class TopicsSection extends StatelessWidget {
                         width: 1,
                       ),
                     ),
-                    child: Text(topic),
+                    child: Text(
+                      topic,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: StarColors.starBlue,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 10),
                 ],
