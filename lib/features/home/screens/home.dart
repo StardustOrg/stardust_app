@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stardust_app_skeleton/common/widgets/artist_wrap_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/artists_row_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocards_row_list.dart';
 import 'package:stardust_app_skeleton/features/home/widgets/slides_home.dart';
+import 'package:stardust_app_skeleton/features/home/widgets/topics_section.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
@@ -34,6 +34,12 @@ class Home extends StatelessWidget {
       Artist("ITZY"),
     ];
 
+    List<String> topics = [
+      "Natal",
+      "Season’s Greetings 2024",
+      "Páscoa",
+    ];
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -45,13 +51,13 @@ class Home extends StatelessWidget {
               const SlidesHome(),
               const SizedBox(height: 27),
               PhotocardsRowList(
-                title: StarTexts.recommendations,
+                title: StarTexts.recommendationsPc,
                 photocards: photocards,
                 detailColor: StarColors.starBlue,
               ),
               const SizedBox(height: 25),
               ArtistsRowList(
-                title: "SEUS ARTISTAS FAVORITOS",
+                title: StarTexts.recommendationsArtist,
                 artists: artists,
               ),
               const SizedBox(height: 25),
@@ -61,7 +67,7 @@ class Home extends StatelessWidget {
                 detailColor: StarColors.starBlue,
               ),
               const SizedBox(height: 25),
-
+              TopicsSection(topics: topics),
               const SizedBox(height: 25),
               PhotocardsRowList(
                 title: StarTexts.lastUnities,

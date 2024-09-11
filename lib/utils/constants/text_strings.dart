@@ -27,7 +27,9 @@ class StarTexts {
 
   // Sections
   static const String newProducts = "NOVOS PRODUTOS";
-  static const String recommendations = "DO SEU BIAS";
+  static const String recommendationsPc = "DO SEU BIAS";
+  static const String recommendationsArtist = "SEUS ARTISTAS FAVORITOS";
+  static const String recommendationsTopics = "VOCÊ PODE SE INTERESSAR";
   static const String lastUnities = "ÚLTIMAS UNIDADES";
   static const String photocard = "PHOTOCARD";
 }
