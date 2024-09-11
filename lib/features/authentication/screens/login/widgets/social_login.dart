@@ -12,7 +12,7 @@ class DifferentWaysToLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ElevatedButton(
+        OutlinedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 0),
@@ -31,7 +31,7 @@ class DifferentWaysToLogin extends StatelessWidget {
           ),
         ),
         const SizedBox(height: StarSizes.spaceBtwItems),
-        ElevatedButton(
+        OutlinedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 0),
