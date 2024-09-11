@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:stardust_app_skeleton/common/widgets/artist_wrap_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocards_row_list.dart';
 import 'package:stardust_app_skeleton/features/home/widgets/slides_home.dart';
+import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
@@ -16,6 +18,19 @@ class Home extends StatelessWidget {
       Photocard(artistName: "BTS", pcName: "Jungkook Photocard", price: 10.99),
       Photocard(artistName: "BLACKPINK", pcName: "Lisa Photocard", price: 8.99),
       Photocard(artistName: "TWICE", pcName: "Lisa Photocard", price: 8.99),
+    ];
+
+    List<Artist> artists = [
+      Artist("ENHYPEN"),
+      Artist("BTS"),
+      Artist("BLACKPINK"),
+      Artist("TWICE"),
+      Artist("Red Velvet"),
+      Artist("EXO"),
+      Artist("NCT"),
+      Artist("Mamamoo"),
+      Artist("Stray Kids"),
+      Artist("ITZY"),
     ];
 
     return Scaffold(
@@ -39,6 +54,8 @@ class Home extends StatelessWidget {
                 photocards: photocards,
               ),
               const SizedBox(height: 25),
+
+              ArtistWrapList(title: "ARTISTAS RECOMENDADAS", artists: artists),
             ],
           ),
         ),

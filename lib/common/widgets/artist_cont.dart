@@ -7,17 +7,22 @@ class ArtistContainer extends StatelessWidget {
     super.key,
     this.imageUrl,
     required this.artistName,
+    required this.borderColor,
   });
 
   final String? imageUrl;
   final String artistName;
+  final Color borderColor;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        StarArtistImage(imageUrl: imageUrl),
+        StarArtistImage(imageUrl: imageUrl, borderColor: borderColor),
         const SizedBox(height: StarSizes.xs),
-        Text(artistName),
+        SizedBox(
+          width: StarSizes.artistSm,
+          child: Text(artistName),
+        ),
       ],
     );
   }

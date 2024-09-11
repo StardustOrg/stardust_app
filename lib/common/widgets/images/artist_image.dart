@@ -7,21 +7,31 @@ class StarArtistImage extends StatelessWidget {
     super.key,
     this.size = StarSizes.artistSm,
     this.imageUrl,
+    required this.borderColor,
   });
 
   final double size;
   final String? imageUrl;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: size,
       height: size,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
           Radius.circular(StarSizes.borderRadiusXl),
         ),
-        color: StarColors.placeholder2,
+        border: Border(
+          top: BorderSide(width: 2, color: borderColor), // Top side width
+          left: BorderSide(width: 2, color: borderColor), // Left side width
+          bottom: BorderSide(
+            width: 1,
+            color: borderColor,
+          ), // Bottom side width
+        ),
+        color: StarColors.white,
       ),
       // TODO: Add image
     );

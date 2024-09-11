@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/artist_cont.dart';
+import 'package:stardust_app_skeleton/common/widgets/section_title.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
+import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 
 class ArtistWrapList extends StatelessWidget {
   final String title;
@@ -17,13 +19,7 @@ class ArtistWrapList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ),
+        SectionTitle(title: title),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: GridView.builder(
@@ -40,6 +36,8 @@ class ArtistWrapList extends StatelessWidget {
               final artist = artists[index];
               return ArtistContainer(
                 artistName: artist.name,
+                borderColor:
+                    index.isEven ? StarColors.starPink : StarColors.starBlue,
               );
             },
           ),

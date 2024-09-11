@@ -51,7 +51,8 @@ class StarSizes {
   static const double borderRadiusSm = 6.0;
   static const double borderRadiusMd = 8.0;
   static const double borderRadiusLg = 10.0;
-  static const double borderRadiusXl = 30.0;
+  static const double borderRadiusXl = 20.0;
+  static const double borderRadiusXXl = 30.0;
   static const double buttonRadius = 100.0;
 
   // Divider Height
