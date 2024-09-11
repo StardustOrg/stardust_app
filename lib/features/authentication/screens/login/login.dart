@@ -19,26 +19,27 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               HeadDetailsLogin(),
-              // Logo´
+              // Logo
               Padding(
-                  padding: EdgeInsets.only(
-                    left: StarSizes.lg,
-                    right: StarSizes.lg,
-                    bottom: StarSizes.xxl,
-                  ),
-                  child: Column(
-                    children: [
-                      StarLogo(),
+                padding: EdgeInsets.only(
+                  left: StarSizes.lg,
+                  right: StarSizes.lg,
+                  bottom: StarSizes.xxl,
+                ),
+                child: Column(
+                  children: [
+                    StarLogo(),
 
-                      // Form Fields
-                      SizedBox(height: StarSizes.spaceBtwSections),
-                      LoginForm(),
+                    // Form Fields
+                    SizedBox(height: StarSizes.spaceBtwSections),
+                    LoginForm(),
 
-                      // Other Ways
-                      SizedBox(height: StarSizes.spaceBtwSections),
-                      DifferentWaysToLogin()
-                    ],
-                  )),
+                    // Other Ways
+                    SizedBox(height: StarSizes.spaceBtwSections),
+                    DifferentWaysToLogin()
+                  ],
+                ),
+              ),
             ],
           ),
         ),

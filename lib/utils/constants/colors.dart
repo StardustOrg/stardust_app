@@ -34,4 +34,5 @@ class StarColors {
   // Neutral Shades
   static const Color white = Color(0xFFEEEFF1);
   static const Color black = Color(0xFF051D25);
+  static const Color grey = Color(0xFF7A9097);
 }

@@ -8,8 +8,8 @@ class StarTextFormFieldTheme {
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
     contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
     errorMaxLines: 3,
-    prefixIconColor: StarColors.textSecondary,
-    suffixIconColor: StarColors.textSecondary,
+    prefixIconColor: StarColors.starPink,
+    suffixIconColor: StarColors.starPink,
     // constraints: const BoxConstraints.expand(height: StarSizes.inputFieldHeight),
     labelStyle: const TextStyle().copyWith(
         fontSize: StarSizes.fontSizeMd, color: StarColors.textSecondary),
