@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stardust_app_skeleton/common/widgets/photocard_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocards_row_list.dart';
+import 'package:stardust_app_skeleton/features/home/widgets/slides_home.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
@@ -26,11 +26,7 @@ class Home extends StatelessWidget {
               // Header
               const Header(),
               const SizedBox(height: 28),
-              Container(
-                height: 200,
-                width: double.infinity,
-                color: Colors.grey.shade400,
-              ),
+              const SlidesHome(),
               const SizedBox(height: 27),
               PhotocardsRowList(
                 title: StarTexts.newProducts,
