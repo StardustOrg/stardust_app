@@ -34,7 +34,7 @@ class SectionTitle extends StatelessWidget {
             StarImages.sparkles,
             semanticsLabel: 'sparkles',
             width: 16,
-            color: color,
+            colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
           ),
         ],
       ),
