@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/app_logo.dart';
 import 'package:stardust_app_skeleton/features/authentication/screens/signup/widgets/signup_form.dart';
+import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -9,7 +10,10 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: StarColors.bgLight,
+        iconTheme: const IconThemeData(color: StarColors.starPink),
+      ),
       body: const SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
