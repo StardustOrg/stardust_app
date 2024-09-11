@@ -1,6 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/images/photocard_image.dart';
+import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 
 class PhotocardContainer extends StatelessWidget {
@@ -11,18 +12,24 @@ class PhotocardContainer extends StatelessWidget {
     required this.artistName,
     required this.pcName,
     required this.price,
+    this.borderColor = StarColors.textSecondary,
   });
 
   final double size, price;
   final String? imageUrl;
   final String artistName, pcName;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        StarPhotocardImage(imageUrl: imageUrl, size: size),
+        StarPhotocardImage(
+          imageUrl: imageUrl,
+          size: size,
+          borderColor: borderColor,
+        ),
         const SizedBox(height: StarSizes.xs),
         SizedBox(
           width: size,

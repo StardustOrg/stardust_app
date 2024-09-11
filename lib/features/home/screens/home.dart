@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocards_row_list.dart';
+import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
 
@@ -34,6 +35,7 @@ class Home extends StatelessWidget {
               PhotocardsRowList(
                 title: StarTexts.newProducts,
                 photocards: photocards,
+                detailColor: StarColors.starBlue,
               ),
               const SizedBox(height: 25),
               PhotocardsRowList(

@@ -7,14 +7,15 @@ class StarPhotocardImage extends StatelessWidget {
     super.key,
     this.size = StarSizes.photocardSm,
     this.imageUrl,
+    required this.borderColor,
   });
 
   final double size;
   final String? imageUrl;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
-    Color borderColor = StarColors.textSecondary;
     return Container(
       width: size,
       height: size * 1.52,

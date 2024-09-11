@@ -12,7 +12,10 @@ class PhotocardsRowList extends StatelessWidget {
     super.key,
     required this.title,
     required this.photocards,
+    this.detailColor = StarColors.starPink,
   });
+
+  final Color detailColor;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class PhotocardsRowList extends StatelessWidget {
       children: [
         SectionTitle(
           title: title,
-          color: StarColors.starPink,
+          color: detailColor,
         ),
         SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 25),
