@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard_cont.dart';
+import 'package:stardust_app_skeleton/common/widgets/section_title.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
+import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 
 class PhotocardsRowList extends StatelessWidget {
   final String title;
@@ -17,12 +19,9 @@ class PhotocardsRowList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
+        SectionTitle(
+          title: title,
+          color: StarColors.starPink,
         ),
         SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 25),

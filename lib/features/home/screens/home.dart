@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocards_row_list.dart';

@@ -10,4 +10,5 @@ class StarImages {
   // Details
   static const String mesh = 'assets/details/mesh.png';
   static const String moons = 'assets/details/moons.png';
+  static const String sparkles = 'assets/details/sparkles.svg';
 }
