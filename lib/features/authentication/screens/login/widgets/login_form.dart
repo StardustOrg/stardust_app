@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stardust_app_skeleton/features/authentication/screens/signup/singup.dart';
 import 'package:stardust_app_skeleton/features/home/screens/home.dart';
+import 'package:stardust_app_skeleton/features/wrapper.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 
@@ -45,7 +46,7 @@ class LoginForm extends StatelessWidget {
           ),
           const SizedBox(height: StarSizes.spaceBtwSections),
           ElevatedButton(
-            onPressed: () => Get.to(() => const Home()),
+            onPressed: () => Get.to(() => const ScreenWrapper()),
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 0),
             ),
