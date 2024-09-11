@@ -6,6 +6,8 @@ import 'package:badges/badges.dart' as badges;
 class Header extends StatelessWidget {
   const Header({super.key});
 
+  final String quantity = '3';
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,9 +42,11 @@ class Header extends StatelessWidget {
               curve: Curves.fastOutSlowIn,
               colorChangeAnimationCurve: Curves.easeInCubic,
             ),
-            badgeContent:
-                Text('3', style: TextStyle(color: StarColors.bgLight)),
-            badgeStyle: badges.BadgeStyle(
+            badgeContent: Text(
+              quantity,
+              style: const TextStyle(color: StarColors.bgLight),
+            ),
+            badgeStyle: const badges.BadgeStyle(
               badgeColor: StarColors.starBlue,
               padding: EdgeInsets.all(5),
               elevation: 0,
@@ -53,16 +57,6 @@ class Header extends StatelessWidget {
               size: 25,
             ),
           ),
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.shopping_cart,
-          //     size: 25,
-          //     color: StarColors.grey,
-          //   ),
-          //   onPressed: () {
-          //     // Ação ao clicar no ícone do carrinho
-          //   },
-          // ),
         ],
       ),
     );
