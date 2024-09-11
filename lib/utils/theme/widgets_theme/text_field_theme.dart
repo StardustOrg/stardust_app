@@ -6,28 +6,28 @@ class StarTextFormFieldTheme {
   StarTextFormFieldTheme._();
 
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
+    contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
     errorMaxLines: 3,
     prefixIconColor: StarColors.textSecondary,
     suffixIconColor: StarColors.textSecondary,
     // constraints: const BoxConstraints.expand(height: StarSizes.inputFieldHeight),
-    labelStyle: const TextStyle()
-        .copyWith(fontSize: StarSizes.fontSizeMd, color: StarColors.black),
-    hintStyle: const TextStyle()
-        .copyWith(fontSize: StarSizes.fontSizeSm, color: StarColors.black),
+    labelStyle: const TextStyle().copyWith(
+        fontSize: StarSizes.fontSizeMd, color: StarColors.textSecondary),
+    hintStyle: const TextStyle().copyWith(
+        fontSize: StarSizes.fontSizeSm, color: StarColors.textSecondary),
     errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
-    floatingLabelStyle:
-        const TextStyle().copyWith(color: StarColors.black.withOpacity(0.8)),
+    floatingLabelStyle: const TextStyle().copyWith(color: StarColors.starPink),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(100),
-      borderSide: const BorderSide(width: 1, color: StarColors.black),
+      borderSide: const BorderSide(width: 1, color: StarColors.starPink),
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(100),
-      borderSide: const BorderSide(width: 1, color: StarColors.black),
+      borderSide: const BorderSide(width: 1, color: StarColors.starPink),
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(100),
-      borderSide: const BorderSide(width: 1, color: StarColors.black),
+      borderSide: const BorderSide(width: 1, color: StarColors.starPink),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(100),
