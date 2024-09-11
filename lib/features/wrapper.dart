@@ -18,17 +18,17 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
     Home(),
     Center(
       child: Text(
-        'Index 1: Business',
+        'Index 1: Favoritos',
       ),
     ),
     Center(
       child: Text(
-        'Index 2: School',
+        'Index 2: Menssagens',
       ),
     ),
     Center(
       child: Text(
-        'Index 3: Settings',
+        'Index 3: Profile',
       ),
     ),
   ];
@@ -43,52 +43,72 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              StarImages.homeSvg,
-              colorFilter: ColorFilter.mode(
-                StarColors.bgLight,
-                BlendMode.srcIn,
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        child: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            height: 71,
+            indicatorColor: StarColors.starBlue.withOpacity(0.5),
+            elevation: 0,
+            backgroundColor: StarColors.starPink,
+            labelTextStyle: const WidgetStatePropertyAll(
+              TextStyle(
+                color: StarColors.bgLight,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              StarImages.favoritesSvg,
-              colorFilter: ColorFilter.mode(
-                StarColors.bgLight,
-                BlendMode.srcIn,
+          child: NavigationBar(
+            destinations: <NavigationDestination>[
+              NavigationDestination(
+                icon: SvgPicture.asset(
+                  StarImages.homeSvg,
+                  colorFilter: const ColorFilter.mode(
+                    StarColors.bgLight,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Home',
               ),
-            ),
-            label: 'Favoritos',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              StarImages.messagesSvg,
-              colorFilter: ColorFilter.mode(
-                StarColors.bgLight,
-                BlendMode.srcIn,
+              NavigationDestination(
+                icon: SvgPicture.asset(
+                  StarImages.favoritesSvg,
+                  colorFilter: const ColorFilter.mode(
+                    StarColors.bgLight,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Favoritos',
               ),
-            ),
-            label: 'Mensagens',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              StarImages.profileSvg,
-              colorFilter: ColorFilter.mode(
-                StarColors.bgLight,
-                BlendMode.srcIn,
+              NavigationDestination(
+                icon: SvgPicture.asset(
+                  StarImages.messagesSvg,
+                  colorFilter: const ColorFilter.mode(
+                    StarColors.bgLight,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Mensagens',
               ),
-            ),
-            label: 'Perfil',
+              NavigationDestination(
+                icon: SvgPicture.asset(
+                  StarImages.profileSvg,
+                  colorFilter: const ColorFilter.mode(
+                    StarColors.bgLight,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Perfil',
+              ),
+            ],
+            selectedIndex: _selectedIndex,
+            onDestinationSelected: _onItemTapped,
           ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        ),
       ),
     );
   }
