@@ -6,6 +6,8 @@ class StarImages {
   static const String logo = 'assets/logos/stardust_1.svg';
   static const String google = 'assets/logos/google-icon.png';
   static const String facebook = 'assets/logos/facebook.png';
+  static const String googleSvg = 'assets/logos/google-icon.svg';
+  static const String facebookSvg = 'assets/logos/facebook.svg';
 
   // Details
   static const String mesh = 'assets/details/mesh.png';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stardust_app_skeleton/features/home/screens/home.dart';
+import 'package:stardust_app_skeleton/features/shop/home/screens/home.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
