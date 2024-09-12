@@ -3,7 +3,7 @@ import 'package:stardust_app_skeleton/common/widgets/artists/artists_row_list.da
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard/photocards_row_list.dart';
 import 'package:stardust_app_skeleton/features/shop/home/widgets/slides_home.dart';
-import 'package:stardust_app_skeleton/features/shop/home/widgets/topics_section.dart';
+import 'package:stardust_app_skeleton/common/widgets/topics_section.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
@@ -100,7 +100,10 @@ class Home extends StatelessWidget {
                 detailColor: StarColors.starBlue,
               ),
               const SizedBox(height: 25),
-              TopicsSection(topics: topics),
+              TopicsSection(
+                topics: topics,
+                title: StarTexts.recommendationsTopics,
+              ),
               const SizedBox(height: 25),
               PhotocardsRowList(
                 title: StarTexts.lastUnities,

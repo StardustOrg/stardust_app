@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/section_title.dart';
 import 'package:stardust_app_skeleton/common/widgets/star_tag.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
-import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 
 class TopicsSection extends StatelessWidget {
   const TopicsSection({
     super.key,
     required this.topics,
+    required this.title,
   });
 
+  final String title;
   final List<String> topics;
 
   @override
@@ -17,8 +18,8 @@ class TopicsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionTitle(
-          title: StarTexts.recommendationsTopics,
+        SectionTitle(
+          title: title,
           color: StarColors.starPink,
         ),
         SingleChildScrollView(

@@ -24,7 +24,7 @@ class StarShapeBorder extends ShapeBorder {
     // Define a star shape based on SVG
     final double centerX = radius;
     final double centerY = radius;
-    final double angle =
+    const double angle =
         2 * 3.141592653589793 / 8; // 360 degrees divided by 5 points
 
     for (int i = 0; i < 8; i++) {
@@ -51,7 +51,7 @@ class StarShapeBorder extends ShapeBorder {
   @override
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
     final paint = Paint()
-      ..color = Colors.blue
+      ..color = Colors.transparent
       ..style = PaintingStyle.fill;
 
     final path = getInnerPath(rect, textDirection: textDirection);
