@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/star_tag.dart';
-import 'package:stardust_app_skeleton/features/product_page/widgets/pc_images.dart';
-import 'package:stardust_app_skeleton/features/product_page/widgets/type_tag.dart';
+import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_images.dart';
+import 'package:stardust_app_skeleton/features/shop/product_page/widgets/type_tag.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 
 class ProductPage extends StatefulWidget {

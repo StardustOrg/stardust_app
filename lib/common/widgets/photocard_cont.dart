@@ -2,7 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stardust_app_skeleton/common/widgets/images/photocard_image.dart';
-import 'package:stardust_app_skeleton/features/product_page/screens/product_page.dart';
+import 'package:stardust_app_skeleton/features/shop/product_page/screens/product_page.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 

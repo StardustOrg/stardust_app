@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
@@ -20,10 +22,11 @@ class DifferentWaysToLogin extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                StarImages.google,
-                width: StarSizes.iconMd,
+              SvgPicture.asset(
+                StarImages.googleSvg,
                 height: StarSizes.iconMd,
+                colorFilter:
+                    const ColorFilter.mode(StarColors.grey, BlendMode.srcIn),
               ),
               const SizedBox(width: StarSizes.defaultSpace),
               const Text(StarTexts.loginWithGoogle),
@@ -39,10 +42,11 @@ class DifferentWaysToLogin extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                StarImages.facebook,
-                width: StarSizes.iconMd,
+              SvgPicture.asset(
+                StarImages.facebookSvg,
                 height: StarSizes.iconMd,
+                colorFilter:
+                    const ColorFilter.mode(StarColors.grey, BlendMode.srcIn),
               ),
               const SizedBox(width: StarSizes.defaultSpace),
               const Text(StarTexts.loginWithFacebook),
