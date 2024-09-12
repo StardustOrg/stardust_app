@@ -1,5 +1,6 @@
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
 
 class SlidesHome extends StatefulWidget {
@@ -22,7 +23,7 @@ class _SlidesHomeState extends State<SlidesHome> {
           top: -20,
           left: -20,
           child: Image.asset(
-            "assets/details/slides_details3.png",
+            StarImages.slidesDetails3,
             width: 160,
           ),
         ),
@@ -63,7 +64,7 @@ class _SlidesHomeState extends State<SlidesHome> {
           top: -10,
           left: 10,
           child: Image.asset(
-            "assets/details/slides_detail1.png",
+            StarImages.slidesDetails1,
             width: 39,
           ),
         ),
@@ -71,7 +72,7 @@ class _SlidesHomeState extends State<SlidesHome> {
           right: -38,
           bottom: -10,
           child: Image.asset(
-            "assets/details/slides_details2.png",
+            StarImages.slidesDetails2,
             width: 100,
           ),
         ),

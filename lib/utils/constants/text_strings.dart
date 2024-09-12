@@ -32,4 +32,7 @@ class StarTexts {
   static const String recommendationsTopics = "VOCÊ PODE SE INTERESSAR";
   static const String lastUnities = "ÚLTIMAS UNIDADES";
   static const String photocard = "PHOTOCARD";
+
+  // Product Page
+  static const String originalTag = "Original";
 }

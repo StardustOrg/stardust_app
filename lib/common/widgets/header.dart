@@ -18,7 +18,7 @@ class Header extends StatelessWidget {
             child: TextFormField(
               decoration: const InputDecoration(
                 hintText: StarTexts.searchLabel,
-                suffixIcon: Icon(Icons.search),
+                suffixIcon: Icon(Icons.search_rounded),
               ).copyWith(
                 contentPadding: const EdgeInsets.symmetric(
                   vertical: 5,
@@ -31,9 +31,7 @@ class Header extends StatelessWidget {
           badges.Badge(
             showBadge: true,
             ignorePointer: false,
-            onTap: () {
-              print("object");
-            },
+            onTap: () {},
             position: badges.BadgePosition.topEnd(top: -12, end: -12),
             badgeAnimation: const badges.BadgeAnimation.slide(
               animationDuration: Duration(milliseconds: 500),
@@ -52,7 +50,7 @@ class Header extends StatelessWidget {
               elevation: 0,
             ),
             child: const Icon(
-              Icons.shopping_cart,
+              Icons.shopping_cart_rounded,
               color: StarColors.grey,
               size: 25,
             ),

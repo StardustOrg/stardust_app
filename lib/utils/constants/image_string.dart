@@ -11,12 +11,15 @@ class StarImages {
   static const String mesh = 'assets/details/mesh.png';
   static const String moons = 'assets/details/moons.png';
   static const String sparkles = 'assets/details/sparkles.svg';
+  static const String fourPointStar = 'assets/details/four_point_star.svg';
+  static const String fallingSparkles = 'assets/details/falling_sparkles.svg';
+
+  // Slides
+  static const String slidesDetails1 = 'assets/details/slides_details1.png';
+  static const String slidesDetails2 = 'assets/details/slides_details2.png';
+  static const String slidesDetails3 = 'assets/details/slides_details3.png';
 
   // Icons
-  static const String home = 'assets/icons/home.png';
-  static const String favorites = 'assets/icons/heart.png';
-  static const String messages = 'assets/icons/chat.png';
-  static const String profile = 'assets/icons/profile.png';
   static const String homeSvg = 'assets/icons/home.svg';
   static const String favoritesSvg = 'assets/icons/heart.svg';
   static const String messagesSvg = 'assets/icons/chat.svg';

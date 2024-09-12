@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
+import 'package:stardust_app_skeleton/utils/theme/widgets_theme/dropdown_menu_theme.dart';
 import 'package:stardust_app_skeleton/utils/theme/widgets_theme/elevated_button_theme.dart';
 import 'package:stardust_app_skeleton/utils/theme/widgets_theme/outlined_button_theme.dart';
 import 'package:stardust_app_skeleton/utils/theme/widgets_theme/text_button_theme.dart';
@@ -19,6 +20,7 @@ class StarTheme {
     elevatedButtonTheme: StarElevatedButtonTheme.lightElevatedButtonTheme,
     outlinedButtonTheme: StarOutlinedButtonTheme.lightOutlinedButtonTheme,
     textButtonTheme: StarTextButtonTheme.lightTextButtonTheme,
+    dropdownMenuTheme: StarDropdownMenuTheme.lightDropdownButtonTheme,
   );
 
   static ThemeData darkTheme = ThemeData(

@@ -37,6 +37,7 @@ class PhotocardsRowList extends StatelessWidget {
                     artistName: photocard.artistName,
                     pcName: photocard.pcName,
                     price: photocard.price,
+                    id: photocard.id,
                   ),
                   const SizedBox(width: 20),
                 ],
