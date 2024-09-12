@@ -1,5 +1,6 @@
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:stardust_app_skeleton/common/widgets/custom_indicator.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
 
@@ -13,6 +14,7 @@ class SlidesHome extends StatefulWidget {
 }
 
 class _SlidesHomeState extends State<SlidesHome> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -37,7 +39,11 @@ class _SlidesHomeState extends State<SlidesHome> {
           child: CarouselSlider(
             options: CarouselOptions(
               autoPlay: true,
-              onPageChanged: (index, reason) {},
+              onPageChanged: (index, reason) {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
             ),
             items: [1, 2, 3, 4, 5].map((i) {
               return Builder(
@@ -58,7 +64,15 @@ class _SlidesHomeState extends State<SlidesHome> {
             }).toList(),
           ),
         ),
-
+        Positioned(
+          bottom: 10, // Adjust this value as needed
+          left: 0,
+          right: 0,
+          child: StarDotsIndicator(
+            pageLength: 5, // Number of pages in the carousel
+            currentIndexPage: currentIndex,
+          ),
+        ),
         // Additional decorative images
         Positioned(
           top: -10,
