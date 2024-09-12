@@ -5,6 +5,7 @@ import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/artist_card.dart';
 import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/highlights/highlights_tab.dart';
+import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/products/products_tab.dart';
 import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/tabs_row.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
@@ -83,7 +84,8 @@ class _ArtistPageState extends State<ArtistPage> {
                 onTabChanged: _updateTab,
               ),
               const SizedBox(height: 30),
-              if (tab1) HighlightsTab(),
+              if (tab1) const HighlightsTab(),
+              if (!tab1) const ProductsTab(),
             ],
           ),
         ),

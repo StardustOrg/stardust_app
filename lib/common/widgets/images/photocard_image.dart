@@ -18,7 +18,7 @@ class StarPhotocardImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size,
-      height: size * 1.52,
+      height: size * 1.4,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(StarSizes.borderRadiusLg),
