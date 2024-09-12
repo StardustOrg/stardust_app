@@ -4,6 +4,7 @@ import 'package:stardust_app_skeleton/common/widgets/artists/artists_row_list.da
 import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/artist_card.dart';
+import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/tabs_row.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
@@ -19,6 +20,13 @@ class ArtistPage extends StatefulWidget {
 
 class _ArtistPageState extends State<ArtistPage> {
   String imageUrl = "";
+  bool tab1 = true;
+
+  void _updateTab(bool isTab1) {
+    setState(() {
+      tab1 = isTab1;
+    });
+  }
 
   List<Artist> artists = [
     Artist("Jungwon"),
@@ -68,6 +76,11 @@ class _ArtistPageState extends State<ArtistPage> {
               ),
               const SizedBox(height: 15),
               if (artists.isNotEmpty) ArtistsRowList(artists: artists),
+              const SizedBox(height: 35),
+              TabsRow(
+                tab1: tab1,
+                onTabChanged: _updateTab,
+              ),
             ],
           ),
         ),
