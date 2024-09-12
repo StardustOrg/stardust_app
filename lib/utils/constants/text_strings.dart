@@ -35,4 +35,5 @@ class StarTexts {
 
   // Product Page
   static const String originalTag = "Original";
+  static const String description = "Descrição";
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/star_tag.dart';
+import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_description.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_images.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_info.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/quantity_dropdown.dart';
@@ -37,6 +38,7 @@ class _ProductPageState extends State<ProductPage> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: 50),
           child: Column(
             children: [
               const Header(),
@@ -97,6 +99,11 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ],
                 ),
+              ),
+              const SizedBox(height: 15),
+              const PhotocardDescription(
+                description:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
               ),
             ],
           ),

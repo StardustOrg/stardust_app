@@ -75,6 +75,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 25),
           child: Column(
             children: [
               // Header
@@ -106,7 +107,6 @@ class Home extends StatelessWidget {
                 photocards: photocards,
                 detailColor: StarColors.starBlue,
               ),
-              const SizedBox(height: 25),
             ],
           ),
         ),
