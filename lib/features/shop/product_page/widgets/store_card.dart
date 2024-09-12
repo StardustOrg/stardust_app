@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:stardust_app_skeleton/common/widgets/RatingTag.dart';
+import 'package:stardust_app_skeleton/features/shop/store_page/screens/store_page.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 
@@ -28,7 +30,7 @@ class StoreCard extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () => Get.to(() => StorePage(storeId: storeId)),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -74,40 +76,7 @@ class StoreCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 2),
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                              width: 1,
-                              color: StarColors.starBlue,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              StarImages.star,
-                              colorFilter: const ColorFilter.mode(
-                                StarColors.starBlue,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              "$rating/5.0",
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: StarColors.starBlue,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      RatingTag(rating: rating),
                       const SizedBox(width: 20),
                       const Icon(
                         Icons.arrow_forward_ios_rounded,

@@ -22,6 +22,10 @@ class StarImages {
   static const String slidesDetails2 = 'assets/details/slides_details2.png';
   static const String slidesDetails3 = 'assets/details/slides_details3.png';
 
+  // Store
+  static const String map = 'assets/icons/map.svg';
+  static const String insta = 'assets/icons/insta.svg';
+
   // Icons
   static const String homeSvg = 'assets/icons/home.svg';
   static const String favoritesSvg = 'assets/icons/heart.svg';
