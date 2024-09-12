@@ -7,6 +7,7 @@ import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_desc
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_images.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_info.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/quantity_dropdown.dart';
+import 'package:stardust_app_skeleton/features/shop/product_page/widgets/store_card.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/type_tag.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 
@@ -28,6 +29,8 @@ class _ProductPageState extends State<ProductPage> {
     "Tag",
   ];
 
+  double rating = 4.5;
+
   // int _selectedQuantity = 1; // Default selected quantity
 
   // List of quantities (can be integers or strings)
@@ -38,7 +41,7 @@ class _ProductPageState extends State<ProductPage> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: 50),
+          padding: const EdgeInsets.only(bottom: 50),
           child: Column(
             children: [
               const Header(),
@@ -105,6 +108,8 @@ class _ProductPageState extends State<ProductPage> {
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
               ),
+              const SizedBox(height: 25),
+              StoreCard(rating: rating, storeName: "Store Name", storeId: "1"),
             ],
           ),
         ),
