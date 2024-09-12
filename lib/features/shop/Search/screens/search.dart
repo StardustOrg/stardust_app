@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stardust_app_skeleton/common/widgets/artist_wrap_list.dart';
+import 'package:stardust_app_skeleton/common/widgets/artists/artist_wrap_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
-import 'package:stardust_app_skeleton/common/widgets/photocards_row_list.dart';
-import 'package:stardust_app_skeleton/common/widgets/store_wrap_list.dart';
+import 'package:stardust_app_skeleton/common/widgets/photocard/photocards_row_list.dart';
+import 'package:stardust_app_skeleton/common/widgets/store/store_wrap_list.dart';
 import 'package:stardust_app_skeleton/models/store.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';

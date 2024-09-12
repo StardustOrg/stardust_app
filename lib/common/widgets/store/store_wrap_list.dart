@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:stardust_app_skeleton/common/widgets/artist_cont.dart';
-import 'package:stardust_app_skeleton/common/widgets/section_title.dart';
-import 'package:stardust_app_skeleton/models/artist.dart';
-import 'package:stardust_app_skeleton/utils/constants/colors.dart';
+import 'package:stardust_app_skeleton/common/widgets/store/store_cont.dart';
+import 'package:stardust_app_skeleton/models/store.dart';
 
-class ArtistWrapList extends StatelessWidget {
+class StoreWrapList extends StatelessWidget {
   final String title;
-  final List<Artist> artists;
+  final List<Store> stores;
 
-  const ArtistWrapList({
+  const StoreWrapList({
     super.key,
     required this.title,
-    required this.artists,
+    required this.stores,
   });
 
   @override
@@ -19,7 +17,13 @@ class ArtistWrapList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(title: title),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: GridView.builder(
@@ -31,13 +35,11 @@ class ArtistWrapList extends StatelessWidget {
               mainAxisSpacing: 10,
               childAspectRatio: 0.75,
             ),
-            itemCount: artists.length,
+            itemCount: stores.length,
             itemBuilder: (context, index) {
-              final artist = artists[index];
-              return ArtistContainer(
-                artistName: artist.name,
-                borderColor:
-                    index.isEven ? StarColors.starPink : StarColors.starBlue,
+              final store = stores[index];
+              return StoreContainer(
+                storeName: store.name,
               );
             },
           ),

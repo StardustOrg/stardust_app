@@ -2,7 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
-import 'package:stardust_app_skeleton/common/widgets/photocards_row_list.dart';
+import 'package:stardust_app_skeleton/common/widgets/photocard/photocards_row_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/star_tag.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_description.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_images.dart';
