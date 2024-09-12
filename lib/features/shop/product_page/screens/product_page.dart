@@ -4,6 +4,8 @@ import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/star_tag.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_images.dart';
+import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_info.dart';
+import 'package:stardust_app_skeleton/features/shop/product_page/widgets/quantity_dropdown.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/type_tag.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 
@@ -25,7 +27,7 @@ class _ProductPageState extends State<ProductPage> {
     "Tag",
   ];
 
-  int _selectedQuantity = 1; // Default selected quantity
+  // int _selectedQuantity = 1; // Default selected quantity
 
   // List of quantities (can be integers or strings)
   final List<int> _quantities = [1, 2, 3, 4];
@@ -71,43 +73,10 @@ class _ProductPageState extends State<ProductPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(),
-                    Text(
-                      "Nome Grupo",
-                      style: TextStyle(
-                        color: StarColors.textSecondary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
-                        height: 0,
-                      ),
-                    ),
-                    SizedBox(height: 2),
-                    Text(
-                      "Nome Artista",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        height: 0,
-                        color: StarColors.textPrimary,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      "Nome Photocard dasbas",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        height: 0,
-                        color: StarColors.textPrimary,
-                      ),
-                    ),
-                  ],
-                ),
+              const PhotocardInformation(
+                artistName: "STACY",
+                pcName: "OT6 Photocard adsaa",
+                groupName: "STACY",
               ),
               const SizedBox(height: 10),
               Padding(
@@ -123,32 +92,9 @@ class _ProductPageState extends State<ProductPage> {
                         color: StarColors.textPrimary,
                       ),
                     ),
-                    DropdownButton<int>(
-                      value: _selectedQuantity, // The current selected quantity
-                      icon: const Icon(Icons.arrow_drop_down),
-                      elevation: 16,
-                      onChanged: (int? newValue) {
-                        setState(() {
-                          _selectedQuantity =
-                              newValue!; // Update the selected quantity
-                        });
-                      },
-                      items:
-                          _quantities.map<DropdownMenuItem<int>>((int value) {
-                        return DropdownMenuItem<int>(
-                          value: value,
-                          child: Text(value
-                              .toString()), // Display the value in the dropdown
-                        );
-                      }).toList(),
-                      // Displaying the selected value in the format "Quantidade: value"
-                      selectedItemBuilder: (BuildContext context) {
-                        return _quantities.map<Widget>((int value) {
-                          return Text(
-                              'Quantidade: $value'); // Format the selected item display
-                        }).toList();
-                      },
-                    )
+                    DropdownQuantitySelector(
+                      quantities: _quantities,
+                    ),
                   ],
                 ),
               ),
