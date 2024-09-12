@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:stardust_app_skeleton/common/widgets/artist_cont.dart';
+import 'package:stardust_app_skeleton/common/widgets/photocard/photocard_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/section_title.dart';
-import 'package:stardust_app_skeleton/models/artist.dart';
+import 'package:stardust_app_skeleton/models/photocard.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 
-class ArtistsRowList extends StatelessWidget {
+class PhotocardsRowList extends StatelessWidget {
   final String title;
-  final List<Artist> artists;
+  final List<Photocard> photocards;
 
-  const ArtistsRowList({
+  const PhotocardsRowList({
     super.key,
     required this.title,
-    required this.artists,
+    required this.photocards,
     this.detailColor = StarColors.starPink,
   });
 
@@ -30,18 +30,16 @@ class ArtistsRowList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 25),
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: artists.asMap().entries.map((entry) {
-              final index = entry.key;
-              final artist = entry.value;
+            children: photocards.map((photocard) {
               return Row(
                 children: [
-                  ArtistContainer(
-                    artistName: artist.name,
-                    borderColor: index.isEven
-                        ? StarColors.starPink
-                        : StarColors.starBlue,
+                  PhotocardContainer(
+                    artistName: photocard.artistName,
+                    pcName: photocard.pcName,
+                    price: photocard.price,
+                    id: photocard.id,
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 20),
                 ],
               );
             }).toList(),

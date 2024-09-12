@@ -15,6 +15,7 @@ class StarImages {
   static const String sparkles = 'assets/details/sparkles.svg';
   static const String fourPointStar = 'assets/details/four_point_star.svg';
   static const String fallingSparkles = 'assets/details/falling_sparkles.svg';
+  static const String star = 'assets/details/star.svg';
 
   // Slides
   static const String slidesDetails1 = 'assets/details/slides_details1.png';

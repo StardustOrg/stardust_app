@@ -23,6 +23,7 @@ class StarSizes {
   static const double artistSm = 77.0;
 
   // Font Sizes
+  static const double fontSizeXs = 12.0;
   static const double fontSizeSm = 14.0;
   static const double fontSizeMd = 16.0;
   static const double fontSizeLg = 18.0;
