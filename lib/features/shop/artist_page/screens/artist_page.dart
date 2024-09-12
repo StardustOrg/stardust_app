@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:stardust_app_skeleton/common/widgets/artists/artists_row_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/artist_card.dart';
+import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 
@@ -17,6 +19,16 @@ class ArtistPage extends StatefulWidget {
 
 class _ArtistPageState extends State<ArtistPage> {
   String imageUrl = "";
+
+  List<Artist> artists = [
+    Artist("Jungwon"),
+    Artist("Heeseung"),
+    Artist("Jay"),
+    Artist("Jake"),
+    Artist("Sunghoon"),
+    Artist("Sunoo"),
+    Artist("Ni-ki"),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +67,7 @@ class _ArtistPageState extends State<ArtistPage> {
                 ],
               ),
               const SizedBox(height: 15),
+              if (artists.isNotEmpty) ArtistsRowList(artists: artists),
             ],
           ),
         ),
