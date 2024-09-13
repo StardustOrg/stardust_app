@@ -5,11 +5,13 @@ class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
   final _db = FirebaseFirestore.instance;
 
-  createUser(String uid, String name) async {
+  createUser(String uid, String name, String email) async {
     try {
       print("Attempting to create user with uid: $uid and name: $name");
       await _db.collection('users').doc(uid).set({
         'username': name,
+        'email': email,
+        'uid': uid,
       });
       print("User created successfully");
     } catch (e) {

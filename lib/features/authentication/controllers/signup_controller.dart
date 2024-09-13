@@ -25,7 +25,10 @@ class SignupController extends GetxController {
       try {
         // Chama o método de cadastro da classe Auth
         await _auth.signUpWithEmailAndPassword(
-            email, password, usernameController.text.trim());
+          email,
+          password,
+          usernameController.text.trim(),
+        );
 
         // Exibe um alerta de sucesso
         Get.snackbar(

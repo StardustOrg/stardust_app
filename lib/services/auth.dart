@@ -55,7 +55,7 @@ class Auth {
         if (!userDoc.exists) {
           final email = userCredential.user!.email!;
           final username = email.split('@')[0];
-          await _userRepository.createUser(uid, username);
+          await _userRepository.createUser(uid, username, email);
         }
 
         return {'authenticated': true};
@@ -80,7 +80,7 @@ class Auth {
 
       if (userCredential.user != null) {
         print("User signed up successfully, uid: ${userCredential.user!.uid}");
-        await _userRepository.createUser(userCredential.user!.uid, name);
+        await _userRepository.createUser(userCredential.user!.uid, name, email);
       } else {
         print("User credential is null");
       }

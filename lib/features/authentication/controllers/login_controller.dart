@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stardust_app_skeleton/services/auth.dart';
-import 'package:stardust_app_skeleton/features/shop/home/screens/home.dart';
 import 'package:stardust_app_skeleton/features/shop/wrapper.dart';
 
 class LoginController extends GetxController {
@@ -18,7 +17,7 @@ class LoginController extends GetxController {
         passwordController.text.trim(),
       );
       if (user['authenticated']) {
-        Get.to(() => const Home());
+        Get.to(() => const ScreenWrapper());
       } else {
         Get.snackbar('Login Failed', 'Invalid email or password',
             snackPosition: SnackPosition.BOTTOM);

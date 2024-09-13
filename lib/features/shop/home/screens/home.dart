@@ -5,12 +5,31 @@ import 'package:stardust_app_skeleton/common/widgets/photocard/photocards_row_li
 import 'package:stardust_app_skeleton/features/shop/home/widgets/slides_home.dart';
 import 'package:stardust_app_skeleton/common/widgets/topics_section.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
+import 'package:stardust_app_skeleton/repository/artists_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  late Future<List<Artist>> _artistsFuture;
+  final ArtistsRepository _artistsRepository = ArtistsRepository.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _artistsFuture = _fetchArtists();
+  }
+
+  Future<List<Artist>> _fetchArtists() async {
+    return await _artistsRepository.getArtists();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,19 +72,6 @@ class Home extends StatelessWidget {
       ),
     ];
 
-    List<Artist> artists = [
-      Artist("ENHYPEN"),
-      Artist("BTS"),
-      Artist("BLACKPINK"),
-      Artist("TWICE"),
-      Artist("Red Velvet"),
-      Artist("EXO"),
-      Artist("NCT"),
-      Artist("Mamamoo"),
-      Artist("Stray Kids"),
-      Artist("ITZY"),
-    ];
-
     List<String> topics = [
       "Natal",
       "Season’s Greetings 2024",
@@ -89,27 +95,40 @@ class Home extends StatelessWidget {
                 detailColor: StarColors.starBlue,
               ),
               const SizedBox(height: 25),
-              ArtistsRowList(
-                title: StarTexts.recommendationsArtist,
-                artists: artists,
+              FutureBuilder<List<Artist>>(
+                future: _artistsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator(); // Loading indicator
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('No artists found');
+                  } else {
+                    return ArtistsRowList(
+                      title: StarTexts.recommendationsArtist,
+                      artists: snapshot.data!,
+                    );
+                  }
+                },
               ),
-              const SizedBox(height: 25),
-              PhotocardsRowList(
-                title: StarTexts.newProducts,
-                photocards: photocards,
-                detailColor: StarColors.starBlue,
-              ),
-              const SizedBox(height: 25),
-              TopicsSection(
-                topics: topics,
-                title: StarTexts.recommendationsTopics,
-              ),
-              const SizedBox(height: 25),
-              PhotocardsRowList(
-                title: StarTexts.lastUnities,
-                photocards: photocards,
-                detailColor: StarColors.starBlue,
-              ),
+              // const SizedBox(height: 25),
+              // PhotocardsRowList(
+              //   title: StarTexts.newProducts,
+              //   photocards: photocards,
+              //   detailColor: StarColors.starBlue,
+              // ),
+              // const SizedBox(height: 25),
+              // TopicsSection(
+              //   topics: topics,
+              //   title: StarTexts.recommendationsTopics,
+              // ),
+              // const SizedBox(height: 25),
+              // PhotocardsRowList(
+              //   title: StarTexts.lastUnities,
+              //   photocards: photocards,
+              //   detailColor: StarColors.starBlue,
+              // ),
             ],
           ),
         ),

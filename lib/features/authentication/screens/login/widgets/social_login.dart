@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:stardust_app_skeleton/features/shop/wrapper.dart';
 import 'package:stardust_app_skeleton/services/auth.dart';
 import 'package:stardust_app_skeleton/features/shop/home/screens/home.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
@@ -51,7 +52,7 @@ class DifferentWaysToLogin extends StatelessWidget {
             final result = await _auth.signInWithGoogle();
             if (result['authenticated']) {
               // Navega para a tela principal se a autenticação foi bem-sucedida
-              Navigator.pushReplacementNamed(context, 'home');
+              Get.to(() => const ScreenWrapper());
             } else {
               // Exibe uma mensagem de erro se a autenticação falhar
               ScaffoldMessenger.of(context).showSnackBar(

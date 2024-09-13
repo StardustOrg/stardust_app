@@ -37,7 +37,7 @@ class ArtistsRowList extends StatelessWidget {
               return Row(
                 children: [
                   ArtistContainer(
-                    artistName: artist.name.toUpperCase(),
+                    artist: artist,
                     borderColor: index.isEven
                         ? StarColors.starPink
                         : StarColors.starBlue,
