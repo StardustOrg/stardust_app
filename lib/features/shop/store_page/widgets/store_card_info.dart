@@ -13,9 +13,11 @@ class StoreCardInfo extends StatelessWidget {
     required this.rating,
     required this.place,
     required this.insta,
+    required this.icon,
   });
 
   final String storeName;
+  final String icon;
   final double rating;
   final String place;
   final String insta;
@@ -30,6 +32,7 @@ class StoreCardInfo extends StatelessWidget {
         children: [
           StarStoreImage(
             size: StarDeviceUtils.getScreenWidth(context) * 0.25,
+            imageUrl: icon,
           ),
           const SizedBox(width: 20),
           Column(

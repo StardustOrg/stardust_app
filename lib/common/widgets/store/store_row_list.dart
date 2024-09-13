@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:stardust_app_skeleton/common/widgets/artists/artist_cont.dart';
+import 'package:get/get.dart';
+import 'package:stardust_app_skeleton/common/widgets/store/store_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/section_title.dart';
-import 'package:stardust_app_skeleton/models/artist.dart';
+import 'package:stardust_app_skeleton/features/shop/store_page/screens/store_page.dart';
+import 'package:stardust_app_skeleton/models/store.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 
-class ArtistsRowList extends StatelessWidget {
+class StoreRowList extends StatelessWidget {
   final String? title;
-  final List<Artist> artists;
+  final List<Store> stores;
 
-  const ArtistsRowList({
+  const StoreRowList({
     super.key,
     this.title,
-    required this.artists,
+    required this.stores,
     this.detailColor = StarColors.starPink,
   });
 
@@ -31,18 +33,20 @@ class ArtistsRowList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 25),
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: artists.asMap().entries.map((entry) {
+            children: stores.asMap().entries.map((entry) {
               final index = entry.key;
-              final artist = entry.value;
+              final store = entry.value;
               return Row(
                 children: [
-                  ArtistContainer(
-                    artist: artist,
-                    borderColor: index.isEven
-                        ? StarColors.starPink
-                        : StarColors.starBlue,
+                  GestureDetector(
+                    onTap: () => Get.to(
+                      () => StorePage(
+                        storeId: store.id,
+                      ),
+                    ),
+                    child: StoreContainer(store: store),
                   ),
-                  if (index != artists.length - 1) const SizedBox(width: 15),
+                  if (index != stores.length - 1) const SizedBox(width: 15),
                 ],
               );
             }).toList(),

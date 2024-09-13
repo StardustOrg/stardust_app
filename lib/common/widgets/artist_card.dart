@@ -7,7 +7,7 @@ class ArtistCard extends StatelessWidget {
     required this.imageUrl,
   });
 
-  final String imageUrl;
+  final String? imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ArtistCard extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            StarColors.bgLight.withOpacity(0.8),
+            StarColors.bgLight.withOpacity(1),
             Colors.transparent,
           ],
           stops: const [0.72, 1.0],
@@ -27,8 +27,12 @@ class ArtistCard extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 210,
-        decoration: const BoxDecoration(
-          color: Color(0xFFD5D5D5),
+        decoration: BoxDecoration(
+          image: imageUrl != null
+              ? DecorationImage(
+                  image: NetworkImage(imageUrl!), fit: BoxFit.cover)
+              : null,
+          color: const Color(0xFFD5D5D5),
         ),
       ),
     );

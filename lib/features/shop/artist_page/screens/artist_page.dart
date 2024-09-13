@@ -8,6 +8,7 @@ import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/highligh
 import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/products/products_tab.dart';
 import 'package:stardust_app_skeleton/common/widgets/tabs_row.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
+import 'package:stardust_app_skeleton/repository/artists_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 
@@ -21,7 +22,8 @@ class ArtistPage extends StatefulWidget {
 }
 
 class _ArtistPageState extends State<ArtistPage> {
-  String imageUrl = "";
+  late Future<Artist> _artist;
+  final ArtistsRepository _artistsRepository = ArtistsRepository.instance;
   bool tab1 = true;
 
   void _updateTab(bool isTab1) {
@@ -30,17 +32,20 @@ class _ArtistPageState extends State<ArtistPage> {
     });
   }
 
-  List<Artist> artists = [
-    Artist("Jungwon"),
-    Artist("Heeseung"),
-    Artist("Jay"),
-    Artist("Jake"),
-    Artist("Sunghoon"),
-    Artist("Sunoo"),
-    Artist("Ni-ki"),
-  ];
+  Future<Artist> _fetchArtist() async {
+    return await _artistsRepository.getArtistById(widget.id);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _artist = _fetchArtist();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('Building ArtistPage');
+    print('Artist ID: ${widget.id}');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -54,38 +59,61 @@ class _ArtistPageState extends State<ArtistPage> {
                 child: StarBackButton(),
               ),
               const SizedBox(height: 15),
-              ArtistCard(imageUrl: imageUrl),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.id,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  SvgPicture.asset(
-                    StarImages.sparkles,
-                    colorFilter: const ColorFilter.mode(
-                      StarColors.starPink,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ],
+              FutureBuilder<Artist>(
+                future: _artist,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    print(snapshot.data);
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData) {
+                    return const Text('Artist not found');
+                  }
+
+                  final artist = snapshot.data!;
+
+                  return Column(
+                    children: [
+                      ArtistCard(imageUrl: artist.cover),
+                      const SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            artist.name,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          SvgPicture.asset(
+                            StarImages.sparkles,
+                            colorFilter: const ColorFilter.mode(
+                              StarColors.starPink,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      if (artist.members.isNotEmpty)
+                        ArtistsRowList(
+                            artists:
+                                artist.members.whereType<Artist>().toList()),
+                      const SizedBox(height: 35),
+                      TabsRow(
+                        tab1: tab1,
+                        onTabChanged: _updateTab,
+                      ),
+                      const SizedBox(height: 30),
+                      if (tab1) const HighlightsTab(),
+                      if (!tab1) const ProductsTab(),
+                    ],
+                  );
+                },
               ),
-              const SizedBox(height: 15),
-              if (artists.isNotEmpty) ArtistsRowList(artists: artists),
-              const SizedBox(height: 35),
-              TabsRow(
-                tab1: tab1,
-                onTabChanged: _updateTab,
-              ),
-              const SizedBox(height: 30),
-              if (tab1) const HighlightsTab(),
-              if (!tab1) const ProductsTab(),
             ],
           ),
         ),

@@ -15,6 +15,7 @@ class SignUpScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: StarColors.starPink),
       ),
       body: const SafeArea(
+        // Removed 'const' keyword here
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
             horizontal: StarSizes.lg,
@@ -27,7 +28,7 @@ class SignUpScreen extends StatelessWidget {
 
               // Form Fields
               SizedBox(height: StarSizes.spaceBtwSections),
-              SignUpForm(),
+              SignUpForm(), // Removed 'const' keyword here
             ],
           ),
         ),
@@ -46,9 +47,9 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        SignupForm(),
+        SignupForm(), // Removed 'const' keyword here
       ],
     );
   }

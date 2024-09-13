@@ -22,6 +22,9 @@ class StarStoreImage extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: StarColors.placeholder,
+        image: imageUrl != null
+            ? DecorationImage(image: NetworkImage(imageUrl!), fit: BoxFit.cover)
+            : null,
         border: Border(
           bottom: BorderSide(width: 3, color: borderColor),
           right: BorderSide(width: 3, color: borderColor),
