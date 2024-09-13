@@ -5,70 +5,14 @@ import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
 
 class StoreProductsTab extends StatefulWidget {
-  const StoreProductsTab({super.key});
+  const StoreProductsTab({super.key, required this.photocards});
+  final List<Photocard> photocards;
 
   @override
   State<StoreProductsTab> createState() => _StoreProductsTabState();
 }
 
 class _StoreProductsTabState extends State<StoreProductsTab> {
-  List<Photocard> photocards = [
-    Photocard(
-      artistName: "(G)-IDLE",
-      pcName: "OT5 Photocard",
-      price: 6.66,
-      id: "1",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-    Photocard(
-      artistName: "BTS",
-      pcName: "Jungkook Photocard",
-      price: 10.99,
-      id: "2",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-    Photocard(
-      artistName: "BLACKPINK",
-      pcName: "Lisa Photocard",
-      price: 8.99,
-      id: "3",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-    Photocard(
-      artistName: "TWICE",
-      pcName: "Lisa Photocard",
-      price: 8.99,
-      id: "4",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-    Photocard(
-      artistName: "BLACKPINK",
-      pcName: "Lisa Photocard",
-      price: 8.99,
-      id: "3",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-    Photocard(
-      artistName: "TWICE",
-      pcName: "Lisa Photocard",
-      price: 8.99,
-      id: "4",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -119,7 +63,7 @@ class _StoreProductsTabState extends State<StoreProductsTab> {
             shrinkWrap: true,
             crossAxisCount: 2,
             childAspectRatio: (0.55),
-            children: photocards.map((photocard) {
+            children: widget.photocards.map((photocard) {
               return Center(
                 child: PhotocardContainer(
                   artistName: photocard.artistName,
@@ -127,6 +71,7 @@ class _StoreProductsTabState extends State<StoreProductsTab> {
                   id: photocard.id,
                   price: photocard.price,
                   size: StarDeviceUtils.getScreenWidth(context) * 0.41,
+                  imageUrl: photocard.imageUrl,
                 ),
               );
             }).toList(),

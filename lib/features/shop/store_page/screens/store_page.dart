@@ -6,8 +6,12 @@ import 'package:stardust_app_skeleton/common/widgets/tabs_row.dart';
 import 'package:stardust_app_skeleton/features/shop/store_page/widgets/highlights/highlights_tab.dart';
 import 'package:stardust_app_skeleton/features/shop/store_page/widgets/products/products_tab.dart';
 import 'package:stardust_app_skeleton/features/shop/store_page/widgets/store_card_info.dart';
+// import 'package:stardust_app_skeleton/models/cep.dart';
+import 'package:stardust_app_skeleton/models/photocard.dart';
 import 'package:stardust_app_skeleton/models/store.dart';
+import 'package:stardust_app_skeleton/repository/photocards_repository.dart';
 import 'package:stardust_app_skeleton/repository/store_repository.dart';
+// import 'package:stardust_app_skeleton/utils/http/search_cep.dart';
 
 class StorePage extends StatefulWidget {
   const StorePage({super.key, required this.storeId});
@@ -21,8 +25,11 @@ class StorePage extends StatefulWidget {
 class _StorePageState extends State<StorePage> {
   late Future<Store> _storeFuture;
   final StoreRepository _storeRepository = StoreRepository.instance;
-
+  String? location;
   bool tab1 = true;
+  late Future<List<Photocard>> _photocardsFuture;
+  final PhotocardsRepository _photocardRepository =
+      PhotocardsRepository.instance;
 
   void _updateTab(bool isTab1) {
     setState(() {
@@ -34,10 +41,27 @@ class _StorePageState extends State<StorePage> {
   void initState() {
     super.initState();
     _storeFuture = _fetchStore();
+
+    // String _cep = _storeFuture.then((store) => store.cep).toString();
+    // _fetchLocation(_cep).then((cep) {
+    //   setState(() {
+    //     location = '${cep.localidade}, ${cep.uf}';
+    //   });
+    // });
+
+    _photocardsFuture = _fetchPhotocards();
   }
 
   Future<Store> _fetchStore() async {
     return await _storeRepository.getStoreById(widget.storeId);
+  }
+
+  // Future<Cep> _fetchLocation(String cep) async {
+  //   return await SearchCep.searchCep(cep);
+  // }|
+
+  Future<List<Photocard>> _fetchPhotocards() async {
+    return await _photocardRepository.getPhotocardByStore(widget.storeId);
   }
 
   @override
@@ -73,8 +97,8 @@ class _StorePageState extends State<StorePage> {
                         StoreCardInfo(
                           storeName: store.name,
                           rating: 0,
-                          place: "Unknown location",
-                          insta: store.insta ?? "",
+                          place: "",
+                          insta: store.insta,
                           icon: store.icon,
                         ),
                         const SizedBox(height: 35),
@@ -83,8 +107,27 @@ class _StorePageState extends State<StorePage> {
                           onTabChanged: _updateTab,
                         ),
                         const SizedBox(height: 30),
-                        if (tab1) StoreHighlightsTab(),
-                        if (!tab1) StoreProductsTab(),
+                        FutureBuilder<List<Photocard>>(
+                          future: _photocardsFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else if (!snapshot.hasData) {
+                              return const Text('No products found');
+                            } else {
+                              if (tab1) {
+                                return StoreHighlightsTab(
+                                    photocards: snapshot.data!);
+                              } else {
+                                return StoreProductsTab(
+                                    photocards: snapshot.data!);
+                              }
+                            }
+                          },
+                        ),
                       ],
                     );
                   }

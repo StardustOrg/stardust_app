@@ -8,6 +8,7 @@ import 'package:stardust_app_skeleton/common/widgets/topics_section.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/models/store.dart';
 import 'package:stardust_app_skeleton/repository/artists_repository.dart';
+import 'package:stardust_app_skeleton/repository/photocards_repository.dart';
 import 'package:stardust_app_skeleton/repository/store_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
@@ -24,14 +25,18 @@ class _HomeState extends State<Home> {
   late Future<List<Artist>> _artistsFuture;
   final ArtistsRepository _artistsRepository = ArtistsRepository.instance;
   late Future<List<Store>> _storesFuture;
-  final StoreRepository _storeRepository =
-      StoreRepository.instance; // Instance for StoreRepository
+  final StoreRepository _storeRepository = StoreRepository.instance;
+
+  late Future<List<Photocard>> _photocardsFuture;
+  final PhotocardsRepository _photocardRepository =
+      PhotocardsRepository.instance;
 
   @override
   void initState() {
     super.initState();
     _artistsFuture = _fetchArtists();
-    _storesFuture = _fetchStores(); // Fetch stores
+    _storesFuture = _fetchStores();
+    _photocardsFuture = _fetchPhotocards();
   }
 
   Future<List<Artist>> _fetchArtists() async {
@@ -42,47 +47,12 @@ class _HomeState extends State<Home> {
     return await _storeRepository.getStores();
   }
 
+  Future<List<Photocard>> _fetchPhotocards() async {
+    return await _photocardRepository.getAllPhotocards(limit: 10);
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Photocard> photocards = [
-      Photocard(
-        artistName: "(G)-IDLE",
-        pcName: "OT5 Photocard",
-        price: 6.66,
-        id: "1",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-        imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-      ),
-      Photocard(
-        artistName: "BTS",
-        pcName: "Jungkook Photocard",
-        price: 10.99,
-        id: "2",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-        imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-      ),
-      Photocard(
-        artistName: "BLACKPINK",
-        pcName: "Lisa Photocard",
-        price: 8.99,
-        id: "3",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-        imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-      ),
-      Photocard(
-        artistName: "TWICE",
-        pcName: "Lisa Photocard",
-        price: 8.99,
-        id: "4",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-        imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-      ),
-    ];
-
     List<String> topics = [
       "Natal",
       "Season’s Greetings 2024",
@@ -100,10 +70,23 @@ class _HomeState extends State<Home> {
               const SizedBox(height: 45),
               const SlidesHome(),
               const SizedBox(height: 27),
-              PhotocardsRowList(
-                title: StarTexts.recommendationsPc,
-                photocards: photocards,
-                detailColor: StarColors.starBlue,
+              FutureBuilder<List<Photocard>>(
+                future: _photocardsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('No photocards found');
+                  } else {
+                    return PhotocardsRowList(
+                      title: StarTexts.recommendationsPc,
+                      photocards: snapshot.data!,
+                      detailColor: StarColors.starBlue,
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 25),
               FutureBuilder<List<Artist>>(

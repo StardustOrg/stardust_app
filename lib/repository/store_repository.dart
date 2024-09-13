@@ -62,4 +62,10 @@ class StoreRepository extends GetxController {
     var snapshot = await _storesCollection.doc(id).get();
     return _storeFromSnapshot(snapshot);
   }
+
+  Future<String?> getStoreIconById(String id) async {
+    var snapshot = await _storesCollection.doc(id).get();
+    var data = snapshot.data() as Map<String, dynamic>?;
+    return data?['icon'] as String?;
+  }
 }

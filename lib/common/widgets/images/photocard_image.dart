@@ -23,6 +23,9 @@ class StarPhotocardImage extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(StarSizes.borderRadiusLg),
         ),
+        image: imageUrl != null
+            ? DecorationImage(image: NetworkImage(imageUrl!), fit: BoxFit.cover)
+            : null,
         border: Border(
           top: BorderSide(width: 1, color: borderColor), // Top side width
           left: BorderSide(width: 2, color: borderColor), // Left side width
