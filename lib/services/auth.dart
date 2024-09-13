@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stardust_app_skeleton/repository/user_repository.dart';
-import 'package:stardust_app_skeleton/services/database.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
