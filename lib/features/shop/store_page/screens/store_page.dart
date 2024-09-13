@@ -6,6 +6,8 @@ import 'package:stardust_app_skeleton/common/widgets/tabs_row.dart';
 import 'package:stardust_app_skeleton/features/shop/store_page/widgets/highlights/highlights_tab.dart';
 import 'package:stardust_app_skeleton/features/shop/store_page/widgets/products/products_tab.dart';
 import 'package:stardust_app_skeleton/features/shop/store_page/widgets/store_card_info.dart';
+import 'package:stardust_app_skeleton/models/store.dart';
+import 'package:stardust_app_skeleton/repository/store_repository.dart';
 
 class StorePage extends StatefulWidget {
   const StorePage({super.key, required this.storeId});
@@ -17,10 +19,8 @@ class StorePage extends StatefulWidget {
 }
 
 class _StorePageState extends State<StorePage> {
-  final String storeName = "K4TOWN";
-  final String place = "Belo Horizonte, Minas Gerais";
-  final double rating = 4.5;
-  final String insta = "@k4town.oficial";
+  late Future<Store> _storeFuture;
+  final StoreRepository _storeRepository = StoreRepository.instance;
 
   bool tab1 = true;
 
@@ -28,6 +28,16 @@ class _StorePageState extends State<StorePage> {
     setState(() {
       tab1 = isTab1;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _storeFuture = _fetchStore();
+  }
+
+  Future<Store> _fetchStore() async {
+    return await _storeRepository.getStoreById(widget.storeId);
   }
 
   @override
@@ -45,22 +55,41 @@ class _StorePageState extends State<StorePage> {
                 child: StarBackButton(),
               ),
               const SizedBox(height: 15),
-              const ArtistCard(imageUrl: "imageUrl"),
-              const SizedBox(height: 30),
-              StoreCardInfo(
-                storeName: storeName,
-                rating: rating,
-                place: place,
-                insta: insta,
+              FutureBuilder<Store>(
+                future: _storeFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData) {
+                    return const Text('No store data found');
+                  } else {
+                    Store store = snapshot.data!;
+                    return Column(
+                      children: [
+                        ArtistCard(imageUrl: store.icon),
+                        const SizedBox(height: 30),
+                        StoreCardInfo(
+                          storeName: store.name,
+                          rating: 0,
+                          place: "Unknown location",
+                          insta: store.insta ?? "",
+                          icon: store.icon,
+                        ),
+                        const SizedBox(height: 35),
+                        TabsRow(
+                          tab1: tab1,
+                          onTabChanged: _updateTab,
+                        ),
+                        const SizedBox(height: 30),
+                        if (tab1) StoreHighlightsTab(),
+                        if (!tab1) StoreProductsTab(),
+                      ],
+                    );
+                  }
+                },
               ),
-              const SizedBox(height: 35),
-              TabsRow(
-                tab1: tab1,
-                onTabChanged: _updateTab,
-              ),
-              const SizedBox(height: 30),
-              if (tab1) const StoreHighlightsTab(),
-              if (!tab1) const StoreProductsTab(),
             ],
           ),
         ),

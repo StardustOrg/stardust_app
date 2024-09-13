@@ -53,14 +53,14 @@ class Search extends StatelessWidget {
     ];
 
     List<Store> stores = [
-      Store("Lojinha 1"),
-      Store("Lojinha 2"),
-      Store("Lojinha 3"),
-      Store("Lojinha 4"),
-      Store("Lojinha 5"),
-      Store("Lojinha 6"),
-      Store("Lojinha 7"),
-      Store("Lojinha 8"),
+      // Store("Lojinha 1"),
+      // Store("Lojinha 2"),
+      // Store("Lojinha 3"),
+      // Store("Lojinha 4"),
+      // Store("Lojinha 5"),
+      // Store("Lojinha 6"),
+      // Store("Lojinha 7"),
+      // Store("Lojinha 8"),
     ];
 
     List<Artist> artists = [

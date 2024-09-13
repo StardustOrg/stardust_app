@@ -39,7 +39,7 @@ class StoreWrapList extends StatelessWidget {
             itemBuilder: (context, index) {
               final store = stores[index];
               return StoreContainer(
-                storeName: store.name,
+                store: store,
               );
             },
           ),
