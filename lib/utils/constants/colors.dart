@@ -13,10 +13,9 @@ class StarColors {
 
   // Text Colors
   static const Color textPrimary = Color(0xFF272727);
-  static const Color textSecondary = Color(0xFF6C757D);
+  static const Color textSecondary = Color(0xFF7A9097);
   static const Color textWhite = Color(0xFFF4F3F2);
   static const Color textDarkScondary = Color(0xFFF4F3F2);
-
 
   // Background Colors
   static const Color bgLight = Color(0xFFFDFEF0);
@@ -35,4 +34,5 @@ class StarColors {
   // Neutral Shades
   static const Color white = Color(0xFFEEEFF1);
   static const Color black = Color(0xFF051D25);
+  static const Color grey = Color(0xFF7A9097);
 }

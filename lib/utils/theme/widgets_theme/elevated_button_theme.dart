@@ -10,8 +10,8 @@ class StarElevatedButtonTheme {
   static final lightElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: StarColors.textPrimary,
-      backgroundColor: StarColors.placeholder,
+      foregroundColor: StarColors.textWhite,
+      backgroundColor: StarColors.starPink,
       disabledForegroundColor: StarColors.placeholder,
       disabledBackgroundColor: StarColors.placeholder,
       padding: const EdgeInsets.all(StarSizes.buttonHeight),

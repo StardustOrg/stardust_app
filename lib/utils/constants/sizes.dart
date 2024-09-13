@@ -20,9 +20,10 @@ class StarSizes {
   static const double storeSm = 70.0;
   static const double storeMd = 100.0;
 
-  static const double artistSm = 80.0;
+  static const double artistSm = 77.0;
 
   // Font Sizes
+  static const double fontSizeXs = 12.0;
   static const double fontSizeSm = 14.0;
   static const double fontSizeMd = 16.0;
   static const double fontSizeLg = 18.0;
@@ -51,8 +52,9 @@ class StarSizes {
   static const double borderRadiusSm = 6.0;
   static const double borderRadiusMd = 8.0;
   static const double borderRadiusLg = 10.0;
-  static const double borderRadiusXl = 30.0;
-  static const double buttonRadius = 15.0;
+  static const double borderRadiusXl = 20.0;
+  static const double borderRadiusXXl = 30.0;
+  static const double buttonRadius = 100.0;
 
   // Divider Height
 

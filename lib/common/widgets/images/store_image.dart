@@ -7,19 +7,25 @@ class StarStoreImage extends StatelessWidget {
     super.key,
     this.size = StarSizes.storeSm,
     this.imageUrl,
+    this.borderColor = StarColors.starPink,
   });
 
   final double size;
   final String? imageUrl;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: size,
       height: size,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: StarColors.placeholder,
+        border: Border(
+          bottom: BorderSide(width: 3, color: borderColor),
+          right: BorderSide(width: 3, color: borderColor),
+        ),
       ),
       // TODO: Add image
     );

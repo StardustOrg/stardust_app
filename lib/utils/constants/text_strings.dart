@@ -23,8 +23,18 @@ class StarTexts {
   static const String confirmPasswordLabel = "Digite a sua senha novamente";
   static const String haveAccount = "Já tem uma conta? Faça login!";
   static const String searchLabel = "Pesquisar";
-  static const String newProducts = "NOVOS PRODUTOS";
-  static const String lastUnities = "ÚLTIMAS UNIDADES";
   static const String filterLabel = "Filtros";
+
+  // Sections
+  static const String newProducts = "NOVOS PRODUTOS";
+  static const String recommendationsPc = "DO SEU BIAS";
+  static const String recommendationsArtist = "SEUS ARTISTAS FAVORITOS";
+  static const String recommendationsTopics = "VOCÊ PODE SE INTERESSAR";
+  static const String lastUnities = "ÚLTIMAS UNIDADES";
   static const String photocard = "PHOTOCARD";
+
+  // Product Page
+  static const String originalTag = "Original";
+  static const String description = "Descrição";
+  static const String productRecommendations = "VOCÊ TAMBÉM PODE SE INTERESSAR";
 }
