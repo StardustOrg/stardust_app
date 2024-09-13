@@ -194,6 +194,12 @@ class _ProductPageState extends State<ProductPage> {
                     SizedBox(
                       width: StarDeviceUtils.getScreenWidth(context) * 0.6,
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 30,
+                            vertical: 5,
+                          ),
+                        ),
                         onPressed: () {},
                         child: const Text("Comprar"),
                       ),
