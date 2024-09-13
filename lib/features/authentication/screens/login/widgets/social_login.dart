@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:stardust_app_skeleton/features/shop/wrapper.dart';
+import 'package:stardust_app_skeleton/services/auth.dart';
+import 'package:stardust_app_skeleton/features/shop/home/screens/home.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 
 class DifferentWaysToLogin extends StatelessWidget {
-  const DifferentWaysToLogin({
-    super.key,
-  });
+  const DifferentWaysToLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Auth _auth = Auth();
+
     return Column(
       children: [
         OutlinedButton(
-          onPressed: () {},
+          onPressed: () async {
+            try {
+              await _auth.signInWithGoogle();
+              Get.to(() => const Home());
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Failed to login: $e')),
+              );
+            }
+          },
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 0),
           ),
@@ -35,7 +48,20 @@ class DifferentWaysToLogin extends StatelessWidget {
         ),
         const SizedBox(height: StarSizes.spaceBtwItems),
         OutlinedButton(
-          onPressed: () {},
+          onPressed: () async {
+            final result = await _auth.signInWithGoogle();
+            if (result['authenticated']) {
+              // Navega para a tela principal se a autenticação foi bem-sucedida
+              Get.to(() => const ScreenWrapper());
+            } else {
+              // Exibe uma mensagem de erro se a autenticação falhar
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Failed to login: ${result['error']}'),
+                ),
+              );
+            }
+          },
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 0),
           ),

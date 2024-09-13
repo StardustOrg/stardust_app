@@ -11,6 +11,7 @@ import 'package:stardust_app_skeleton/features/shop/product_page/widgets/quantit
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/store_card.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/type_tag.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
+import 'package:stardust_app_skeleton/repository/photocards_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
@@ -25,6 +26,11 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  late Future<Photocard> _photocardFuture;
+  late Future<List<Photocard>> _photocardsFuture;
+  final PhotocardsRepository _photocardRepository =
+      PhotocardsRepository.instance;
+
   List<String> topics = [
     "Season’s Greetings 2024",
     "Tag",
@@ -33,44 +39,20 @@ class _ProductPageState extends State<ProductPage> {
     "Tag",
   ];
 
-  List<Photocard> photocards = [
-    Photocard(
-      artistName: "(G)-IDLE",
-      pcName: "OT5 Photocard",
-      price: 6.66,
-      id: "1",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-    Photocard(
-      artistName: "BTS",
-      pcName: "Jungkook Photocard",
-      price: 10.99,
-      id: "2",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-    Photocard(
-      artistName: "BLACKPINK",
-      pcName: "Lisa Photocard",
-      price: 8.99,
-      id: "3",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-    Photocard(
-      artistName: "TWICE",
-      pcName: "Lisa Photocard",
-      price: 8.99,
-      id: "4",
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
-      imageUrl: "https://i.pinimg.com/originals/7b/7b/7b/",
-    ),
-  ];
+  Future<List<Photocard>> _fetchPhotocards() async {
+    return await _photocardRepository.getAllPhotocards(limit: 10);
+  }
+
+  Future<Photocard> _fetchPhotocard() async {
+    return await _photocardRepository.getPhotocardById(widget.id);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _photocardsFuture = _fetchPhotocards();
+    _photocardFuture = _fetchPhotocard();
+  }
 
   double rating = 4.5;
 
@@ -81,9 +63,9 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
           children: [
             SingleChildScrollView(
               padding: const EdgeInsets.only(bottom: 100),
@@ -102,65 +84,103 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  const PhotocardImagesCont(
-                    mainImage: "mainImage",
-                    dt1: "dt1",
-                    dt2: "dt2",
-                  ),
-                  const SizedBox(height: 20),
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: topics.map((topic) {
-                        return Row(
+                  FutureBuilder<Photocard>(
+                    future: _photocardFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData) {
+                        return const Center(child: Text('No data found'));
+                      } else {
+                        final photocard = snapshot.data!;
+                        return Column(
                           children: [
-                            StarTag(topic: topic),
-                            const SizedBox(width: 8),
+                            PhotocardImagesCont(
+                              mainImage: photocard.imageUrl,
+                              dt1: "",
+                              dt2: "",
+                            ),
+                            const SizedBox(height: 20),
+                            SingleChildScrollView(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 25),
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: topics.map((topic) {
+                                  return Row(
+                                    children: [
+                                      StarTag(topic: topic),
+                                      const SizedBox(width: 8),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            PhotocardInformation(
+                              artistName: photocard.memberName,
+                              pcName: photocard.pcName,
+                              groupName: photocard.artistName,
+                            ),
+                            const SizedBox(height: 10),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 25),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    UtilBrasilFields.obterReal(photocard.price),
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                      color: StarColors.textPrimary,
+                                    ),
+                                  ),
+                                  DropdownQuantitySelector(
+                                    quantities: _quantities,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            PhotocardDescription(
+                              description: photocard.description,
+                            ),
+                            const SizedBox(height: 25),
+                            StoreCard(
+                              rating: rating,
+                              storeName: photocard.storeName,
+                              storeId: photocard.storeId,
+                            ),
                           ],
                         );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const PhotocardInformation(
-                    artistName: "STACY",
-                    pcName: "OT6 Photocard adsaa",
-                    groupName: "STACY",
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          UtilBrasilFields.obterReal(66.66),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: StarColors.textPrimary,
-                          ),
-                        ),
-                        DropdownQuantitySelector(
-                          quantities: _quantities,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  const PhotocardDescription(
-                    description:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ullamcorper lorem in nibh posuere maximus. Aliquam erat volutpat. Etiam fringilla vulputate purus, ut mattis libero vestibulum a. Proin ligula ex, venenatis ut consequat non, consectetur porta velit. Vestibulum tincidunt quam et nulla euismod",
+                      }
+                    },
                   ),
                   const SizedBox(height: 25),
-                  StoreCard(
-                      rating: rating, storeName: "Store Name", storeId: "1"),
-                  const SizedBox(height: 25),
-                  PhotocardsRowList(
-                    title: StarTexts.productRecommendations,
-                    photocards: photocards,
-                    detailColor: StarColors.starBlue,
+                  FutureBuilder<List<Photocard>>(
+                    future: _photocardsFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(
+                            child: Text('No recommendations found'));
+                      } else {
+                        final photocards = snapshot.data!;
+                        return PhotocardsRowList(
+                          title: StarTexts.productRecommendations,
+                          photocards: photocards,
+                          detailColor: StarColors.starBlue,
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
@@ -194,6 +214,12 @@ class _ProductPageState extends State<ProductPage> {
                     SizedBox(
                       width: StarDeviceUtils.getScreenWidth(context) * 0.6,
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 30,
+                            vertical: 5,
+                          ),
+                        ),
                         onPressed: () {},
                         child: const Text("Comprar"),
                       ),

@@ -23,6 +23,10 @@ class StarArtistImage extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(StarSizes.borderRadiusXl),
         ),
+        image: DecorationImage(
+          image: NetworkImage(imageUrl!),
+          fit: BoxFit.cover,
+        ),
         border: Border(
           top: BorderSide(width: 2, color: borderColor), // Top side width
           left: BorderSide(width: 2, color: borderColor), // Left side width

@@ -1,5 +1,13 @@
 class Artist {
-  String name;
+  String name, icon, cover, id;
 
-  Artist(this.name);
+  List<Artist?> members;
+
+  Artist({
+    required this.name,
+    required this.icon,
+    required this.cover,
+    required this.id,
+    this.members = const [],
+  });
 }

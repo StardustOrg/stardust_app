@@ -30,14 +30,19 @@ dependencies:
   http: ^1.2.1
   logger: ^2.3.0
   flutter_native_splash: ^2.4.0
-  smooth_page_indicator: ^1.1.0
   carousel_slider_plus: ^7.0.1
+  dots_indicator: ^2.1.1
   get_storage: ^2.1.1
   badges: ^3.1.2
 
   # Icons & Fonts
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
+
+  cloud_firestore: ^5.4.1
+  firebase_core: ^3.4.1
+  firebase_auth: ^5.2.1
+  google_sign_in: ^6.2.1
 
   # State Management
   get: ^4.6.6

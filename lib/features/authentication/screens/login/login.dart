@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/features/authentication/screens/login/widgets/login_form.dart';
 import 'package:stardust_app_skeleton/common/widgets/app_logo.dart';
 import 'package:stardust_app_skeleton/features/authentication/screens/login/widgets/social_login.dart';
+import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
@@ -58,14 +59,17 @@ class HeadDetailsLogin extends StatelessWidget {
       children: [
         ShaderMask(
           shaderCallback: (rect) {
-            return const LinearGradient(
+            return LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Colors.white],
-              stops: [0.2, 1.0],
+              colors: [
+                StarColors.bgLight.withOpacity(0.8),
+                Colors.transparent,
+              ],
+              stops: const [0.6, 1.0],
             ).createShader(rect);
           },
-          blendMode: BlendMode.srcATop,
+          blendMode: BlendMode.dstIn,
           child: Image.asset(
             StarImages.mesh,
           ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stardust_app_skeleton/features/cart/screens/cart_screen.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
+import 'package:get/get.dart';
 import 'package:badges/badges.dart' as badges;
 
 class Header extends StatelessWidget {
@@ -31,8 +33,7 @@ class Header extends StatelessWidget {
           badges.Badge(
             showBadge: true,
             ignorePointer: false,
-            onTap: () {},
-            position: badges.BadgePosition.topEnd(top: -12, end: -12),
+            position: badges.BadgePosition.topEnd(top: -1, end: -1),
             badgeAnimation: const badges.BadgeAnimation.slide(
               animationDuration: Duration(milliseconds: 500),
               colorChangeAnimationDuration: Duration(seconds: 1),
@@ -49,10 +50,13 @@ class Header extends StatelessWidget {
               padding: EdgeInsets.all(5),
               elevation: 0,
             ),
-            child: const Icon(
-              Icons.shopping_cart_rounded,
-              color: StarColors.grey,
-              size: 25,
+            child: IconButton(
+              onPressed: () => Get.to(() => const CartScreen()),
+              icon: const Icon(
+                Icons.shopping_cart_rounded,
+                color: StarColors.grey,
+                size: 25,
+              ),
             ),
           ),
         ],

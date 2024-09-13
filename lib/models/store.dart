@@ -1,5 +1,13 @@
 class Store {
-  String name;
+  String name, cep, email, id, insta, icon, cover;
 
-  Store(this.name);
+  Store({
+    required this.name,
+    required this.cep,
+    required this.email,
+    required this.id,
+    required this.insta,
+    required this.icon,
+    required this.cover,
+  });
 }

@@ -5,12 +5,12 @@ import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 
 class ArtistsRowList extends StatelessWidget {
-  final String title;
+  final String? title;
   final List<Artist> artists;
 
   const ArtistsRowList({
     super.key,
-    required this.title,
+    this.title,
     required this.artists,
     this.detailColor = StarColors.starPink,
   });
@@ -22,10 +22,11 @@ class ArtistsRowList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(
-          title: title,
-          color: detailColor,
-        ),
+        if (title != null)
+          SectionTitle(
+            title: title!,
+            color: detailColor,
+          ),
         SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           scrollDirection: Axis.horizontal,
@@ -36,12 +37,12 @@ class ArtistsRowList extends StatelessWidget {
               return Row(
                 children: [
                   ArtistContainer(
-                    artistName: artist.name,
+                    artist: artist,
                     borderColor: index.isEven
                         ? StarColors.starPink
                         : StarColors.starBlue,
                   ),
-                  const SizedBox(width: 15),
+                  if (index != artists.length - 1) const SizedBox(width: 15),
                 ],
               );
             }).toList(),

@@ -1,10 +1,13 @@
 class Photocard {
-  final String artistName;
+  final String artistName, artistId;
+  final String? memberName, memberId;
   final String pcName;
   final String description;
   final String imageUrl;
   final double price;
   final String id;
+  final int stock;
+  final String storeId, storeName;
 
   Photocard({
     required this.artistName,
@@ -13,5 +16,11 @@ class Photocard {
     required this.pcName,
     required this.price,
     required this.id,
+    required this.artistId,
+    required this.memberName,
+    required this.memberId,
+    required this.stock,
+    required this.storeId,
+    required this.storeName,
   });
 }

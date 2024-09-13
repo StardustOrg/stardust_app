@@ -35,7 +35,7 @@ class ArtistWrapList extends StatelessWidget {
             itemBuilder: (context, index) {
               final artist = artists[index];
               return ArtistContainer(
-                artistName: artist.name,
+                artist: artist,
                 borderColor:
                     index.isEven ? StarColors.starPink : StarColors.starBlue,
               );

@@ -9,7 +9,8 @@ class PhotocardInformation extends StatelessWidget {
     required this.groupName,
   });
 
-  final String artistName, pcName, groupName;
+  final String? artistName;
+  final String pcName, groupName;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +30,16 @@ class PhotocardInformation extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            artistName,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              height: 0,
-              color: StarColors.textPrimary,
+          if (artistName != null)
+            Text(
+              artistName!,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                height: 0,
+                color: StarColors.textPrimary,
+              ),
             ),
-          ),
           const SizedBox(height: 5),
           Text(
             pcName,
