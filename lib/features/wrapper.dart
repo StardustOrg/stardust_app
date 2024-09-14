@@ -48,7 +48,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               StarImages.homeSvg,
-              colorFilter: ColorFilter.mode(
+              colorFilter: const ColorFilter.mode(
                 StarColors.bgLight,
                 BlendMode.srcIn,
               ),
@@ -58,7 +58,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               StarImages.favoritesSvg,
-              colorFilter: ColorFilter.mode(
+              colorFilter: const ColorFilter.mode(
                 StarColors.bgLight,
                 BlendMode.srcIn,
               ),
@@ -68,7 +68,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               StarImages.messagesSvg,
-              colorFilter: ColorFilter.mode(
+              colorFilter: const ColorFilter.mode(
                 StarColors.bgLight,
                 BlendMode.srcIn,
               ),
@@ -78,7 +78,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               StarImages.profileSvg,
-              colorFilter: ColorFilter.mode(
+              colorFilter: const ColorFilter.mode(
                 StarColors.bgLight,
                 BlendMode.srcIn,
               ),

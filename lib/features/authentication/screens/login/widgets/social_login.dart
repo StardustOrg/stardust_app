@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -14,14 +16,14 @@ class DifferentWaysToLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Auth _auth = Auth();
+    final Auth auth = Auth();
 
     return Column(
       children: [
         OutlinedButton(
           onPressed: () async {
             try {
-              await _auth.signInWithGoogle();
+              await auth.signInWithGoogle();
               Get.to(() => const Home());
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -49,7 +51,7 @@ class DifferentWaysToLogin extends StatelessWidget {
         const SizedBox(height: StarSizes.spaceBtwItems),
         OutlinedButton(
           onPressed: () async {
-            final result = await _auth.signInWithGoogle();
+            final result = await auth.signInWithGoogle();
             if (result['authenticated']) {
               // Navega para a tela principal se a autenticação foi bem-sucedida
               Get.to(() => const ScreenWrapper());

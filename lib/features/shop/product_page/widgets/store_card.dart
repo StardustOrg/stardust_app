@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stardust_app_skeleton/common/widgets/RatingTag.dart';
+import 'package:stardust_app_skeleton/common/widgets/rating_tag.dart';
 import 'package:stardust_app_skeleton/features/shop/store_page/screens/store_page.dart';
 import 'package:stardust_app_skeleton/repository/store_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
@@ -108,7 +108,7 @@ class _StoreCardState extends State<StoreCard> {
                                   image: NetworkImage(snapshot.data!),
                                   fit: BoxFit.cover,
                                 ),
-                                shape: OvalBorder(),
+                                shape: const OvalBorder(),
                               ),
                             );
                           }

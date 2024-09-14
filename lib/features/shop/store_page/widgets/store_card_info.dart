@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:stardust_app_skeleton/common/widgets/RatingTag.dart';
+import 'package:stardust_app_skeleton/common/widgets/rating_tag.dart';
 import 'package:stardust_app_skeleton/common/widgets/images/store_image.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';

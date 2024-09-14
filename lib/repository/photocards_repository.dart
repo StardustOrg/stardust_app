@@ -5,10 +5,10 @@ import 'package:stardust_app_skeleton/models/photocard.dart';
 class PhotocardsRepository extends GetxController {
   static PhotocardsRepository get instance => Get.put(PhotocardsRepository());
   final _db = FirebaseFirestore.instance;
-  late final CollectionReference _photocards_collection;
+  late final CollectionReference _photocardsCollection;
 
   PhotocardsRepository() {
-    _photocards_collection = _db.collection('photocards');
+    _photocardsCollection = _db.collection('photocards');
   }
 
   /// Artists from snapshot
@@ -33,7 +33,7 @@ class PhotocardsRepository extends GetxController {
   }
 
   Future<List<Photocard>> getAllPhotocards({int? limit}) async {
-    Query<Object?> query = _photocards_collection;
+    Query<Object?> query = _photocardsCollection;
     if (limit != null) {
       query = query.limit(limit);
     }
@@ -43,7 +43,7 @@ class PhotocardsRepository extends GetxController {
 
   Future<List<Photocard>> getPhotocardsByArtist(String artistId,
       {int? limit}) async {
-    var query = _photocards_collection.where('artist_id', isEqualTo: artistId);
+    var query = _photocardsCollection.where('artist_id', isEqualTo: artistId);
     if (limit != null) {
       query = query.limit(limit);
     }
@@ -53,7 +53,7 @@ class PhotocardsRepository extends GetxController {
 
   Future<List<Photocard>> getPhotocardsByMember(String memberId,
       {int? limit}) async {
-    var query = _photocards_collection.where('member_id', isEqualTo: memberId);
+    var query = _photocardsCollection.where('member_id', isEqualTo: memberId);
     if (limit != null) {
       query = query.limit(limit);
     }
@@ -64,7 +64,7 @@ class PhotocardsRepository extends GetxController {
   Future<List<Photocard>> getPhotocardsByArtistAndMember(
       String artistId, String memberId,
       {int? limit}) async {
-    var query = _photocards_collection
+    var query = _photocardsCollection
         .where('artist_id', isEqualTo: artistId)
         .where('member_id', isEqualTo: memberId);
     if (limit != null) {
@@ -76,7 +76,7 @@ class PhotocardsRepository extends GetxController {
 
   Future<List<Photocard>> getPhotocardByStore(String storeId,
       {int? limit}) async {
-    var query = _photocards_collection.where('store_id', isEqualTo: storeId);
+    var query = _photocardsCollection.where('store_id', isEqualTo: storeId);
     if (limit != null) {
       query = query.limit(limit);
     }
@@ -85,7 +85,7 @@ class PhotocardsRepository extends GetxController {
   }
 
   Future<Photocard> getPhotocardById(String id) async {
-    var snapshot = await _photocards_collection.doc(id).get();
+    var snapshot = await _photocardsCollection.doc(id).get();
     var data = snapshot.data() as Map<String, dynamic>;
     return Photocard(
       id: snapshot.id,

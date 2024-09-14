@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
@@ -7,15 +8,16 @@ class UserRepository extends GetxController {
 
   createUser(String uid, String name, String email) async {
     try {
-      print("Attempting to create user with uid: $uid and name: $name");
+      StarLoggerHelper.debug(
+          "Attempting to create user with uid: $uid and name: $name");
       await _db.collection('users').doc(uid).set({
         'username': name,
         'email': email,
         'uid': uid,
       });
-      print("User created successfully");
+      StarLoggerHelper.debug("User created successfully");
     } catch (e) {
-      print("Error adding user to Firestore: $e");
+      StarLoggerHelper.error("Error creating user: $e");
     }
   }
 }

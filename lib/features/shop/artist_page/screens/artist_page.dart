@@ -11,6 +11,7 @@ import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/repository/artists_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
+import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
 class ArtistPage extends StatefulWidget {
   const ArtistPage({super.key, required this.id});
@@ -44,8 +45,8 @@ class _ArtistPageState extends State<ArtistPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('Building ArtistPage');
-    print('Artist ID: ${widget.id}');
+    StarLoggerHelper.debug('Building ArtistPage');
+    StarLoggerHelper.debug('Artist ID: ${widget.id}');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -65,7 +66,7 @@ class _ArtistPageState extends State<ArtistPage> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
-                    print(snapshot.data);
+                    StarLoggerHelper.debug('Error: ${snapshot.error}');
                     return Text('Error: ${snapshot.error}');
                   } else if (!snapshot.hasData) {
                     return const Text('Artist not found');

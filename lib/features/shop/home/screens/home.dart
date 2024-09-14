@@ -4,7 +4,6 @@ import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard/photocards_row_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/store/store_row_list.dart';
 import 'package:stardust_app_skeleton/features/shop/home/widgets/slides_home.dart';
-import 'package:stardust_app_skeleton/common/widgets/topics_section.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/models/store.dart';
 import 'package:stardust_app_skeleton/repository/artists_repository.dart';
@@ -53,11 +52,11 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> topics = [
-      "Natal",
-      "Season’s Greetings 2024",
-      "Páscoa",
-    ];
+    // List<String> topics = [
+    //   "Natal",
+    //   "Season’s Greetings 2024",
+    //   "Páscoa",
+    // ];
 
     return Scaffold(
       body: SafeArea(

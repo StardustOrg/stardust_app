@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stardust_app_skeleton/repository/user_repository.dart';
+import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -19,7 +20,7 @@ class Auth {
           email: email, password: password);
       return {'authenticated': true, 'user': userCredential.user};
     } catch (e) {
-      print("Sign in error: $e");
+      StarLoggerHelper.error("Sign in error: $e");
 
       return {'authenticated': false, 'error': e.toString()};
     }
@@ -63,7 +64,7 @@ class Auth {
         return {'authenticated': false, 'error': 'User credential is null'};
       }
     } catch (e) {
-      print("Google sign-in error: $e");
+      StarLoggerHelper.error("Google sign-in error: $e");
       return {'authenticated': false, 'error': e.toString()};
     }
   }
@@ -71,7 +72,7 @@ class Auth {
   Future<void> signUpWithEmailAndPassword(
       String email, String password, String name) async {
     try {
-      print("Attempting to sign up with email: $email");
+      StarLoggerHelper.info("Attempting to sign up with email: $email");
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -79,13 +80,14 @@ class Auth {
       );
 
       if (userCredential.user != null) {
-        print("User signed up successfully, uid: ${userCredential.user!.uid}");
+        StarLoggerHelper.info(
+            "User signed up successfully, uid: ${userCredential.user!.uid}");
         await _userRepository.createUser(userCredential.user!.uid, name, email);
       } else {
-        print("User credential is null");
+        StarLoggerHelper.error("User credential is null");
       }
     } catch (e) {
-      print("Sign up error: $e");
+      StarLoggerHelper.error("Sign up error: $e");
     }
   }
 

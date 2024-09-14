@@ -35,12 +35,10 @@ class PhotocardImagesCont extends StatelessWidget {
                     side: const BorderSide(width: 1, color: StarColors.grey),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  image: mainImage != null
-                      ? DecorationImage(
-                          image: NetworkImage(mainImage),
-                          fit: BoxFit.cover,
-                        )
-                      : null,
+                  image: DecorationImage(
+                    image: NetworkImage(mainImage),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Positioned(
