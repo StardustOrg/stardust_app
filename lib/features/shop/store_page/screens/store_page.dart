@@ -42,23 +42,12 @@ class _StorePageState extends State<StorePage> {
     super.initState();
     _storeFuture = _fetchStore();
 
-    // String _cep = _storeFuture.then((store) => store.cep).toString();
-    // _fetchLocation(_cep).then((cep) {
-    //   setState(() {
-    //     location = '${cep.localidade}, ${cep.uf}';
-    //   });
-    // });
-
     _photocardsFuture = _fetchPhotocards();
   }
 
   Future<Store> _fetchStore() async {
     return await _storeRepository.getStoreById(widget.storeId);
   }
-
-  // Future<Cep> _fetchLocation(String cep) async {
-  //   return await SearchCep.searchCep(cep);
-  // }|
 
   Future<List<Photocard>> _fetchPhotocards() async {
     return await _photocardRepository.getPhotocardByStore(widget.storeId);
@@ -94,12 +83,26 @@ class _StorePageState extends State<StorePage> {
                       children: [
                         ArtistCard(imageUrl: store.icon),
                         const SizedBox(height: 30),
-                        StoreCardInfo(
-                          storeName: store.name,
-                          rating: 0,
-                          place: "",
-                          insta: store.insta,
-                          icon: store.icon,
+                        FutureBuilder<String>(
+                          future: store.getLocalidadeUf(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else if (!snapshot.hasData) {
+                              return const Text('No location data found');
+                            } else {
+                              return StoreCardInfo(
+                                storeName: store.name,
+                                rating: 0,
+                                place: snapshot.data!,
+                                insta: store.insta,
+                                icon: store.icon,
+                              );
+                            }
+                          },
                         ),
                         const SizedBox(height: 35),
                         TabsRow(
