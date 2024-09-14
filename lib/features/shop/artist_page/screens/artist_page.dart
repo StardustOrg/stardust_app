@@ -101,8 +101,9 @@ class _ArtistPageState extends State<ArtistPage> {
                       const SizedBox(height: 15),
                       if (artist.members.isNotEmpty)
                         ArtistsRowList(
-                            artists:
-                                artist.members.whereType<Artist>().toList()),
+                          artists: artist.members.whereType<Artist>().toList(),
+                          goToArtistPage: false,
+                        ),
                       const SizedBox(height: 35),
                       TabsRow(
                         tab1: tab1,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/artists/artist_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/section_title.dart';
+import 'package:stardust_app_skeleton/features/shop/artist_page/screens/artist_page.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
+import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
 class ArtistsRowList extends StatelessWidget {
   final String? title;
@@ -13,9 +15,11 @@ class ArtistsRowList extends StatelessWidget {
     this.title,
     required this.artists,
     this.detailColor = StarColors.starPink,
+    this.goToArtistPage = true,
   });
 
   final Color detailColor;
+  final bool goToArtistPage;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,17 @@ class ArtistsRowList extends StatelessWidget {
                     borderColor: index.isEven
                         ? StarColors.starPink
                         : StarColors.starBlue,
+                    onPressed: () {
+                      if (goToArtistPage) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) {
+                            return ArtistPage(id: artist.id);
+                          }),
+                        );
+                      } else {
+                        StarLoggerHelper.info("Not going to artist page");
+                      }
+                    },
                   ),
                   if (index != artists.length - 1) const SizedBox(width: 15),
                 ],

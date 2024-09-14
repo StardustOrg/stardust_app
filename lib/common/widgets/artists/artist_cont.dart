@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:stardust_app_skeleton/common/widgets/images/artist_image.dart';
-import 'package:stardust_app_skeleton/features/shop/artist_page/screens/artist_page.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 
@@ -10,14 +8,17 @@ class ArtistContainer extends StatelessWidget {
     super.key,
     required this.artist,
     required this.borderColor,
+    required this.onPressed,
   });
 
   final Artist artist;
   final Color borderColor;
+  final VoidCallback onPressed;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(() => ArtistPage(id: artist.id)),
+      onTap: onPressed,
       child: Column(
         children: [
           StarArtistImage(imageUrl: artist.icon, borderColor: borderColor),

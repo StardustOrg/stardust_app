@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/artists/artist_cont.dart';
 import 'package:stardust_app_skeleton/common/widgets/section_title.dart';
+import 'package:stardust_app_skeleton/features/shop/artist_page/screens/artist_page.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 
@@ -35,10 +36,16 @@ class ArtistWrapList extends StatelessWidget {
             itemBuilder: (context, index) {
               final artist = artists[index];
               return ArtistContainer(
-                artist: artist,
-                borderColor:
-                    index.isEven ? StarColors.starPink : StarColors.starBlue,
-              );
+                  artist: artist,
+                  borderColor:
+                      index.isEven ? StarColors.starPink : StarColors.starBlue,
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return ArtistPage(id: artist.id);
+                      }),
+                    );
+                  });
             },
           ),
         ),
