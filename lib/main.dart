@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase core package
 import 'package:provider/provider.dart';
+import 'package:stardust_app_skeleton/features/auth_controller.dart';
 // import 'package:stardust_app_skeleton/features/Search/screens/search.dart';
 import 'package:stardust_app_skeleton/features/authentication/screens/login/login.dart';
 import 'package:stardust_app_skeleton/models/user.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         theme: StarTheme.lightTheme,
         darkTheme: StarTheme.darkTheme,
-        home: const LoginScreen(),
+        home: const AuthController(),
       ),
     );
   }
