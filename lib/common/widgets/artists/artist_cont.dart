@@ -23,12 +23,9 @@ class ArtistContainer extends StatelessWidget {
         children: [
           StarArtistImage(imageUrl: artist.icon, borderColor: borderColor),
           const SizedBox(height: StarSizes.xs),
-          SizedBox(
-            width: StarSizes.artistSm + 5,
-            child: Text(
-              artist.name,
-              textAlign: TextAlign.center,
-            ),
+          Text(
+            artist.name,
+            textAlign: TextAlign.center,
           ),
         ],
       ),

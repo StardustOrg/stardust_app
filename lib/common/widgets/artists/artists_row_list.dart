@@ -35,6 +35,7 @@ class ArtistsRowList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 25),
           scrollDirection: Axis.horizontal,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: artists.asMap().entries.map((entry) {
               final index = entry.key;
               final artist = entry.value;
