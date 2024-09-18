@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart'; // Import Firebase core package
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:stardust_app_skeleton/features/auth_controller.dart';
-// import 'package:stardust_app_skeleton/features/Search/screens/search.dart';
-import 'package:stardust_app_skeleton/features/authentication/screens/login/login.dart';
 import 'package:stardust_app_skeleton/models/user.dart';
 import 'package:stardust_app_skeleton/services/auth.dart';
 import 'package:stardust_app_skeleton/utils/logging/logger.dart';
-// import 'package:stardust_app_skeleton/features/home/screens/home.dart';
 import 'package:stardust_app_skeleton/utils/theme/theme.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -37,7 +34,7 @@ class MyApp extends StatelessWidget {
       initialData: null,
       value: Auth().user,
       child: GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'Stardust Card',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
         theme: StarTheme.lightTheme,
