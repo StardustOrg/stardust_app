@@ -36,7 +36,6 @@ class StarPhotocardImage extends StatelessWidget {
         ),
         color: StarColors.bgLight,
       ),
-      // TODO: Add image
     );
   }
 }

@@ -37,7 +37,6 @@ class StarArtistImage extends StatelessWidget {
         ),
         color: StarColors.white,
       ),
-      // TODO: Add image
     );
   }
 }

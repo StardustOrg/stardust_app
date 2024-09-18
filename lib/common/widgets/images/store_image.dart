@@ -30,7 +30,6 @@ class StarStoreImage extends StatelessWidget {
           right: BorderSide(width: 3, color: borderColor),
         ),
       ),
-      // TODO: Add image
     );
   }
 }
