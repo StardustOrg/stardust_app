@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/features/shop/home/screens/home.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:stardust_app_skeleton/models/user.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
+import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
 class ScreenWrapper extends StatefulWidget {
-  const ScreenWrapper({super.key});
+  const ScreenWrapper({super.key, required this.user});
+  final UserApp user;
 
   @override
   State<ScreenWrapper> createState() => _ScreenWrapperState();
@@ -41,6 +44,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    StarLoggerHelper.info('User: ${widget.user.uid}');
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: ClipRRect(

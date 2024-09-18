@@ -1,7 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stardust_app_skeleton/features/auth_controller.dart';
 import 'package:stardust_app_skeleton/services/auth.dart';
-import 'package:stardust_app_skeleton/features/shop/wrapper.dart';
 
 class LoginController extends GetxController {
   final Auth _auth = Auth();
@@ -9,7 +11,7 @@ class LoginController extends GetxController {
   final passwordController = TextEditingController();
   final isLoading = false.obs;
 
-  Future<void> login() async {
+  Future<void> login(BuildContext context) async {
     isLoading.value = true;
     try {
       final user = await _auth.signInWithEmailAndPassword(
@@ -17,7 +19,12 @@ class LoginController extends GetxController {
         passwordController.text.trim(),
       );
       if (user['authenticated']) {
-        Get.to(() => const ScreenWrapper());
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => const AuthController(),
+            ),
+            (route) => false);
       } else {
         Get.snackbar('Login Failed', 'Invalid email or password',
             snackPosition: SnackPosition.BOTTOM);

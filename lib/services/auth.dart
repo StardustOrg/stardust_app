@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:stardust_app_skeleton/models/user.dart';
 import 'package:stardust_app_skeleton/repository/user_repository.dart';
 import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
@@ -9,16 +10,25 @@ class Auth {
   final UserRepository _userRepository = UserRepository();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  User? get user => _auth.currentUser;
+  UserApp? _userFromFirebase(User? user) {
+    return user != null ? UserApp(uid: user.uid) : null;
+  }
 
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
+  /// auth change user stream
+  Stream<UserApp?> get user {
+    return _auth.authStateChanges().map(_userFromFirebase);
+  }
 
   Future<Map<String, dynamic>> signInWithEmailAndPassword(
       String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      return {'authenticated': true, 'user': userCredential.user};
+      return {
+        'authenticated': true,
+        'user': userCredential.user,
+        'uid': userCredential.user!.uid
+      };
     } catch (e) {
       StarLoggerHelper.error("Sign in error: $e");
 

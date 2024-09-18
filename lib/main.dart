@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase core package
+import 'package:provider/provider.dart';
 // import 'package:stardust_app_skeleton/features/Search/screens/search.dart';
 import 'package:stardust_app_skeleton/features/authentication/screens/login/login.dart';
+import 'package:stardust_app_skeleton/models/user.dart';
+import 'package:stardust_app_skeleton/services/auth.dart';
 import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 // import 'package:stardust_app_skeleton/features/home/screens/home.dart';
 import 'package:stardust_app_skeleton/utils/theme/theme.dart';
@@ -29,13 +32,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
-      theme: StarTheme.lightTheme,
-      darkTheme: StarTheme.darkTheme,
-      home: const LoginScreen(),
+    return StreamProvider<UserApp?>.value(
+      initialData: null,
+      value: Auth().user,
+      child: GetMaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.light,
+        theme: StarTheme.lightTheme,
+        darkTheme: StarTheme.darkTheme,
+        home: const LoginScreen(),
+      ),
     );
   }
 }

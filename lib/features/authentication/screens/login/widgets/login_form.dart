@@ -11,8 +11,10 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
+    final formKey = GlobalKey<FormState>();
 
     return Form(
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,17 +48,19 @@ class LoginForm extends StatelessWidget {
             ),
           ),
           const SizedBox(height: StarSizes.spaceBtwSections),
-          Obx(() {
-            return ElevatedButton(
-              onPressed: controller.login,
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 0),
-              ),
-              child: controller.isLoading.value
-                  ? const CircularProgressIndicator()
-                  : const Text(StarTexts.login),
-            );
-          }),
+          ElevatedButton(
+            onPressed: () async {
+              if (formKey.currentState!.validate()) {
+                await controller.login(context);
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 0),
+            ),
+            child: controller.isLoading.value
+                ? const CircularProgressIndicator()
+                : const Text(StarTexts.login),
+          ),
           const SizedBox(height: StarSizes.xxs),
           Align(
             alignment: Alignment.center,
