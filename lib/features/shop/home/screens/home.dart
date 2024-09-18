@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<List<Artist>> _fetchArtists() async {
-    return await _artistsRepository.getArtists();
+    return await _artistsRepository.getSoloAndGroups();
   }
 
   Future<List<Store>> _fetchStores() async {

@@ -20,6 +20,7 @@ class ArtistsRepository extends GetxController {
         name: data['name'],
         icon: data['icon'],
         cover: data['cover'],
+        groupId: data['group_id'],
       );
     }).toList();
   }
@@ -34,14 +35,19 @@ class ArtistsRepository extends GetxController {
     return _artistsListFromSnapshot(snapshot);
   }
 
-  /// Fetch members subcollection for an artist
-  Future<List<Artist>> _fetchMembers(String artistId) async {
-    var membersCollection =
-        await _artistsCollection.doc(artistId).collection('members').get();
+  Future<List<Artist>> getSoloAndGroups() async {
+    var snapshot = await _artistsCollection.get();
+    var artists = _artistsListFromSnapshot(snapshot);
 
-    return membersCollection.docs
-        .map((doc) => _artistFromSnapshot(doc))
-        .toList();
+    return artists.where((artist) => artist.groupId == null).toList();
+  }
+
+  /// Fetch members based on the groupId (members have the groupId of the group artist)
+  Future<List<Artist>> _fetchMembers(String groupId) async {
+    var snapshot =
+        await _artistsCollection.where('group_id', isEqualTo: groupId).get();
+
+    return _artistsListFromSnapshot(snapshot);
   }
 
   /// Create an artist from snapshot including members
@@ -61,15 +67,33 @@ class ArtistsRepository extends GetxController {
   /// Get artist by ID with real-time updates including members
   Stream<Artist> getArtist(String id) {
     return _artistsCollection.doc(id).snapshots().asyncMap((snapshot) async {
-      var members = await _fetchMembers(id);
-      return _artistFromSnapshot(snapshot, members);
+      var artistData = snapshot.data() as Map<String, dynamic>;
+
+      // Check if the artist is a group (no group_id, but has members)
+      if (artistData['group_id'] == null) {
+        // Fetch members for the group (members have the group's id as their groupId)
+        var members = await _fetchMembers(id);
+        return _artistFromSnapshot(snapshot, members);
+      } else {
+        // Solo artist or member of a group, no members to fetch
+        return _artistFromSnapshot(snapshot);
+      }
     });
   }
 
   /// Get artist by ID once including members
   Future<Artist> getArtistById(String id) async {
     var snapshot = await _artistsCollection.doc(id).get();
-    var members = await _fetchMembers(id);
-    return _artistFromSnapshot(snapshot, members);
+    var artistData = snapshot.data() as Map<String, dynamic>;
+
+    // Check if the artist is a group (no group_id, but has members)
+    if (artistData['group_id'] == null) {
+      // Fetch members for the group (members have the group's id as their groupId)
+      var members = await _fetchMembers(id);
+      return _artistFromSnapshot(snapshot, members);
+    } else {
+      // Solo artist or member of a group, no members to fetch
+      return _artistFromSnapshot(snapshot);
+    }
   }
 }
