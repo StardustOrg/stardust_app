@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/features/shop/home/screens/home.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:stardust_app_skeleton/features/shop/profile/screens/profile_screen.dart';
 import 'package:stardust_app_skeleton/models/user.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
@@ -17,24 +18,26 @@ class ScreenWrapper extends StatefulWidget {
 class _ScreenWrapperState extends State<ScreenWrapper> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Center(
-      child: Text(
-        'Index 1: Favoritos',
+  late List<Widget> _widgetOptions;
+
+  @override
+  void initState() {
+    super.initState();
+    _widgetOptions = <Widget>[
+      const Home(),
+      const Center(
+        child: Text(
+          'Index 1: Favoritos',
+        ),
       ),
-    ),
-    Center(
-      child: Text(
-        'Index 2: Menssagens',
+      const Center(
+        child: Text(
+          'Index 2: Menssagens',
+        ),
       ),
-    ),
-    Center(
-      child: Text(
-        'Index 3: Profile',
-      ),
-    ),
-  ];
+      ProfileScreen(uid: widget.user.uid),
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {

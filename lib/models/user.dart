@@ -6,14 +6,17 @@ class UserApp {
   });
 }
 
-class UserData {
+class StarUser {
   final String uid;
-  final bool username;
+  final String username;
   final String email;
+  final String? icon, cover;
 
-  UserData({
+  StarUser({
     required this.uid,
     required this.username,
     required this.email,
+    this.icon,
+    this.cover,
   });
 }

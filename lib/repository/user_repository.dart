@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:stardust_app_skeleton/models/user.dart';
 import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
 class UserRepository extends GetxController {
@@ -19,5 +20,25 @@ class UserRepository extends GetxController {
     } catch (e) {
       StarLoggerHelper.error("Error creating user: $e");
     }
+  }
+
+  StarUser _userFromSnapshot(DocumentSnapshot snapshot) {
+    var data = snapshot.data() as Map<String, dynamic>;
+    return StarUser(
+      uid: snapshot.id,
+      username: data['username'],
+      email: data['email'],
+      icon: data['icon'],
+      cover: data['cover'],
+    );
+  }
+
+  Stream<StarUser> getUser(String uid) {
+    return _db.collection('users').doc(uid).snapshots().map(_userFromSnapshot);
+  }
+
+  Future<StarUser> getUserOnce(String uid) async {
+    var snapshot = await _db.collection('users').doc(uid).get();
+    return _userFromSnapshot(snapshot);
   }
 }
