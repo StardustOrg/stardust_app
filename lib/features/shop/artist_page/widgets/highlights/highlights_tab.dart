@@ -6,8 +6,12 @@ import 'package:stardust_app_skeleton/models/photocard.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 
 class HighlightsTab extends StatefulWidget {
-  const HighlightsTab({super.key});
+  const HighlightsTab({
+    super.key,
+    required this.storeId,
+  });
 
+  final String storeId;
   @override
   State<HighlightsTab> createState() => _HighlightsTabState();
 }
@@ -19,7 +23,7 @@ class _HighlightsTabState extends State<HighlightsTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SlidesHightlights(),
+        SlidesHightlights(storeId: widget.storeId),
         const SizedBox(height: 30),
         PhotocardsRowList(
           title: "VOCÊ TAMBÉM PODE SE INTERESSAR",

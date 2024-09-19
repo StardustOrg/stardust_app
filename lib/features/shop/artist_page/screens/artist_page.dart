@@ -110,7 +110,7 @@ class _ArtistPageState extends State<ArtistPage> {
                         onTabChanged: _updateTab,
                       ),
                       const SizedBox(height: 30),
-                      if (tab1) const HighlightsTab(),
+                      if (tab1) HighlightsTab(storeId: widget.id),
                       if (!tab1) const ProductsTab(),
                     ],
                   );

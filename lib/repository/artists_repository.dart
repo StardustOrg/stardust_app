@@ -96,4 +96,25 @@ class ArtistsRepository extends GetxController {
       return _artistFromSnapshot(snapshot);
     }
   }
+
+  List<Map<String, dynamic>> _artistHightlights(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      var data = doc.data() as Map<String, dynamic>;
+      return {
+        'photo': data['photo'],
+        'active': data['active'],
+      };
+    }).toList();
+  }
+
+  Future<List<Map<String, dynamic>>> getArtistHighlights(
+      String artistId) async {
+    var snapshot =
+        await _artistsCollection.doc(artistId).collection('highlights').get();
+    var highlights = _artistHightlights(snapshot);
+
+    return highlights
+        .where((highlight) => highlight['active'] == true)
+        .toList();
+  }
 }

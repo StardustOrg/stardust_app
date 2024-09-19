@@ -95,7 +95,7 @@ class _SlidesHomeState extends State<SlidesHome> {
                 ),
               ),
               Positioned(
-                bottom: 0,
+                bottom: 5,
                 left: 0,
                 right: 0,
                 child: StarDotsIndicator(

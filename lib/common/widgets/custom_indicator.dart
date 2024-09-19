@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
@@ -76,24 +76,48 @@ class StarDotsIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DotsIndicator(
-      dotsCount: pageLength,
-      position: currentIndexPage.toDouble(),
-      decorator: DotsDecorator(
-        size: const Size(16.0, 16.0),
-        activeSize: const Size(24.0, 24.0),
-        shapes: List.generate(
-          pageLength,
-          (index) => const StarShapeBorder(size: 12.0),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.transparent,
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: StarColors.bgLight.withOpacity(0.2),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: DotsIndicator(
+                  dotsCount: pageLength,
+                  position: currentIndexPage.toDouble(),
+                  decorator: DotsDecorator(
+                    size: const Size(16.0, 16.0),
+                    activeSize: const Size(24.0, 24.0),
+                    shapes: List.generate(
+                      pageLength,
+                      (index) => const StarShapeBorder(size: 12.0),
+                    ),
+                    activeShapes: List.generate(
+                      pageLength,
+                      (index) => const StarShapeBorder(size: 18.0),
+                    ),
+                    activeColor: StarColors.starPink,
+                    color: StarColors.placeholder,
+                    spacing: const EdgeInsets.symmetric(horizontal: 5.0),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        activeShapes: List.generate(
-          pageLength,
-          (index) => const StarShapeBorder(size: 18.0),
-        ),
-        activeColor: StarColors.starPink,
-        color: StarColors.grey,
-        spacing: const EdgeInsets.all(5.0),
-      ),
+      ],
     );
   }
 }
