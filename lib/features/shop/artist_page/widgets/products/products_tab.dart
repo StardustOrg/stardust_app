@@ -4,15 +4,9 @@ import 'package:stardust_app_skeleton/models/photocard.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
 
-class ProductsTab extends StatefulWidget {
-  const ProductsTab({super.key});
-
-  @override
-  State<ProductsTab> createState() => _ProductsTabState();
-}
-
-class _ProductsTabState extends State<ProductsTab> {
-  List<Photocard> photocards = [];
+class ProductsTab extends StatelessWidget {
+  const ProductsTab({super.key, required this.photocards});
+  final List<Photocard> photocards;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +66,7 @@ class _ProductsTabState extends State<ProductsTab> {
                   id: photocard.id,
                   price: photocard.price,
                   size: StarDeviceUtils.getScreenWidth(context) * 0.41,
+                  imageUrl: photocard.imageUrl,
                 ),
               );
             }).toList(),

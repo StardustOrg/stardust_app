@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stardust_app_skeleton/common/widgets/artists/artists_row_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
@@ -8,7 +8,9 @@ import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/highligh
 import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/products/products_tab.dart';
 import 'package:stardust_app_skeleton/common/widgets/tabs_row.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
+import 'package:stardust_app_skeleton/models/photocard.dart';
 import 'package:stardust_app_skeleton/repository/artists_repository.dart';
+import 'package:stardust_app_skeleton/repository/photocards_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 import 'package:stardust_app_skeleton/utils/logging/logger.dart';
@@ -26,6 +28,13 @@ class _ArtistPageState extends State<ArtistPage> {
   late Future<Artist> _artist;
   final ArtistsRepository _artistsRepository = ArtistsRepository.instance;
   bool tab1 = true;
+  late Future<List<Photocard>> _photocardsFuture;
+  final PhotocardsRepository _photocardRepository =
+      PhotocardsRepository.instance;
+
+  late Future<List<Map<String, dynamic>>> _highlightsFuture;
+
+  String? _selectedArtistId;
 
   void _updateTab(bool isTab1) {
     setState(() {
@@ -37,10 +46,32 @@ class _ArtistPageState extends State<ArtistPage> {
     return await _artistsRepository.getArtistById(widget.id);
   }
 
+  Future<List<Photocard>> _fetchPhotocards() async {
+    return await _photocardRepository.getPhotocardsByArtist(widget.id);
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchHighlights() async {
+    return await _artistsRepository.getArtistHighlights(widget.id);
+  }
+
   @override
   void initState() {
     super.initState();
     _artist = _fetchArtist();
+    _photocardsFuture = _fetchPhotocards();
+    _highlightsFuture = _fetchHighlights();
+  }
+
+  void _filterProductsByArtist(String artistId) {
+    setState(() {
+      _selectedArtistId = artistId;
+    });
+  }
+
+  void _resetFilter() {
+    setState(() {
+      _selectedArtistId = null;
+    });
   }
 
   @override
@@ -64,12 +95,12 @@ class _ArtistPageState extends State<ArtistPage> {
                 future: _artist,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     StarLoggerHelper.debug('Error: ${snapshot.error}');
-                    return Text('Error: ${snapshot.error}');
+                    return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (!snapshot.hasData) {
-                    return const Text('Artist not found');
+                    return const Center(child: Text('Artist not found'));
                   }
 
                   final artist = snapshot.data!;
@@ -103,15 +134,76 @@ class _ArtistPageState extends State<ArtistPage> {
                         ArtistsRowList(
                           artists: artist.members.whereType<Artist>().toList(),
                           goToArtistPage: false,
+                          onArtistContainerPress: (selectedArtist) {
+                            _resetFilter();
+                            StarLoggerHelper.debug(
+                                'Selected artist: ${selectedArtist.id}');
+                            _filterProductsByArtist(selectedArtist.id);
+                            _updateTab(false); // Switch to ProductsTab
+                          },
                         ),
                       const SizedBox(height: 35),
                       TabsRow(
                         tab1: tab1,
-                        onTabChanged: _updateTab,
+                        onTabChanged: (isTab1) {
+                          _updateTab(isTab1);
+                          if (isTab1) {
+                            _resetFilter();
+                          }
+                        },
                       ),
                       const SizedBox(height: 30),
-                      if (tab1) HighlightsTab(storeId: widget.id),
-                      if (!tab1) const ProductsTab(),
+                      FutureBuilder<List<Photocard>>(
+                        future: _photocardsFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          } else if (!snapshot.hasData) {
+                            return const Center(
+                                child: Text('No products found'));
+                          } else {
+                            final photocards = snapshot.data!;
+                            final filteredPhotocards = _selectedArtistId != null
+                                ? photocards
+                                    .where((pc) =>
+                                        pc.memberId == _selectedArtistId)
+                                    .toList()
+                                : photocards;
+
+                            if (tab1) {
+                              return FutureBuilder<List<Map<String, dynamic>>>(
+                                future: _highlightsFuture,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (snapshot.hasError) {
+                                    return Center(
+                                        child:
+                                            Text('Error: ${snapshot.error}'));
+                                  } else {
+                                    final highlights = snapshot.data!;
+                                    return HighlightsTab(
+                                      storeId: widget.id,
+                                      photocards: filteredPhotocards,
+                                      highlights: highlights,
+                                    );
+                                  }
+                                },
+                              );
+                            } else {
+                              return ProductsTab(
+                                  photocards: filteredPhotocards);
+                            }
+                          }
+                        },
+                      ),
                     ],
                   );
                 },

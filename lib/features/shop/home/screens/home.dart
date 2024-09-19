@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
                 future: _artistsFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(); // Loading indicator
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -101,6 +101,7 @@ class _HomeState extends State<Home> {
                     return ArtistsRowList(
                       title: StarTexts.recommendationsArtist,
                       artists: snapshot.data!,
+                      onArtistContainerPress: (p0) {},
                     );
                   }
                 },
@@ -117,7 +118,7 @@ class _HomeState extends State<Home> {
                     return const Text('No stores found');
                   } else {
                     return StoreRowList(
-                      title: "Lojas em alta", // Use the appropriate title
+                      title: "Lojas em alta",
                       stores: snapshot.data!,
                     );
                   }

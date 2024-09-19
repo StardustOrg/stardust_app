@@ -9,25 +9,27 @@ class HighlightsTab extends StatefulWidget {
   const HighlightsTab({
     super.key,
     required this.storeId,
+    required this.photocards,
+    required this.highlights,
   });
-
+  final List<Map<String, dynamic>> highlights;
+  final List<Photocard> photocards;
   final String storeId;
   @override
   State<HighlightsTab> createState() => _HighlightsTabState();
 }
 
 class _HighlightsTabState extends State<HighlightsTab> {
-  List<Photocard> photocards = [];
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SlidesHightlights(storeId: widget.storeId),
+        SlidesHightlights(highlights: widget.highlights,),
         const SizedBox(height: 30),
         PhotocardsRowList(
           title: "VOCÊ TAMBÉM PODE SE INTERESSAR",
-          photocards: photocards,
+          photocards: widget.photocards,
         ),
         const SizedBox(height: 30),
         const TopicsSection(
@@ -37,7 +39,7 @@ class _HighlightsTabState extends State<HighlightsTab> {
         const SizedBox(height: 30),
         PhotocardsRowList(
           title: "Últimas unidades",
-          photocards: photocards,
+          photocards: widget.photocards,
         ),
       ],
     );

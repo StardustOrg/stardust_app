@@ -15,7 +15,9 @@ class _StoreHighlightsTabState extends State<StoreHighlightsTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // const SlidesHightlights(),
+        const SlidesHightlights(
+          highlights: [],
+        ),
         const SizedBox(height: 30),
         PhotocardsRowList(
           title: "PRODUTOS DA LOJA",

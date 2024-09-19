@@ -4,7 +4,6 @@ import 'package:stardust_app_skeleton/common/widgets/section_title.dart';
 import 'package:stardust_app_skeleton/features/shop/artist_page/screens/artist_page.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
-import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
 class ArtistsRowList extends StatelessWidget {
   final String? title;
@@ -16,10 +15,12 @@ class ArtistsRowList extends StatelessWidget {
     required this.artists,
     this.detailColor = StarColors.starPink,
     this.goToArtistPage = true,
+    required this.onArtistContainerPress,
   });
 
   final Color detailColor;
   final bool goToArtistPage;
+  final void Function(Artist) onArtistContainerPress;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class ArtistsRowList extends StatelessWidget {
                           }),
                         );
                       } else {
-                        StarLoggerHelper.info("Not going to artist page");
+                        onArtistContainerPress(artist);
                       }
                     },
                   ),
