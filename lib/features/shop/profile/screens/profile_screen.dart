@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/images/store_image.dart';
 import 'package:stardust_app_skeleton/common/widgets/star_tag.dart';
+import 'package:stardust_app_skeleton/features/shop/profile/widgets/profile_options.dart';
 import 'package:stardust_app_skeleton/models/user.dart';
 import 'package:stardust_app_skeleton/repository/user_repository.dart';
 import 'package:stardust_app_skeleton/services/auth.dart';
@@ -100,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     children: [
                                       StarTag(topic: "GG Stan"),
                                       StarTag(topic: "My"),
-                                      StarTag(topic: "Midzy"),
+                                      StarTag(topic: "Fernot"),
                                     ],
                                   ),
                                 ),
@@ -109,61 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                         const SizedBox(height: 25),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(25),
-                          decoration: BoxDecoration(
-                            color: StarColors.bgLight,
-                            borderRadius: BorderRadius.circular(20),
-                            border: const Border(
-                              top: BorderSide(
-                                  width: 1, color: StarColors.starBlue),
-                              left: BorderSide(
-                                  width: 1, color: StarColors.starBlue),
-                              bottom: BorderSide(
-                                  width: 3, color: StarColors.starBlue),
-                              right: BorderSide(
-                                  width: 3, color: StarColors.starBlue),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Material(
-                                color: Colors.transparent,
-                                clipBehavior: Clip.none,
-                                borderRadius: BorderRadius.circular(5),
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(5),
-                                  onTap: () {
-                                    _auth.signOut();
-                                    StarLoggerHelper.debug('Logout');
-                                  },
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(2.0),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.logout_rounded,
-                                          size: 30,
-                                        ),
-                                        SizedBox(width: 30),
-                                        Text(
-                                          'Logout',
-                                          style: TextStyle(
-                                            color: StarColors.textPrimary,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            height: 0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
+                        ProfileOptions(auth: _auth)
                       ],
                     ),
                   ),
