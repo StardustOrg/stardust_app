@@ -12,7 +12,8 @@ class PhotocardImagesCont extends StatelessWidget {
     required this.dt2,
   });
 
-  final String mainImage, dt1, dt2;
+  final String mainImage;
+  final String? dt1, dt2;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,9 @@ class PhotocardImagesCont extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: (dt1 != null || dt2 != null)
+            ? MainAxisAlignment.spaceBetween
+            : MainAxisAlignment.center,
         children: [
           Stack(
             clipBehavior: Clip.none,
@@ -51,23 +54,10 @@ class PhotocardImagesCont extends StatelessWidget {
               ),
             ],
           ),
-          Column(
-            children: [
-              Container(
-                width: smallPcSize,
-                height: smallPcSize,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 1, color: StarColors.grey),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                // TODO: add image
-              ),
-              SizedBox(height: gap),
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
+          if (dt1 != null || dt2 != null)
+            Column(
+              children: [
+                if (dt1 != null)
                   Container(
                     width: smallPcSize,
                     height: smallPcSize,
@@ -77,20 +67,43 @@ class PhotocardImagesCont extends StatelessWidget {
                             const BorderSide(width: 1, color: StarColors.grey),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                    ),
-                    // TODO: add image
-                  ),
-                  Positioned(
-                    right: -5,
-                    top: -6,
-                    child: SvgPicture.asset(
-                      StarImages.fallingSparkles,
+                      image: DecorationImage(
+                        image: NetworkImage(dt1!),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
+                SizedBox(height: gap),
+                if (dt2 != null)
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        width: smallPcSize,
+                        height: smallPcSize,
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                width: 1, color: StarColors.grey),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          image: DecorationImage(
+                            image: NetworkImage(dt2!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: -5,
+                        top: -6,
+                        child: SvgPicture.asset(
+                          StarImages.fallingSparkles,
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
         ],
       ),
     );

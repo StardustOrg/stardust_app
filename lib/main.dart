@@ -16,7 +16,7 @@ void main() async {
   FlutterNativeSplash.preserve(
       widgetsBinding: widgetsBinding); // Inicializa as ligações do Flutter
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: StarColors.bgLight.withOpacity(0.2), // status bar color
+    statusBarColor: StarColors.bgDark.withOpacity(0.35), // status bar color
   ));
   try {
     await Firebase.initializeApp(); // Inicializa o Firebase

@@ -99,8 +99,8 @@ class _ProductPageState extends State<ProductPage> {
                           children: [
                             PhotocardImagesCont(
                               mainImage: photocard.imageUrl,
-                              dt1: "",
-                              dt2: "",
+                              dt1: photocard.dt1,
+                              dt2: photocard.dt2,
                             ),
                             const SizedBox(height: 20),
                             SingleChildScrollView(

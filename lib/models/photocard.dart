@@ -1,6 +1,7 @@
 class Photocard {
   final String artistName, artistId;
   final String? memberName, memberId;
+  final String? dt1, dt2;
   final String pcName;
   final String description;
   final String imageUrl;
@@ -22,5 +23,7 @@ class Photocard {
     required this.stock,
     required this.storeId,
     required this.storeName,
+    required this.dt1,
+    required this.dt2,
   });
 }
