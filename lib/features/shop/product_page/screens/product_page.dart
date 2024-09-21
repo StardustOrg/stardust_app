@@ -65,42 +65,46 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              padding: const EdgeInsets.only(bottom: 100),
-              child: Column(
+        child: FutureBuilder<Photocard>(
+          future: _photocardFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData) {
+              return const Center(child: Text('No data found'));
+            } else {
+              final photocard = snapshot.data!;
+              return Stack(
                 children: [
-                  const Header(),
-                  const SizedBox(height: 25),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(bottom: 100),
+                    child: Column(
                       children: [
-                        StarBackButton(),
-                        PcTypeTag(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  FutureBuilder<Photocard>(
-                    future: _photocardFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (!snapshot.hasData) {
-                        return const Center(child: Text('No data found'));
-                      } else {
-                        final photocard = snapshot.data!;
-                        return Column(
+                        const Header(),
+                        const SizedBox(height: 25),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const StarBackButton(),
+                              if (photocard.original) const PcTypeTag(),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Column(
                           children: [
-                            PhotocardImagesCont(
-                              mainImage: photocard.imageUrl,
-                              dt1: photocard.dt1,
-                              dt2: photocard.dt2,
+                            Stack(
+                              children: [
+                                PhotocardImagesCont(
+                                  mainImage: photocard.imageUrl,
+                                  dt1: photocard.dt1,
+                                  dt2: photocard.dt2,
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 20),
                             SingleChildScrollView(
@@ -141,7 +145,10 @@ class _ProductPageState extends State<ProductPage> {
                                     ),
                                   ),
                                   DropdownQuantitySelector(
-                                    quantities: _quantities,
+                                    quantities: photocard.quantity > 4
+                                        ? _quantities
+                                        : List<int>.generate(photocard.quantity,
+                                            (index) => index + 1),
                                   ),
                                 ],
                               ),
@@ -157,79 +164,84 @@ class _ProductPageState extends State<ProductPage> {
                               storeId: photocard.storeId,
                             ),
                           ],
-                        );
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 25),
-                  FutureBuilder<List<Photocard>>(
-                    future: _photocardsFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(
-                            child: Text('No recommendations found'));
-                      } else {
-                        final photocards = snapshot.data!;
-                        return PhotocardsRowList(
-                          title: StarTexts.productRecommendations,
-                          photocards: photocards,
-                          detailColor: StarColors.starBlue,
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: const BoxDecoration(
-                  color: StarColors.bgLight,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 5,
-                      offset: Offset(0, -1),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.add_shopping_cart_rounded,
-                        color: StarColors.black,
-                      ),
-                    ),
-                    SizedBox(
-                      width: StarDeviceUtils.getScreenWidth(context) * 0.6,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 30,
-                            vertical: 5,
-                          ),
                         ),
-                        onPressed: () {},
-                        child: const Text("Comprar"),
+                        const SizedBox(height: 25),
+                        FutureBuilder<List<Photocard>>(
+                          future: _photocardsFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                  child: Text('Error: ${snapshot.error}'));
+                            } else if (!snapshot.hasData ||
+                                snapshot.data!.isEmpty) {
+                              return const Center(
+                                  child: Text('No recommendations found'));
+                            } else {
+                              final photocards = snapshot.data!;
+                              return PhotocardsRowList(
+                                title: StarTexts.productRecommendations,
+                                photocards: photocards,
+                                detailColor: StarColors.starBlue,
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      decoration: const BoxDecoration(
+                        color: StarColors.bgLight,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 5,
+                            offset: Offset(0, -1),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.add_shopping_cart_rounded,
+                              color: StarColors.black,
+                            ),
+                          ),
+                          SizedBox(
+                            width:
+                                StarDeviceUtils.getScreenWidth(context) * 0.6,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 30,
+                                  vertical: 5,
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: const Text("Comprar"),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
+                  )
+                ],
+              );
+            }
+          },
+        ), // TODO
       ),
     );
   }

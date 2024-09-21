@@ -7,7 +7,7 @@ import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 class PhotocardDescription extends StatefulWidget {
   const PhotocardDescription({super.key, required this.description});
 
-  final String description;
+  final String? description;
 
   @override
   State<PhotocardDescription> createState() => _PhotocardDescriptionState();
@@ -15,6 +15,8 @@ class PhotocardDescription extends StatefulWidget {
 
 class _PhotocardDescriptionState extends State<PhotocardDescription> {
   bool isExpanded = false;
+  final String description =
+      "Descrição não informada pelo vendedor. Entre em contato para mais informações.";
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +46,11 @@ class _PhotocardDescriptionState extends State<PhotocardDescription> {
             ],
           ),
           const SizedBox(height: 10),
-          // Text(
-          //   widget.description,
-          //   style: const TextStyle(
-          //     fontSize: 14,
-          //     fontWeight: FontWeight.w300,
-          //     height: 1.5,
-          //   ),
-          // ),
           LayoutBuilder(
             builder: (context, constraints) {
               final textSpan = TextSpan(
-                text: widget.description,
+                text:
+                    widget.description == '' ? description : widget.description,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w300,

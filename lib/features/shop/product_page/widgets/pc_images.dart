@@ -52,6 +52,44 @@ class PhotocardImagesCont extends StatelessWidget {
                   width: 100,
                 ),
               ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: Container(
+                  padding: const EdgeInsets.only(
+                    bottom: 5.0,
+                    left: 10.0,
+                    right: 20.0,
+                    top: 50.0,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(20),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      colors: [
+                        StarColors.bgDark.withOpacity(1),
+                        StarColors.bgDark.withOpacity(0.5),
+                        StarColors.bgDark.withOpacity(0.1),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                  child: IconButton(
+                    onPressed: () {},
+                    splashColor: StarColors.starPink,
+                    highlightColor: StarColors.starPink.withOpacity(0.4),
+                    icon: const Icon(
+                      Icons.favorite_border_rounded,
+                      size: 30,
+                      color: StarColors.starPink,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
           if (dt1 != null || dt2 != null)

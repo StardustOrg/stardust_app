@@ -27,9 +27,10 @@ class PhotocardsRepository extends GetxController {
         memberName: data['member_name'],
         memberId: data['member_id'],
         price: data['price'],
-        stock: data['quantity'],
+        quantity: data['quantity'],
         storeId: data['store_id'],
         storeName: data['store_name'],
+        original: data['original'],
       );
     }).toList();
   }
@@ -101,9 +102,10 @@ class PhotocardsRepository extends GetxController {
       memberName: data['member_name'],
       memberId: data['member_id'],
       price: data['price'],
-      stock: data['quantity'],
+      quantity: data['quantity'],
       storeId: data['store_id'],
       storeName: data['store_name'],
+      original: data['original'],
     );
   }
 }
