@@ -1,6 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:stardust_app_skeleton/common/widgets/images/photocard_image.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/screens/product_page.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
@@ -26,7 +25,12 @@ class PhotocardContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(() => ProductPage(id: id)),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductPage(id: id),
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
