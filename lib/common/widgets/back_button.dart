@@ -7,24 +7,33 @@ class StarBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Get.back(),
-      child: const Row(
-        children: [
-          Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: StarColors.starBlue,
-            size: 15,
+    return Material(
+      color: Colors.transparent,
+      clipBehavior: Clip.none,
+      borderRadius: BorderRadius.circular(5),
+      child: InkWell(
+        highlightColor: StarColors.starBlue.withOpacity(0.25),
+        onTap: () => Get.back(),
+        child: Container(
+          padding: const EdgeInsets.all(2.0),
+          child: const Row(
+            children: [
+              Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: StarColors.starBlue,
+                size: 15,
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Voltar',
+                style: TextStyle(
+                  color: StarColors.starBlue,
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
-          SizedBox(width: 10),
-          Text(
-            'Voltar',
-            style: TextStyle(
-              color: StarColors.starBlue,
-              fontSize: 16,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
