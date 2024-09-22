@@ -10,10 +10,14 @@ class PhotocardImagesCont extends StatelessWidget {
     required this.mainImage,
     required this.dt1,
     required this.dt2,
+    required this.onTap,
+    required this.isFavorite,
   });
 
   final String mainImage;
   final String? dt1, dt2;
+  final VoidCallback? onTap;
+  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +83,13 @@ class PhotocardImagesCont extends StatelessWidget {
                     ),
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: onTap,
                     splashColor: StarColors.starPink,
                     highlightColor: StarColors.starPink.withOpacity(0.4),
-                    icon: const Icon(
-                      Icons.favorite_border_rounded,
+                    icon: Icon(
+                      isFavorite
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_border_rounded,
                       size: 30,
                       color: StarColors.starPink,
                     ),

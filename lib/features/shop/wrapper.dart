@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stardust_app_skeleton/features/shop/favorites/screens/favorites_page.dart';
 import 'package:stardust_app_skeleton/features/shop/home/screens/home.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stardust_app_skeleton/features/shop/profile/screens/profile_screen.dart';
@@ -26,9 +27,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
     _widgetOptions = <Widget>[
       const Home(),
       const Center(
-        child: Text(
-          'Index 1: Favoritos',
-        ),
+        child: FavoritesPage(),
       ),
       const Center(
         child: Text(

@@ -40,11 +40,17 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _artistsFuture = _fetchArtists();
-    _tagsFuture = _fetchTags();
-    _storesFuture = _fetchStores();
-    _photocardsFuture = _fetchPhotocards();
-    _lastUnitsPhotocardsFuture = _fetchLastUnitsPhotocards();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() {
+      _artistsFuture = _fetchArtists();
+      _tagsFuture = _fetchTags();
+      _storesFuture = _fetchStores();
+      _photocardsFuture = _fetchPhotocards();
+      _lastUnitsPhotocardsFuture = _fetchLastUnitsPhotocards();
+    });
   }
 
   Future<List<Artist>> _fetchArtists() async {
@@ -69,111 +75,120 @@ class _HomeState extends State<Home> {
     return await _photocardRepository.getLowStockPhotocards(limit: 10);
   }
 
+  Future<void> _onRefresh() async {
+    await _loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.only(bottom: 25),
-          child: Column(
-            children: [
-              // Header
-              const Header(goToSearchPage: true),
-              const SizedBox(height: 45),
-              const SlidesHome(),
-              const SizedBox(height: 27),
-              FutureBuilder<List<Photocard>>(
-                future: _photocardsFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No photocards found');
-                  } else {
-                    return PhotocardsRowList(
-                      title: StarTexts.recommendationsPc,
-                      photocards: snapshot.data!,
-                      detailColor: StarColors.starBlue,
-                    );
-                  }
-                },
-              ),
-              const SizedBox(height: 25),
-              FutureBuilder<List<Artist>>(
-                future: _artistsFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No artists found');
-                  } else {
-                    return ArtistsRowList(
-                      title: StarTexts.recommendationsArtist,
-                      artists: snapshot.data!,
-                      onArtistContainerPress: (p0) {},
-                    );
-                  }
-                },
-              ),
-              const SizedBox(height: 25),
-              FutureBuilder<List<Tag>>(
-                future: _tagsFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No artists found');
-                  } else {
-                    return TopicsSection(
-                        topics: snapshot.data!,
-                        title: StarTexts.recommendationsTopics);
-                  }
-                },
-              ),
-              const SizedBox(height: 25),
-              FutureBuilder<List<Photocard>>(
-                future: _lastUnitsPhotocardsFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No photocards found');
-                  } else {
-                    return PhotocardsRowList(
-                      title: StarTexts.lastUnities,
-                      photocards: snapshot.data!,
-                      detailColor: StarColors.starBlue,
-                    );
-                  }
-                },
-              ),
-              const SizedBox(height: 25),
-              FutureBuilder<List<Store>>(
-                future: _storesFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No stores found');
-                  } else {
-                    return StoreRowList(
-                      title: "Lojas em alta",
-                      stores: snapshot.data!,
-                    );
-                  }
-                },
-              ),
-            ],
+        child: RefreshIndicator(
+          color: StarColors.starPink,
+          backgroundColor: StarColors.bgLight,
+          onRefresh: _onRefresh, // Trigger refresh when user pulls down
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 25),
+            child: Column(
+              children: [
+                // Header
+                const Header(goToSearchPage: true),
+                const SizedBox(height: 45),
+                const SlidesHome(),
+                const SizedBox(height: 27),
+                FutureBuilder<List<Photocard>>(
+                  future: _photocardsFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('No photocards found');
+                    } else {
+                      return PhotocardsRowList(
+                        title: StarTexts.recommendationsPc,
+                        photocards: snapshot.data!,
+                        detailColor: StarColors.starBlue,
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(height: 25),
+                FutureBuilder<List<Artist>>(
+                  future: _artistsFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('No artists found');
+                    } else {
+                      return ArtistsRowList(
+                        title: StarTexts.recommendationsArtist,
+                        artists: snapshot.data!,
+                        onArtistContainerPress: (p0) {},
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(height: 25),
+                FutureBuilder<List<Tag>>(
+                  future: _tagsFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('No artists found');
+                    } else {
+                      return TopicsSection(
+                          topics: snapshot.data!,
+                          title: StarTexts.recommendationsTopics);
+                    }
+                  },
+                ),
+                const SizedBox(height: 25),
+                FutureBuilder<List<Photocard>>(
+                  future: _lastUnitsPhotocardsFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('No photocards found');
+                    } else {
+                      return PhotocardsRowList(
+                        title: StarTexts.lastUnities,
+                        photocards: snapshot.data!,
+                        detailColor: StarColors.starBlue,
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(height: 25),
+                FutureBuilder<List<Store>>(
+                  future: _storesFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('No stores found');
+                    } else {
+                      return StoreRowList(
+                        title: "Lojas em alta",
+                        stores: snapshot.data!,
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

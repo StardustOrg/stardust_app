@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
@@ -15,6 +17,7 @@ import 'package:stardust_app_skeleton/repository/photocards_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
+import 'package:stardust_app_skeleton/utils/local_storage/favorite_utils.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id});
@@ -31,6 +34,14 @@ class _ProductPageState extends State<ProductPage> {
   final PhotocardsRepository _photocardRepository =
       PhotocardsRepository.instance;
 
+  bool _isFavorite = false; // Track favorite status
+  double rating = 4.5;
+
+  // int _selectedQuantity = 1; // Default selected quantity
+
+  // List of quantities (can be integers or strings)
+  final List<int> _quantities = [1, 2, 3, 4];
+
   Future<List<Photocard>> _fetchPhotocards() async {
     return await _photocardRepository.getAllPhotocards(limit: 10);
   }
@@ -44,14 +55,32 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
     _photocardsFuture = _fetchPhotocards();
     _photocardFuture = _fetchPhotocard();
+
+    // Check if the current product is a favorite
+    _checkFavoriteStatus();
   }
 
-  double rating = 4.5;
+  void _checkFavoriteStatus() async {
+    _isFavorite = await FavoritesUtils.isFavorite(widget.id);
+    setState(() {});
+  }
 
-  // int _selectedQuantity = 1; // Default selected quantity
-
-  // List of quantities (can be integers or strings)
-  final List<int> _quantities = [1, 2, 3, 4];
+  void _toggleFavorite() async {
+    if (_isFavorite) {
+      await FavoritesUtils.removeFavorite(widget.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Removed from favorites!')),
+      );
+    } else {
+      await FavoritesUtils.addFavorite(widget.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Added to favorites!')),
+      );
+    }
+    setState(() {
+      _isFavorite = !_isFavorite; // Toggle favorite status
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +123,8 @@ class _ProductPageState extends State<ProductPage> {
                               mainImage: photocard.imageUrl,
                               dt1: photocard.dt1,
                               dt2: photocard.dt2,
+                              onTap: _toggleFavorite, // Toggle favorite on tap
+                              isFavorite: _isFavorite,
                             ),
                             const SizedBox(height: 20),
                             SingleChildScrollView(
@@ -202,7 +233,7 @@ class _ProductPageState extends State<ProductPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {}, // Handle add to cart
                             icon: const Icon(
                               Icons.add_shopping_cart_rounded,
                               color: StarColors.black,
@@ -218,7 +249,7 @@ class _ProductPageState extends State<ProductPage> {
                                   vertical: 5,
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {}, // Handle purchase
                               child: const Text("Comprar"),
                             ),
                           ),
@@ -230,7 +261,7 @@ class _ProductPageState extends State<ProductPage> {
               );
             }
           },
-        ), // TODO
+        ),
       ),
     );
   }
