@@ -99,9 +99,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     spacing: 8.0,
                                     runSpacing: 10.0,
                                     children: [
-                                      StarTag(topic: "GG Stan"),
-                                      StarTag(topic: "My"),
-                                      StarTag(topic: "Fernot"),
+                                      StarTag(
+                                        topic: {'name': "GG Stan", 'id': "a"},
+                                      ),
+                                      StarTag(
+                                        topic: {'name': "My", 'id': "a"},
+                                      ),
+                                      StarTag(
+                                        topic: {'name': "Fearnot", 'id': "a"},
+                                      ),
                                     ],
                                   ),
                                 ),

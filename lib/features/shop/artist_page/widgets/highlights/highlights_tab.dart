@@ -34,7 +34,7 @@ class _HighlightsTabState extends State<HighlightsTab> {
         const SizedBox(height: 30),
         const TopicsSection(
           title: StarTexts.recommendationsTopics,
-          topics: ["tag", "tag", "tag", "tag", "tag", "tag", "tag"],
+          topics: [],
         ),
         const SizedBox(height: 30),
         PhotocardsRowList(

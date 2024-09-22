@@ -10,6 +10,7 @@ class Photocard {
   final int quantity;
   final String storeId, storeName;
   final bool original;
+  final List<Map<String, dynamic>> tags;
 
   Photocard({
     required this.artistName,
@@ -27,5 +28,6 @@ class Photocard {
     required this.dt1,
     required this.dt2,
     required this.original,
+    required this.tags,
   });
 }

@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               // Header
-              const Header(),
+              const Header(goToSearchPage: true),
               const SizedBox(height: 45),
               const SlidesHome(),
               const SizedBox(height: 27),

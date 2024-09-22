@@ -8,11 +8,13 @@ import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 class ArtistWrapList extends StatelessWidget {
   final String title;
   final List<Artist> artists;
+  final Color color;
 
   const ArtistWrapList({
     super.key,
     required this.title,
     required this.artists,
+    this.color = StarColors.starBlue,
   });
 
   @override
@@ -20,7 +22,7 @@ class ArtistWrapList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(title: title),
+        SectionTitle(title: title, color: color),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: GridView.builder(

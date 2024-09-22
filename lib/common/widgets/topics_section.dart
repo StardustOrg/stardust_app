@@ -11,7 +11,7 @@ class TopicsSection extends StatelessWidget {
   });
 
   final String title;
-  final List<String> topics;
+  final List<Map<String, dynamic>> topics;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class TopicsSection extends StatelessWidget {
             children: topics.map((topic) {
               return Row(
                 children: [
-                  StarTag(topic: topic),
+                  StarTag(topic: topic['name']),
                   const SizedBox(width: 10),
                 ],
               );

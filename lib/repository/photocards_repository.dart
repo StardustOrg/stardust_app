@@ -31,6 +31,9 @@ class PhotocardsRepository extends GetxController {
         storeId: data['store_id'],
         storeName: data['store_name'],
         original: data['original'],
+        tags: (data['tags'] as List<dynamic>)
+            .map((tag) => tag as Map<String, dynamic>)
+            .toList(),
       );
     }).toList();
   }
@@ -106,6 +109,9 @@ class PhotocardsRepository extends GetxController {
       storeId: data['store_id'],
       storeName: data['store_name'],
       original: data['original'],
+      tags: (data['tags'] as List<dynamic>)
+          .map((tag) => tag as Map<String, dynamic>)
+          .toList(),
     );
   }
 }

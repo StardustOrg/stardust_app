@@ -31,14 +31,6 @@ class _ProductPageState extends State<ProductPage> {
   final PhotocardsRepository _photocardRepository =
       PhotocardsRepository.instance;
 
-  List<String> topics = [
-    "Season’s Greetings 2024",
-    "Tag",
-    "Tag",
-    "Tag",
-    "Tag",
-  ];
-
   Future<List<Photocard>> _fetchPhotocards() async {
     return await _photocardRepository.getAllPhotocards(limit: 10);
   }
@@ -96,6 +88,7 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         const SizedBox(height: 15),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             PhotocardImagesCont(
                               mainImage: photocard.imageUrl,
@@ -108,7 +101,7 @@ class _ProductPageState extends State<ProductPage> {
                                   const EdgeInsets.symmetric(horizontal: 25),
                               scrollDirection: Axis.horizontal,
                               child: Row(
-                                children: topics.map((topic) {
+                                children: photocard.tags.map((topic) {
                                   return Row(
                                     children: [
                                       StarTag(topic: topic),
