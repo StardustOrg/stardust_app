@@ -3,12 +3,15 @@ import 'package:stardust_app_skeleton/common/widgets/artists/artists_row_list.da
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard/photocards_row_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/store/store_row_list.dart';
+import 'package:stardust_app_skeleton/common/widgets/topics_section.dart';
 import 'package:stardust_app_skeleton/features/shop/home/widgets/slides_home.dart';
 import 'package:stardust_app_skeleton/models/artist.dart';
+import 'package:stardust_app_skeleton/models/star_tag.dart';
 import 'package:stardust_app_skeleton/models/store.dart';
 import 'package:stardust_app_skeleton/repository/artists_repository.dart';
 import 'package:stardust_app_skeleton/repository/photocards_repository.dart';
 import 'package:stardust_app_skeleton/repository/store_repository.dart';
+import 'package:stardust_app_skeleton/repository/tags_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
@@ -27,15 +30,21 @@ class _HomeState extends State<Home> {
   final StoreRepository _storeRepository = StoreRepository.instance;
 
   late Future<List<Photocard>> _photocardsFuture;
+  late Future<List<Photocard>> _lastUnitsPhotocardsFuture;
   final PhotocardsRepository _photocardRepository =
       PhotocardsRepository.instance;
+
+  late Future<List<Tag>> _tagsFuture;
+  final TagsRepository _tagsRepository = TagsRepository.instance;
 
   @override
   void initState() {
     super.initState();
     _artistsFuture = _fetchArtists();
+    _tagsFuture = _fetchTags();
     _storesFuture = _fetchStores();
     _photocardsFuture = _fetchPhotocards();
+    _lastUnitsPhotocardsFuture = _fetchLastUnitsPhotocards();
   }
 
   Future<List<Artist>> _fetchArtists() async {
@@ -47,17 +56,21 @@ class _HomeState extends State<Home> {
   }
 
   Future<List<Photocard>> _fetchPhotocards() async {
-    return await _photocardRepository.getAllPhotocards(limit: 10);
+    List<Photocard> allPhotocards =
+        await _photocardRepository.getAllPhotocards();
+    return allPhotocards.take(10).toList();
+  }
+
+  Future<List<Tag>> _fetchTags() async {
+    return await _tagsRepository.getTags();
+  }
+
+  Future<List<Photocard>> _fetchLastUnitsPhotocards() async {
+    return await _photocardRepository.getLowStockPhotocards(limit: 10);
   }
 
   @override
   Widget build(BuildContext context) {
-    // List<String> topics = [
-    //   "Natal",
-    //   "Season’s Greetings 2024",
-    //   "Páscoa",
-    // ];
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -102,6 +115,42 @@ class _HomeState extends State<Home> {
                       title: StarTexts.recommendationsArtist,
                       artists: snapshot.data!,
                       onArtistContainerPress: (p0) {},
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 25),
+              FutureBuilder<List<Tag>>(
+                future: _tagsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('No artists found');
+                  } else {
+                    return TopicsSection(
+                        topics: snapshot.data!,
+                        title: StarTexts.recommendationsTopics);
+                  }
+                },
+              ),
+              const SizedBox(height: 25),
+              FutureBuilder<List<Photocard>>(
+                future: _lastUnitsPhotocardsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('No photocards found');
+                  } else {
+                    return PhotocardsRowList(
+                      title: StarTexts.lastUnities,
+                      photocards: snapshot.data!,
+                      detailColor: StarColors.starBlue,
                     );
                   }
                 },

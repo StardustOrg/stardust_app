@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
@@ -44,7 +46,12 @@ class PhotocardsRepository extends GetxController {
       query = query.limit(limit);
     }
     var snapshot = await query.get();
-    return _photocardsListFromSnapshot(snapshot);
+    List<Photocard> photocards = _photocardsListFromSnapshot(snapshot);
+
+    // Shuffle the list of photocards
+    photocards.shuffle(Random());
+
+    return photocards;
   }
 
   Future<List<Photocard>> getPhotocardsByArtist(String artistId,
@@ -113,5 +120,49 @@ class PhotocardsRepository extends GetxController {
           .map((tag) => tag as Map<String, dynamic>)
           .toList(),
     );
+  }
+
+  Future<List<Photocard>> getLowStockPhotocards({int? limit}) async {
+    var query = _photocardsCollection.where('quantity', isLessThan: 4);
+    if (limit != null) {
+      query = query.limit(limit);
+    }
+    var snapshot = await query.get();
+    return _photocardsListFromSnapshot(snapshot);
+  }
+
+  Future<List<Photocard>> getPhotocardsByIds(List<String> ids) async {
+    // Create a list to hold the fetched photocards
+    List<Photocard> photocards = [];
+
+    // Fetch each document by ID
+    for (String id in ids) {
+      var snapshot = await _photocardsCollection.doc(id).get();
+      if (snapshot.exists) {
+        var data = snapshot.data() as Map<String, dynamic>;
+        photocards.add(Photocard(
+          id: snapshot.id,
+          pcName: data['name'],
+          description: data['description'],
+          imageUrl: data['image_url'],
+          artistName: data['artist_name'],
+          artistId: data['artist_id'],
+          dt1: data['dt1'],
+          dt2: data['dt2'],
+          memberName: data['member_name'],
+          memberId: data['member_id'],
+          price: data['price'],
+          quantity: data['quantity'],
+          storeId: data['store_id'],
+          storeName: data['store_name'],
+          original: data['original'],
+          tags: (data['tags'] as List<dynamic>)
+              .map((tag) => tag as Map<String, dynamic>)
+              .toList(),
+        ));
+      }
+    }
+
+    return photocards;
   }
 }
