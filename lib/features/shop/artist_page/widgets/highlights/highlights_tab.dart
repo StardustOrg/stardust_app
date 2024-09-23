@@ -20,12 +20,13 @@ class HighlightsTab extends StatefulWidget {
 }
 
 class _HighlightsTabState extends State<HighlightsTab> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SlidesHightlights(highlights: widget.highlights,),
+        SlidesHightlights(
+          highlights: widget.highlights,
+        ),
         const SizedBox(height: 30),
         PhotocardsRowList(
           title: "VOCÊ TAMBÉM PODE SE INTERESSAR",
@@ -35,6 +36,7 @@ class _HighlightsTabState extends State<HighlightsTab> {
         const TopicsSection(
           title: StarTexts.recommendationsTopics,
           topics: [],
+          goToScreen: true,
         ),
         const SizedBox(height: 30),
         PhotocardsRowList(

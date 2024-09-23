@@ -9,10 +9,12 @@ class TopicsSection extends StatelessWidget {
     super.key,
     required this.topics,
     required this.title,
+    required this.goToScreen,
   });
 
   final String title;
   final List<Tag> topics;
+  final bool goToScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,10 @@ class TopicsSection extends StatelessWidget {
             children: topics.map((topic) {
               return Row(
                 children: [
-                  StarTag(topic: {'name': topic.label, 'id': topic.id}),
+                  StarTag(
+                    topic: {'name': topic.label, 'id': topic.id},
+                    goToScreen: goToScreen,
+                  ),
                   const SizedBox(width: 10),
                 ],
               );

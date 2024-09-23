@@ -165,4 +165,15 @@ class PhotocardsRepository extends GetxController {
 
     return photocards;
   }
+
+  Future<List<Photocard>> getPhotocardsByTag(String tagId) async {
+    // Query where 'tag_ids' contains the specified tagId
+    var query = _photocardsCollection.where('tags_id', arrayContains: tagId);
+
+    // Execute the query and get the snapshot
+    var snapshot = await query.get();
+
+    // Convert the snapshot to a list of Photocard objects
+    return _photocardsListFromSnapshot(snapshot);
+  }
 }

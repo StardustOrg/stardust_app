@@ -135,7 +135,10 @@ class _ProductPageState extends State<ProductPage> {
                                 children: photocard.tags.map((topic) {
                                   return Row(
                                     children: [
-                                      StarTag(topic: topic),
+                                      StarTag(
+                                        topic: topic,
+                                        goToScreen: true,
+                                      ),
                                       const SizedBox(width: 8),
                                     ],
                                   );

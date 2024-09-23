@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stardust_app_skeleton/features/shop/tag_page/screens/tag_screen.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
@@ -6,9 +7,11 @@ class StarTag extends StatelessWidget {
   const StarTag({
     super.key,
     required this.topic,
+    this.goToScreen = false,
   });
 
   final Map<String, dynamic> topic;
+  final bool goToScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,14 @@ class StarTag extends StatelessWidget {
         highlightColor: StarColors.starBlue.withOpacity(0.1),
         onTap: () {
           StarLoggerHelper.info('Tag: ${topic['name']}');
+          if (goToScreen) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TagScreen(tagId: topic['id']),
+              ),
+            );
+          }
         },
         child: Container(
           padding: const EdgeInsets.symmetric(

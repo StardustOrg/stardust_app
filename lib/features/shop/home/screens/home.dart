@@ -145,8 +145,10 @@ class _HomeState extends State<Home> {
                       return const Text('No artists found');
                     } else {
                       return TopicsSection(
-                          topics: snapshot.data!,
-                          title: StarTexts.recommendationsTopics);
+                        topics: snapshot.data!,
+                        title: StarTexts.recommendationsTopics,
+                        goToScreen: true,
+                      );
                     }
                   },
                 ),
