@@ -3,6 +3,7 @@ import 'package:stardust_app_skeleton/utils/http/search_cep.dart';
 
 class Store {
   String name, cep, email, id, insta, icon, cover;
+  double? rating;
 
   Store({
     required this.name,
@@ -12,6 +13,7 @@ class Store {
     required this.insta,
     required this.icon,
     required this.cover,
+    required this.rating,
   });
 
   // Method to get localidade and uf using SearchCep class

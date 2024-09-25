@@ -31,6 +31,8 @@ class _StorePageState extends State<StorePage> {
   final PhotocardsRepository _photocardRepository =
       PhotocardsRepository.instance;
 
+  late Future<List<Map<String, dynamic>>> _highlightsFuture;
+
   void _updateTab(bool isTab1) {
     setState(() {
       tab1 = isTab1;
@@ -43,6 +45,7 @@ class _StorePageState extends State<StorePage> {
     _storeFuture = _fetchStore();
 
     _photocardsFuture = _fetchPhotocards();
+    _highlightsFuture = _fetchHighlights();
   }
 
   Future<Store> _fetchStore() async {
@@ -51,6 +54,10 @@ class _StorePageState extends State<StorePage> {
 
   Future<List<Photocard>> _fetchPhotocards() async {
     return await _photocardRepository.getPhotocardByStore(widget.storeId);
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchHighlights() async {
+    return await _storeRepository.getStoreHighlights(widget.storeId);
   }
 
   @override
@@ -96,7 +103,7 @@ class _StorePageState extends State<StorePage> {
                             } else {
                               return StoreCardInfo(
                                 storeName: store.name,
-                                rating: 0,
+                                rating: store.rating!,
                                 place: snapshot.data!,
                                 insta: store.insta,
                                 icon: store.icon,
@@ -122,8 +129,24 @@ class _StorePageState extends State<StorePage> {
                               return const Text('No products found');
                             } else {
                               if (tab1) {
-                                return StoreHighlightsTab(
-                                    photocards: snapshot.data!);
+                                return FutureBuilder<
+                                    List<Map<String, dynamic>>>(
+                                  future: _highlightsFuture,
+                                  builder: (context, highSnapshot) {
+                                    if (highSnapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const CircularProgressIndicator();
+                                    } else if (highSnapshot.hasError) {
+                                      return Text(
+                                          'Error: ${highSnapshot.error}');
+                                    } else {
+                                      return StoreHighlightsTab(
+                                        photocards: snapshot.data!,
+                                        highlights: highSnapshot.data!,
+                                      );
+                                    }
+                                  },
+                                );
                               } else {
                                 return StoreProductsTab(
                                     photocards: snapshot.data!);

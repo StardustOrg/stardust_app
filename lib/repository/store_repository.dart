@@ -23,6 +23,7 @@ class StoreRepository extends GetxController {
         insta: data['insta'],
         icon: data['icon'],
         cover: data['cover'],
+        rating: data['rating'].toDouble(),
       );
     }).toList();
   }
@@ -49,6 +50,7 @@ class StoreRepository extends GetxController {
       insta: data['insta'],
       icon: data['icon'],
       cover: data['cover'],
+      rating: data['rating'].toDouble(),
     );
   }
 
@@ -67,5 +69,25 @@ class StoreRepository extends GetxController {
     var snapshot = await _storesCollection.doc(id).get();
     var data = snapshot.data() as Map<String, dynamic>?;
     return data?['icon'] as String?;
+  }
+
+  List<Map<String, dynamic>> _storeHightlights(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      var data = doc.data() as Map<String, dynamic>;
+      return {
+        'photo': data['photo'],
+        'active': data['active'],
+      };
+    }).toList();
+  }
+
+  Future<List<Map<String, dynamic>>> getStoreHighlights(String storeId) async {
+    var snapshot =
+        await _storesCollection.doc(storeId).collection('highlights').get();
+    var highlights = _storeHightlights(snapshot);
+
+    return highlights
+        .where((highlight) => highlight['active'] == true)
+        .toList();
   }
 }

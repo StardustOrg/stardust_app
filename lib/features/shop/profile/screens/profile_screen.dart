@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         } else {
           StarLoggerHelper.error(
               'Unexpected state: ${snapshot.connectionState}');
-          return Center(child: Text('Unexpected state'));
+          return const Center(child: Text('Unexpected state'));
         }
       },
     );

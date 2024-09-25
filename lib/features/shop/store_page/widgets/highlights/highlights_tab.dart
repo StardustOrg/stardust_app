@@ -4,8 +4,13 @@ import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/highligh
 import 'package:stardust_app_skeleton/models/photocard.dart';
 
 class StoreHighlightsTab extends StatefulWidget {
-  const StoreHighlightsTab({super.key, required this.photocards});
+  const StoreHighlightsTab({
+    super.key,
+    required this.photocards,
+    required this.highlights,
+  });
   final List<Photocard> photocards;
+  final List<Map<String, dynamic>> highlights;
   @override
   State<StoreHighlightsTab> createState() => _StoreHighlightsTabState();
 }
@@ -15,8 +20,8 @@ class _StoreHighlightsTabState extends State<StoreHighlightsTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SlidesHightlights(
-          highlights: [],
+        SlidesHightlights(
+          highlights: widget.highlights,
         ),
         const SizedBox(height: 30),
         PhotocardsRowList(
