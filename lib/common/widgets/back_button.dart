@@ -17,6 +17,7 @@ class StarBackButton extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(2.0),
           child: const Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 Icons.arrow_back_ios_new_rounded,

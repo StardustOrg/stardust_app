@@ -83,6 +83,7 @@ class _ArtistPageState extends State<ArtistPage> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(bottom: 25),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Header(),
               const SizedBox(height: 25),

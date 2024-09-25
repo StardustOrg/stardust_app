@@ -61,6 +61,7 @@ class _TagScreenState extends State<TagScreen> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(bottom: 25),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Header(),
               const SizedBox(height: 25),

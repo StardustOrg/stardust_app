@@ -63,23 +63,23 @@ class PhotocardImagesCont extends StatelessWidget {
                   padding: const EdgeInsets.only(
                     bottom: 5.0,
                     left: 10.0,
-                    right: 20.0,
+                    right: 50.0,
                     top: 50.0,
                   ),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(10),
+                      topRight: Radius.circular(100),
                       bottomLeft: Radius.circular(20),
                     ),
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomLeft,
-                      end: Alignment.topRight,
+                    gradient: RadialGradient(
+                      center: AlignmentDirectional.bottomStart,
                       colors: [
                         StarColors.bgDark.withOpacity(1),
-                        StarColors.bgDark.withOpacity(0.5),
                         StarColors.bgDark.withOpacity(0.1),
+                        StarColors.bgDark.withOpacity(0.05),
                         Colors.transparent,
                       ],
+                      radius: 3,
                     ),
                   ),
                   child: IconButton(

@@ -67,6 +67,7 @@ class _StorePageState extends State<StorePage> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(bottom: 25),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Header(),
               const SizedBox(height: 25),
@@ -88,7 +89,7 @@ class _StorePageState extends State<StorePage> {
                     Store store = snapshot.data!;
                     return Column(
                       children: [
-                        ArtistCard(imageUrl: store.icon),
+                        ArtistCard(imageUrl: store.cover),
                         const SizedBox(height: 30),
                         FutureBuilder<String>(
                           future: store.getLocalidadeUf(),
