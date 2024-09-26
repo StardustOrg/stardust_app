@@ -90,7 +90,7 @@ class _ProductPageState extends State<ProductPage> {
   void _addToCart() async {
     await _cartService.addItemToCart(widget.id, _selectedQuantity);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Item added to cart!')),
+      const SnackBar(content: Text('Photocard adicionado ao carrinho!')),
     );
   }
 
