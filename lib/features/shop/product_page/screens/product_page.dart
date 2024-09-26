@@ -6,6 +6,7 @@ import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard/photocards_row_list.dart';
 import 'package:stardust_app_skeleton/common/widgets/star_tag.dart';
+import 'package:stardust_app_skeleton/features/cart/screens/cart_screen.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_description.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_images.dart';
 import 'package:stardust_app_skeleton/features/shop/product_page/widgets/pc_info.dart';
@@ -17,6 +18,7 @@ import 'package:stardust_app_skeleton/repository/photocards_repository.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
+import 'package:stardust_app_skeleton/utils/local_storage/cart_utils.dart';
 import 'package:stardust_app_skeleton/utils/local_storage/favorite_utils.dart';
 
 class ProductPage extends StatefulWidget {
@@ -69,17 +71,27 @@ class _ProductPageState extends State<ProductPage> {
     if (_isFavorite) {
       await FavoritesUtils.removeFavorite(widget.id);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Removed from favorites!')),
+        const SnackBar(content: Text('Removido dos favoritos!')),
       );
     } else {
       await FavoritesUtils.addFavorite(widget.id);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Added to favorites!')),
+        const SnackBar(content: Text('Adicionado aos favoritos!')),
       );
     }
     setState(() {
       _isFavorite = !_isFavorite; // Toggle favorite status
     });
+  }
+
+  final CartService _cartService = CartService();
+  int _selectedQuantity = 1;
+
+  void _addToCart() async {
+    await _cartService.addItemToCart(widget.id, _selectedQuantity);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Item added to cart!')),
+    );
   }
 
   @override
@@ -172,6 +184,11 @@ class _ProductPageState extends State<ProductPage> {
                                         ? _quantities
                                         : List<int>.generate(photocard.quantity,
                                             (index) => index + 1),
+                                    onQuantityChanged: (int value) {
+                                      setState(() {
+                                        _selectedQuantity = value;
+                                      });
+                                    },
                                   ),
                                 ],
                               ),
@@ -236,7 +253,7 @@ class _ProductPageState extends State<ProductPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                            onPressed: () {}, // Handle add to cart
+                            onPressed: _addToCart, // Handle add to cart
                             icon: const Icon(
                               Icons.add_shopping_cart_rounded,
                               color: StarColors.black,
@@ -252,7 +269,15 @@ class _ProductPageState extends State<ProductPage> {
                                   vertical: 5,
                                 ),
                               ),
-                              onPressed: () {}, // Handle purchase
+                              onPressed: () {
+                                _addToCart();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CartScreen(),
+                                  ),
+                                );
+                              },
                               child: const Text("Comprar"),
                             ),
                           ),

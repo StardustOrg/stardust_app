@@ -4,9 +4,14 @@ import 'package:stardust_app_skeleton/utils/constants/sizes.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
 
 class DropdownQuantitySelector extends StatefulWidget {
-  const DropdownQuantitySelector({super.key, required this.quantities});
+  const DropdownQuantitySelector({
+    super.key,
+    required this.quantities,
+    required this.onQuantityChanged,
+  });
 
   final List<int> quantities;
+  final ValueChanged<int> onQuantityChanged;
 
   @override
   State<DropdownQuantitySelector> createState() =>
@@ -14,10 +19,18 @@ class DropdownQuantitySelector extends StatefulWidget {
 }
 
 class _DropdownQuantitySelectorState extends State<DropdownQuantitySelector> {
+  late int selectedQuantity;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedQuantity = widget.quantities[0]; // Default selected quantity
+  }
+
   @override
   Widget build(BuildContext context) {
     List<int> quantities = widget.quantities;
-    int selectedQuantity = quantities[0]; // Default selected quantity
+
     return SizedBox(
       width: StarDeviceUtils.getScreenWidth(context) * 0.45,
       child: DropdownButtonFormField(
@@ -45,20 +58,21 @@ class _DropdownQuantitySelectorState extends State<DropdownQuantitySelector> {
             value: value,
             child: Text(
               value.toString(),
-            ), // Display the value in the dropdown
+            ),
           );
         }).toList(),
         dropdownColor: StarColors.bgLight,
         onChanged: (int? newValue) {
           setState(() {
-            selectedQuantity = newValue!; // Update the selected quantity
+            selectedQuantity = newValue!;
           });
+          widget.onQuantityChanged(newValue!);
         },
         selectedItemBuilder: (BuildContext context) {
           return quantities.map<Widget>((int value) {
             return Text(
               'Quantidade: $value',
-            ); // Format the selected item display
+            );
           }).toList();
         },
       ),
