@@ -7,6 +7,7 @@ import 'package:stardust_app_skeleton/features/auth_controller.dart';
 import 'package:stardust_app_skeleton/models/user.dart';
 import 'package:stardust_app_skeleton/services/auth.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
+import 'package:stardust_app_skeleton/utils/local_storage/cart_utils.dart';
 import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 import 'package:stardust_app_skeleton/utils/theme/theme.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -36,9 +37,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<UserApp?>.value(
-      initialData: null,
-      value: Auth().user,
+    return MultiProvider(
+      providers: [
+        StreamProvider<UserApp?>.value(
+          initialData: null,
+          value: Auth().user,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(),
+        ),
+      ],
       child: GetMaterialApp(
         title: 'Stardust Card',
         debugShowCheckedModeBanner: false,

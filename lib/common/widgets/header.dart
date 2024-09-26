@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stardust_app_skeleton/features/cart/screens/cart_screen.dart';
 import 'package:stardust_app_skeleton/features/shop/Search/screens/search.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 import 'package:get/get.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:stardust_app_skeleton/utils/local_storage/cart_utils.dart';
 import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // For cache
 
@@ -22,7 +24,6 @@ class Header extends StatefulWidget {
 
 class _HeaderState extends State<Header> {
   final TextEditingController _searchController = TextEditingController();
-  final String quantity = '3';
 
   @override
   void dispose() {
@@ -63,6 +64,13 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    int totalCount = 0;
+    if (cartProvider.cart.isNotEmpty) {
+      totalCount = cartProvider.cart
+          .fold<int>(0, (total, item) => total + item.quantity);
+    }
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(25, 30, 25, 0),
       child: Row(
@@ -106,18 +114,11 @@ class _HeaderState extends State<Header> {
           ),
           const SizedBox(width: 10),
           badges.Badge(
-            showBadge: true,
+            showBadge: totalCount > 0, // Show badge only if there are items
             ignorePointer: false,
             position: badges.BadgePosition.topEnd(top: -1, end: -1),
-            badgeAnimation: const badges.BadgeAnimation.slide(
-              animationDuration: Duration(milliseconds: 500),
-              colorChangeAnimationDuration: Duration(seconds: 1),
-              loopAnimation: false,
-              curve: Curves.fastOutSlowIn,
-              colorChangeAnimationCurve: Curves.easeInCubic,
-            ),
             badgeContent: Text(
-              quantity,
+              totalCount.toString(),
               style: const TextStyle(color: StarColors.bgLight),
             ),
             badgeStyle: const badges.BadgeStyle(

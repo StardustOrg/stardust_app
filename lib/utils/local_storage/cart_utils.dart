@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stardust_app_skeleton/utils/logging/logger.dart';
 
 class CartItem {
   final String id; // Photocard id
@@ -22,12 +21,15 @@ class CartItem {
   }
 }
 
-class CartService extends ChangeNotifier {
+class CartProvider with ChangeNotifier {
   static const String cartKey = 'user_cart';
   List<CartItem> _cart = [];
 
+  CartProvider() {
+    loadCart();
+  }
+
   List<CartItem> get cart => _cart;
-  int get itemCount => _cart.length;
 
   // Fetch the current cart from cache
   Future<void> loadCart() async {
@@ -37,7 +39,7 @@ class CartService extends ChangeNotifier {
       List<dynamic> decodedData = json.decode(cartData);
       _cart = decodedData.map((item) => CartItem.fromJson(item)).toList();
     }
-    notifyListeners(); // Notify listeners that the cart has changed
+    notifyListeners(); // Notify listeners when loading
   }
 
   // Save the cart to cache
@@ -45,11 +47,12 @@ class CartService extends ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String cartData = json.encode(_cart.map((item) => item.toJson()).toList());
     await prefs.setString(cartKey, cartData);
+    notifyListeners(); // Notify listeners when saving
   }
 
   // Add item to cart
   Future<void> addItemToCart(String productId, int quantity) async {
-    CartItem? existingItem = _cart.firstWhere(
+    CartItem existingItem = _cart.firstWhere(
       (item) => item.id == productId,
       orElse: () => CartItem(id: productId, quantity: 0),
     );
@@ -63,16 +66,12 @@ class CartService extends ChangeNotifier {
     }
 
     await saveCart();
-    notifyListeners(); // Notify listeners that the cart has changed
-    StarLoggerHelper.info(
-        'Photocard ($productId): Added $quantity items to cart');
   }
 
   // Remove item from cart
   Future<void> removeItemFromCart(String productId) async {
     _cart.removeWhere((item) => item.id == productId);
     await saveCart();
-    notifyListeners(); // Notify listeners that the cart has changed
   }
 
   // Clear cart
@@ -80,11 +79,6 @@ class CartService extends ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(cartKey);
     _cart.clear();
-    notifyListeners(); // Notify listeners that the cart has changed
-  }
-
-  // Get the total quantity of items in the cart
-  int getTotalItems() {
-    return _cart.fold<int>(0, (total, item) => total + item.quantity);
+    notifyListeners(); // Notify listeners when clearing
   }
 }

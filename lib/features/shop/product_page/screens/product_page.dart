@@ -2,6 +2,7 @@
 
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stardust_app_skeleton/common/widgets/back_button.dart';
 import 'package:stardust_app_skeleton/common/widgets/header.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard/photocards_row_list.dart';
@@ -84,11 +85,11 @@ class _ProductPageState extends State<ProductPage> {
     });
   }
 
-  final CartService _cartService = CartService();
   int _selectedQuantity = 1;
 
   void _addToCart() async {
-    await _cartService.addItemToCart(widget.id, _selectedQuantity);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    await cartProvider.addItemToCart(widget.id, _selectedQuantity);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Photocard adicionado ao carrinho!')),
     );
