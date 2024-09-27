@@ -1,25 +1,31 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stardust_app_skeleton/models/photocard.dart';
+import 'package:stardust_app_skeleton/repository/photocards_repository.dart';
 
 class CartItem {
   final String id; // Photocard id
   int quantity;
+  double price; // Adicione este campo
 
-  CartItem({required this.id, required this.quantity});
+  CartItem({required this.id, required this.quantity, required this.price});
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'quantity': quantity,
+        'price': price, // Inclua o preço aqui
       };
 
   static CartItem fromJson(Map<String, dynamic> json) {
     return CartItem(
       id: json['id'],
       quantity: json['quantity'],
+      price: json['price'], // Inclua o preço aqui
     );
   }
 }
+
 
 class CartProvider with ChangeNotifier {
   static const String cartKey = 'user_cart';
@@ -30,6 +36,10 @@ class CartProvider with ChangeNotifier {
   }
 
   List<CartItem> get cart => _cart;
+
+  double get totalAmount {
+    return _cart.fold(0, (total, item) => total + (item.price * item.quantity));
+  }
 
   // Fetch the current cart from cache
   Future<void> loadCart() async {
@@ -51,10 +61,10 @@ class CartProvider with ChangeNotifier {
   }
 
   // Add item to cart
-  Future<void> addItemToCart(String productId, int quantity) async {
+  Future<void> addItemToCart(String productId, int quantity, double price) async {
     CartItem existingItem = _cart.firstWhere(
       (item) => item.id == productId,
-      orElse: () => CartItem(id: productId, quantity: 0),
+      orElse: () => CartItem(id: productId, quantity: 0, price: price),
     );
 
     if (existingItem.quantity < 4) {
@@ -69,8 +79,21 @@ class CartProvider with ChangeNotifier {
   }
 
   // Remove item from cart
-  Future<void> removeItemFromCart(String productId) async {
-    _cart.removeWhere((item) => item.id == productId);
+  // Remove item from cart
+  Future<void> removeItemFromCart(String productId, int quantity) async {
+    CartItem existingItem = _cart.firstWhere(
+      (item) => item.id == productId,
+      orElse: () => CartItem(id: productId, quantity: 0, price: 0),
+    );
+
+    if (existingItem.quantity > 0) {
+      existingItem.quantity -= quantity;
+    }
+
+    if (existingItem.quantity <= 0) {
+      _cart.remove(existingItem);
+    }
+
     await saveCart();
   }
 
@@ -80,5 +103,10 @@ class CartProvider with ChangeNotifier {
     await prefs.remove(cartKey);
     _cart.clear();
     notifyListeners(); // Notify listeners when clearing
+  }
+
+  Future<List<Photocard>> fetchCartPhotocardDetails() async {
+    List<String> cartIds = _cart.map((item) => item.id).toList();
+    return await PhotocardsRepository.instance.getPhotocardsByIds(cartIds);
   }
 }

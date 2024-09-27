@@ -2,11 +2,14 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:stardust_app_skeleton/common/widgets/images/photocard_image.dart';
 import 'package:stardust_app_skeleton/features/shop/store_page/screens/store_page.dart';
+import 'package:stardust_app_skeleton/models/photocard.dart';
 import 'package:stardust_app_skeleton/utils/constants/colors.dart';
 import 'package:stardust_app_skeleton/utils/constants/image_string.dart';
 import 'package:stardust_app_skeleton/utils/device/device_utility.dart';
+import 'package:stardust_app_skeleton/utils/local_storage/cart_utils.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -16,51 +19,13 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List<Map<String, dynamic>> cart = [
-    {
-      'store_name': "Loja 1",
-      'store_id': "dadsa",
-      'items': [
-        {
-          "group_name": "(G)-IDLE",
-          "artist_name": "(G)-IDLE",
-          "pc_name": "OT5 Photocard",
-          "price": 6.66,
-          "id": "1",
-          "image_url": "https://i.pinimg.com/originals/7b/7b/7b/",
-          "quantity": 1,
-        },
-        {
-          "group_name": "(G)-IDLE",
-          "artist_name": "(G)-IDLE",
-          "pc_name": "OT5 Photocard",
-          "price": 6.66,
-          "id": "1",
-          "image_url": "https://i.pinimg.com/originals/7b/7b/7b/",
-          "quantity": 5,
-        },
-      ]
-    },
-    {
-      'store_name': "Loja 2",
-      'store_id': "dadsa",
-      'items': [
-        {
-          "group_name": "(G)-IDLE",
-          "artist_name": "(G)-IDLE",
-          "pc_name": "OT5 Photocard",
-          "price": 6.66,
-          "id": "1",
-          "image_url": "https://i.pinimg.com/originals/7b/7b/7b/",
-          "quantity": 1,
-        },
-      ]
-    },
-  ];
-
-  double total = 275.2;
+  late Future<List<Photocard>> _cartPhotocardsFuture;
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartItems = cartProvider.cart;
+    _cartPhotocardsFuture = cartProvider.fetchCartPhotocardDetails();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: StarColors.bgLight,
@@ -91,205 +56,303 @@ class _CartScreenState extends State<CartScreen> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 75),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: cart.length,
-                itemBuilder: (context, index) {
-                  Map<String, dynamic> store = cart[index];
-                  bool isLast = index == cart.length - 1;
-                  bool isFirst = index == 0;
-                  return Column(
-                    children: [
-                      if (isFirst) const SizedBox(height: 15),
-                      Row(
+            padding: const EdgeInsets.only(bottom: 100),
+            child: FutureBuilder<List<Photocard>>(
+              future: _cartPhotocardsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        top: StarDeviceUtils.getScreenHeight(context) * 0.35),
+                    child:
+                        const Center(child: Text('Seu carrinho está vazio!')),
+                  );
+                } else {
+                  List<Photocard> photocards = snapshot.data!;
+
+                  Map<String, List<Photocard>> groupedByStore = {};
+                  for (var photocard in photocards) {
+                    if (!groupedByStore.containsKey(photocard.storeId)) {
+                      groupedByStore[photocard.storeId] = [];
+                    }
+                    groupedByStore[photocard.storeId]!.add(photocard);
+                  }
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: groupedByStore.keys.length,
+                    itemBuilder: (context, storeIndex) {
+                      final storeId = groupedByStore.keys.elementAt(storeIndex);
+                      final storePhotocards = groupedByStore[storeId]!;
+                      final storeName = storePhotocards.first.storeName;
+                      bool isLastStore =
+                          storeIndex == groupedByStore.keys.length - 1;
+                      bool isFirstStore = storeIndex == 0;
+
+                      return Column(
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.check_box_outline_blank_rounded,
-                              color: StarColors.grey,
-                            ),
-                            iconSize: 20,
-                          ),
-                          GestureDetector(
-                            onTap: () => Get.to(
-                              () => StorePage(
-                                storeId: store['store_id'],
+                          if (isFirstStore) const SizedBox(height: 15),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.check_box_outline_blank_rounded,
+                                  color: StarColors.grey,
+                                ),
+                                iconSize: 20,
                               ),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  store['store_name'],
-                                  style: const TextStyle(
-                                    color: StarColors.textSecondary,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
+                              GestureDetector(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => StorePage(
+                                      storeId: storeId,
+                                    ),
                                   ),
                                 ),
-                                const SizedBox(width: 10),
-                                const Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: StarColors.textSecondary,
-                                  size: 15,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(height: 30),
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: store['items'].length,
-                        itemBuilder: (context, index) {
-                          Map<String, dynamic> item = store['items'][index];
-                          return Container(
-                            margin: index == store['items'].length - 1
-                                ? null
-                                : const EdgeInsets.only(bottom: 20),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.check_box_outline_blank_rounded,
-                                    color: StarColors.grey,
-                                  ),
-                                  iconSize: 20,
-                                ),
-                                const SizedBox(width: 15),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Row(
                                   children: [
-                                    StarPhotocardImage(
-                                      borderColor: StarColors.grey,
-                                      size: StarDeviceUtils.getScreenWidth(
-                                              context) *
-                                          0.3,
+                                    Text(
+                                      storeName,
+                                      style: const TextStyle(
+                                        color: StarColors.textSecondary,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                     ),
                                     const SizedBox(width: 10),
-                                    SizedBox(
-                                      height: StarDeviceUtils.getScreenWidth(
-                                              context) *
-                                          0.3 *
-                                          1.4,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                item['group_name'],
-                                                style: const TextStyle(
-                                                  color:
-                                                      StarColors.textSecondary,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w300,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 2),
-                                              Text(
-                                                item['artist_name'],
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                  height: 0,
-                                                  color: StarColors.textPrimary,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 5),
-                                              Text(
-                                                item['pc_name'],
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  height: 0,
-                                                  color: StarColors.textPrimary,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            // width: 5,
-                                            // height: 5,
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 10,
-                                            ),
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: ShapeDecoration(
-                                              shape: RoundedRectangleBorder(
-                                                side: const BorderSide(
-                                                    width: 1,
-                                                    color: StarColors.grey),
-                                                borderRadius:
-                                                    BorderRadius.circular(100),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                IconButton(
-                                                  onPressed: () {},
-                                                  icon: Icon(
-                                                    item['quantity'] > 1
-                                                        ? Icons.remove_rounded
-                                                        : Icons.delete_rounded,
-                                                    color: StarColors.grey,
-                                                    size: 18,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  item['quantity'].toString(),
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                    height: 0,
-                                                    color: StarColors.grey,
-                                                  ),
-                                                ),
-                                                IconButton(
-                                                  onPressed: () {},
-                                                  icon: const Icon(
-                                                    Icons.add_rounded,
-                                                    color: StarColors.grey,
-                                                    size: 18,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                    const Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: StarColors.textSecondary,
+                                      size: 15,
                                     ),
                                   ],
                                 ),
-                              ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 30),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: storePhotocards.length,
+                            itemBuilder: (context, pcIndex) {
+                              final photocard = storePhotocards[pcIndex];
+                              final cartItem = cartItems.firstWhere(
+                                  (item) => item.id == photocard.id);
+                              final quantity = cartItem.quantity;
+                              return Container(
+                                margin: pcIndex == storePhotocards.length - 1
+                                    ? null
+                                    : const EdgeInsets.only(bottom: 20),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.check_box_outline_blank_rounded,
+                                        color: StarColors.grey,
+                                      ),
+                                      iconSize: 20,
+                                    ),
+                                    const SizedBox(width: 15),
+                                    Row(
+                                      children: [
+                                        StarPhotocardImage(
+                                          borderColor: StarColors.grey,
+                                          size: StarDeviceUtils.getScreenWidth(
+                                                  context) *
+                                              0.3,
+                                          imageUrl: photocard.imageUrl,
+                                        ),
+                                        const SizedBox(width: 10),
+                                        SizedBox(
+                                          width: StarDeviceUtils.getScreenWidth(
+                                                  context) *
+                                              0.3 *
+                                              1.4,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    photocard.artistName,
+                                                    style: const TextStyle(
+                                                      color: StarColors
+                                                          .textSecondary,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      height: 0,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 2),
+                                                  Text(
+                                                    photocard.memberName != ''
+                                                        ? photocard.memberName!
+                                                        : photocard.artistName,
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      height: 0,
+                                                      color: StarColors
+                                                          .textPrimary,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  Text(
+                                                    photocard.pcName,
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      height: 0,
+                                                      color: StarColors
+                                                          .textPrimary,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  Text(
+                                                    UtilBrasilFields.obterReal(
+                                                        photocard.price),
+                                                    style: const TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      height: 0,
+                                                      color: StarColors
+                                                          .textPrimary,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 20),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 10,
+                                                ),
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: ShapeDecoration(
+                                                  shape: RoundedRectangleBorder(
+                                                    side: const BorderSide(
+                                                        width: 1,
+                                                        color: StarColors.grey),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100),
+                                                  ),
+                                                ),
+                                                child: (photocard.quantity > 0)
+                                                    ? Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          IconButton(
+                                                            onPressed: () {
+                                                              cartProvider
+                                                                  .removeItemFromCart(
+                                                                      photocard
+                                                                          .id,
+                                                                      1);
+                                                            },
+                                                            icon: Icon(
+                                                              quantity > 1
+                                                                  ? Icons
+                                                                      .remove_rounded
+                                                                  : Icons
+                                                                      .delete_rounded,
+                                                              color: StarColors
+                                                                  .grey,
+                                                              size: 18,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            quantity.toString(),
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              height: 0,
+                                                              color: StarColors
+                                                                  .grey,
+                                                            ),
+                                                          ),
+                                                          IconButton(
+                                                            onPressed: () {
+                                                              cartProvider
+                                                                  .addItemToCart(
+                                                                      photocard
+                                                                          .id,
+                                                                      1,
+                                                                      photocard
+                                                                          .price);
+                                                            },
+                                                            icon: const Icon(
+                                                              Icons.add_rounded,
+                                                              color: StarColors
+                                                                  .grey,
+                                                              size: 18,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : const Text(
+                                                        'Esgotado',
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          height: 0,
+                                                          color:
+                                                              StarColors.grey,
+                                                        ),
+                                                      ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 30),
+                          if (!isLastStore)
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 25),
+                              child: Divider(
+                                color: StarColors.grey,
+                                thickness: 0.5,
+                              ),
                             ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 30),
-                      if (!isLast)
-                        const Divider(
-                          color: StarColors.grey,
-                          thickness: 0.5,
-                        ),
-                    ],
+                        ],
+                      );
+                    },
                   );
-                },
-              ),
+                }
+              },
             ),
           ),
           Align(
@@ -322,7 +385,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                       const SizedBox(width: 15),
                       Text(
-                        UtilBrasilFields.obterReal(total),
+                        UtilBrasilFields.obterReal(cartProvider.totalAmount),
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.normal,

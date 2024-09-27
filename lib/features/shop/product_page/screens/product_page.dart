@@ -87,9 +87,9 @@ class _ProductPageState extends State<ProductPage> {
 
   int _selectedQuantity = 1;
 
-  void _addToCart() async {
+  void _addToCart(double price) async {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    await cartProvider.addItemToCart(widget.id, _selectedQuantity);
+    await cartProvider.addItemToCart(widget.id, _selectedQuantity, price);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Photocard adicionado ao carrinho!')),
     );
@@ -180,17 +180,20 @@ class _ProductPageState extends State<ProductPage> {
                                       color: StarColors.textPrimary,
                                     ),
                                   ),
-                                  DropdownQuantitySelector(
-                                    quantities: photocard.quantity > 4
-                                        ? _quantities
-                                        : List<int>.generate(photocard.quantity,
-                                            (index) => index + 1),
-                                    onQuantityChanged: (int value) {
-                                      setState(() {
-                                        _selectedQuantity = value;
-                                      });
-                                    },
-                                  ),
+                                  photocard.quantity > 0
+                                      ? DropdownQuantitySelector(
+                                          quantities: photocard.quantity > 4
+                                              ? _quantities
+                                              : List<int>.generate(
+                                                  photocard.quantity,
+                                                  (index) => index + 1),
+                                          onQuantityChanged: (int value) {
+                                            setState(() {
+                                              _selectedQuantity = value;
+                                            });
+                                          },
+                                        )
+                                      : const SizedBox(),
                                 ],
                               ),
                             ),
@@ -250,40 +253,57 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                         ],
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: _addToCart, // Handle add to cart
-                            icon: const Icon(
-                              Icons.add_shopping_cart_rounded,
-                              color: StarColors.black,
-                            ),
-                          ),
-                          SizedBox(
-                            width:
-                                StarDeviceUtils.getScreenWidth(context) * 0.6,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 30,
-                                  vertical: 5,
+                      child: photocard.quantity > 0
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    _addToCart(photocard.price);
+                                  }, // Handle add to cart
+                                  icon: const Icon(
+                                    Icons.add_shopping_cart_rounded,
+                                    color: StarColors.black,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                      StarDeviceUtils.getScreenWidth(context) *
+                                          0.6,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 30,
+                                        vertical: 5,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      _addToCart(photocard.price);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const CartScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text("Comprar"),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text(
+                                'Produto esgotado',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: StarColors.textPrimary,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              onPressed: () {
-                                _addToCart();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const CartScreen(),
-                                  ),
-                                );
-                              },
-                              child: const Text("Comprar"),
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                   )
                 ],
