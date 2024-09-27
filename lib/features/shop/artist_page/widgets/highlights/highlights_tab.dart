@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stardust_app_skeleton/common/widgets/photocard/photocards_row_list.dart';
-import 'package:stardust_app_skeleton/common/widgets/topics_section.dart';
 import 'package:stardust_app_skeleton/features/shop/artist_page/widgets/highlights/slides_highlights.dart';
 import 'package:stardust_app_skeleton/models/photocard.dart';
-import 'package:stardust_app_skeleton/utils/constants/text_strings.dart';
 
 class HighlightsTab extends StatefulWidget {
   const HighlightsTab({
@@ -22,6 +20,8 @@ class HighlightsTab extends StatefulWidget {
 class _HighlightsTabState extends State<HighlightsTab> {
   @override
   Widget build(BuildContext context) {
+    List<Photocard> lastUnits =
+        widget.photocards.where((photocard) => photocard.quantity < 5).toList();
     return Column(
       children: [
         SlidesHightlights(
@@ -32,16 +32,16 @@ class _HighlightsTabState extends State<HighlightsTab> {
           title: "VOCÊ TAMBÉM PODE SE INTERESSAR",
           photocards: widget.photocards,
         ),
-        const SizedBox(height: 30),
-        const TopicsSection(
-          title: StarTexts.recommendationsTopics,
-          topics: [],
-          goToScreen: true,
-        ),
+        // const SizedBox(height: 30),
+        // const TopicsSection(
+        //   title: StarTexts.recommendationsTopics,
+        //   topics: [],
+        //   goToScreen: true,
+        // ),
         const SizedBox(height: 30),
         PhotocardsRowList(
           title: "Últimas unidades",
-          photocards: widget.photocards,
+          photocards: lastUnits,
         ),
       ],
     );

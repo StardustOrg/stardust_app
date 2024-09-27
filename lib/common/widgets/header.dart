@@ -77,6 +77,7 @@ class _HeaderState extends State<Header> {
         children: [
           Expanded(
             child: TextFormField(
+              enabled: false,
               controller: _searchController,
               onFieldSubmitted: (value) {
                 if (value.isNotEmpty && !widget.goToSearchPage) {

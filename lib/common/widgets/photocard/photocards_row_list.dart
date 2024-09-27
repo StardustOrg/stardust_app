@@ -29,22 +29,27 @@ class PhotocardsRowList extends StatelessWidget {
         SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: photocards.map((photocard) {
-              return Row(
-                children: [
-                  PhotocardContainer(
-                    artistName: photocard.artistName,
-                    pcName: photocard.pcName,
-                    price: photocard.price,
-                    id: photocard.id,
-                    imageUrl: photocard.imageUrl,
-                  ),
-                  const SizedBox(width: 20),
-                ],
-              );
-            }).toList(),
-          ),
+          child: photocards.isNotEmpty
+              ? Row(
+                  children: photocards.map((photocard) {
+                    return Row(
+                      children: [
+                        PhotocardContainer(
+                          artistName: photocard.artistName,
+                          pcName: photocard.pcName,
+                          price: photocard.price,
+                          id: photocard.id,
+                          imageUrl: photocard.imageUrl,
+                        ),
+                        const SizedBox(width: 20),
+                      ],
+                    );
+                  }).toList(),
+                )
+              : const Text(
+                  'Nenhum item encontrado',
+                  textAlign: TextAlign.center,
+                ),
         ),
       ],
     );
