@@ -36,7 +36,10 @@ class ArtistsRepository extends GetxController {
   }
 
   Future<List<Artist>> getSoloAndGroups() async {
-    var snapshot = await _artistsCollection.get();
+    var snapshot = await _artistsCollection
+        .where('group_id', isNull: true)
+        .where('active', isEqualTo: true)
+        .get();
     var artists = _artistsListFromSnapshot(snapshot);
 
     return artists.where((artist) => artist.groupId == null).toList();
